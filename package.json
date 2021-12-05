@@ -7,7 +7,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.16"
+    "vue": "^3.2.16",
+    "vue-lorem-ipsum": "^0.0.1",
+    "vue-material-design-icons": "^5.0.0",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",

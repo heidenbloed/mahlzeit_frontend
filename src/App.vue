@@ -1,8 +1,7 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" class="mx-auto mt-60"/>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <router-view></router-view>
 </template>
+
+<style>
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Outlined');
+</style>
