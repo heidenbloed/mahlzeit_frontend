@@ -1,13 +1,55 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import Vue from '@vitejs/plugin-vue'
 import path from 'path'
 import WindiCSS from 'vite-plugin-windicss'
+import { ManifestOptions, VitePWA, VitePWAOptions } from 'vite-plugin-pwa'
+import replace from '@rollup/plugin-replace'
+
+const pwaOptions: Partial<VitePWAOptions> = {
+  mode: 'development',
+  base: '/',
+  srcDir: 'src',
+  filename: 'sw.ts',
+  includeAssets: ['favicon.svg'],
+  strategies: 'injectManifest',
+  manifest: {
+    name: 'Rezeptdatenbank',
+    short_name: 'RezeptDB',
+    theme_color: '#ffffff',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#ffffff',
+    icons: [
+      {
+        src: 'pwa-192x192.png', // <== don't add slash, for testing
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/pwa-512x512.png', // <== don't remove slash, for testing
+        sizes: '512x512',
+        type: 'image/png',
+      },
+      {
+        src: 'pwa-512x512.png', // <== don't add slash, for testing
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable',
+      },
+    ],
+  },
+}
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    sourcemap: process.env.SOURCE_MAP === 'true',
+  },
   plugins: [
-    vue(),
-    WindiCSS()
+    Vue(),
+    VitePWA(pwaOptions),
+    WindiCSS(),
   ],
   resolve: {
     alias: {
@@ -15,6 +57,7 @@ export default defineConfig({
     },
   },
   server: {
-    host: true
-  }
+    host: true,
+    port: 3000,
+  },
 })

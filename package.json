@@ -4,19 +4,29 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "build-no-check": "vite build",
-    "serve": "vite preview"
+    "build-no-check": "DEBUG=vite-plugin-pwa:* vite build",
+    "serve": "vite preview --port 4000",
+    "start": "npm run build-no-check && npm run serve",
+    "https-serve": "PORT=5000 serve dist",
+    "https-start": "npm run build-no-check && npm run https-serve"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.4.2",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
+    "https-localhost": "^4.7.0",
     "typescript": "^4.4.3",
     "vite": "^2.6.4",
+    "vite-plugin-pwa": "^0.11.10",
     "vite-plugin-windicss": "^1.5.1",
+    "vue-tsc": "^0.29.8",
     "windicss": "^3.2.1",
-    "vue-tsc": "^0.29.8"
+    "workbox-core": "^6.4.0",
+    "workbox-precaching": "^6.4.0",
+    "workbox-routing": "^6.4.0",
+    "workbox-window": "^6.4.0"
   }
 }
