@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import path from 'path'
-import WindiCSS from 'vite-plugin-windicss'
-import { ManifestOptions, VitePWA, VitePWAOptions } from 'vite-plugin-pwa'
-import replace from '@rollup/plugin-replace'
+import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa'
 
 const pwaOptions: Partial<VitePWAOptions> = {
   mode: 'development',
@@ -49,7 +47,6 @@ export default defineConfig({
   plugins: [
     Vue(),
     VitePWA(pwaOptions),
-    WindiCSS(),
   ],
   resolve: {
     alias: {

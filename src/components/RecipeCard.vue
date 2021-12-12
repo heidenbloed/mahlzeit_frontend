@@ -4,7 +4,7 @@
       <img :src="imageUrl" alt="recipe image">
     </div>
     <div class="p-4 flex flex-row">
-      <div class="flex-grow pr-4">
+      <div class="grow pr-4">
         <div class="font-sans font-semibold tracking-tight text-2xl text-gray-700">
           <slot name=title></slot>
         </div>
