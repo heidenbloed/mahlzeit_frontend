@@ -1,6 +1,6 @@
 <template>
-  <header class="w-full lg:shadow-lg h-16 fixed bottom-0 lg:top-0 bg-white">
-    <div class="h-full lg:max-w-4xl mx-auto grid grid-flow-col auto-cols-fr bg-white border-t-2 lg:border-t-0 border-gray-200 items-center">
+  <header class="w-full h-16 z-30 fixed bottom-0 lg:top-0">
+    <div class="h-full lg:container mx-auto bg-white rounded-t-xl lg:rounded-b-xl lg:rounded-t-none shadow-t-lg lg:shadow-lg grid grid-flow-col auto-cols-fr place-items-center px-2">
       <div class="hidden lg:block">
         <slot name="logo"></slot>
       </div>
@@ -13,3 +13,9 @@
   </div>
   <div class="h-16 block lg:hidden"></div>
 </template>
+
+<style scoped>
+.shadow-t-lg {
+  box-shadow: 0 -10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+</style>

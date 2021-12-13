@@ -1,29 +1,27 @@
 <template>
-  <div class="h-screen w-screen">
-    <TabBar>
-      <template v-slot:logo>
-        <div class="text-center text-4xl logo">
-          RezeptDB
-        </div>
-      </template>
+  <TabBar>
+    <template v-slot:logo>
+      <div class="text-center text-4xl logo">
+        RezeptDB
+      </div>
+    </template>
 
-      <template v-slot:buttons>
-        <TabButton iconName="dinner_dining" url="/recipes/">
-          Rezepte
-        </TabButton>
-        <TabButton iconName="event" url="/plan/">
-          Planung
-        </TabButton>
-        <TabButton iconName="shopping_cart" url="/cart/">
-          Einkaufsliste
-        </TabButton>
-      </template>
+    <template v-slot:buttons>
+      <TabButton iconName="dinner_dining" url="/recipes/">
+        Rezepte
+      </TabButton>
+      <TabButton iconName="event" url="/plan/">
+        Planung
+      </TabButton>
+      <TabButton iconName="shopping_cart" url="/cart/">
+        Einkaufsliste
+      </TabButton>
+    </template>
 
-      <template v-slot:content>
-        <router-view/>
-      </template>
-    </TabBar>
-  </div>
+    <template v-slot:content>
+      <router-view/>
+    </template>
+  </TabBar>
 </template>
 
 <script setup lang="ts">

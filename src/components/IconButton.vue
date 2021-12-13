@@ -1,6 +1,6 @@
 <template>
   <button
-    class="w-12 h-12 rounded-lg"
+    class="w-12 h-12 rounded-lg hover:shadow-lg hover:shadow-red-500/50 hover:-translate-y-1 transition-all"
     :class="isPrimary ? 'bg-red-500 border-0' : 'bg-white border-2 border-red-500'"
   >
     <div

@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-md bg-white rounded-xl shadow-xl">
     <div class="rounded-xl overflow-hidden">
-      <img :src="imageUrl" alt="recipe image">
+      <img :src="imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
     </div>
     <div class="p-4 flex flex-row">
       <div class="grow pr-4">
