@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import TabsView from '@/components/TabsView.vue'
 import ExamplePage from '@/components/ExamplePage.vue'
 import RecipesGridView from '@/components/RecipesGridView.vue'
+import RecipeDetail from "@/components/RecipeDetail.vue"
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
       {
         path: 'recipes/',
         component: RecipesGridView,
+      },
+      {
+        path: 'recipe/',
+        component: RecipeDetail,
       },
       {
         path: 'plan/',

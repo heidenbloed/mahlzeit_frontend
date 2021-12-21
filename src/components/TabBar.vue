@@ -1,17 +1,17 @@
 <template>
-  <header class="w-full h-16 z-30 fixed bottom-0 lg:top-0">
-    <div class="h-full lg:container mx-auto bg-white rounded-t-xl lg:rounded-b-xl lg:rounded-t-none shadow-t-lg lg:shadow-lg grid grid-flow-col auto-cols-fr place-items-center px-2">
-      <div class="hidden lg:block">
+  <header class="w-full h-16 z-30 fixed bottom-0 md:top-0">
+    <div class="h-full md:container mx-auto bg-white rounded-t-xl md:rounded-b-xl md:rounded-t-none shadow-t-lg md:shadow-lg grid grid-flow-col auto-cols-fr place-items-center px-2">
+      <div class="hidden md:block">
         <slot name="logo"></slot>
       </div>
       <slot name="buttons"></slot>
     </div>
   </header>
-  <div class="h-16 mb-4 hidden lg:block"></div>
-  <div>
-    <slot name="content"></slot>
-  </div>
-  <div class="h-16 block lg:hidden"></div>
+  <div class="h-16 mb-4 hidden md:block"></div>
+    <div class="container mx-auto">
+      <slot name="content"></slot>
+    </div>
+  <div class="h-16 block md:hidden"></div>
 </template>
 
 <style scoped>

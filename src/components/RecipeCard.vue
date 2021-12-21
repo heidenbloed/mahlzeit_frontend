@@ -16,7 +16,7 @@
         <IconButton type="primary">
           shopping_cart
         </IconButton>
-        <IconButton type="secondary">
+        <IconButton type="secondary" @click="$router.push('/recipe/')">
           info
         </IconButton>
       </div>
