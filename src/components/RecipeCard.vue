@@ -8,7 +8,7 @@
         <div class="font-sans font-semibold tracking-tight text-2xl text-gray-700">
           <slot name=title></slot>
         </div>
-        <div class="font-sans font-medium tracking-tight text-gray-700">
+        <div class="font-sans tracking-tight text-gray-700">
           <slot name=description></slot>
         </div>
       </div>

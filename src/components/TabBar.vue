@@ -11,7 +11,7 @@
     <div class="container mx-auto">
       <slot name="content"></slot>
     </div>
-  <div class="h-16 block md:hidden"></div>
+  <div class="h-16 mt-2 block md:hidden"></div>
 </template>
 
 <style scoped>
