@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-4 my-2">
+  <div class="flex gap-4 my-2 w-full md:w-auto">
     <span class="material-icons-outlined">people</span>
     <span class="block md:hidden">{{numServings}}</span>
     <input 
@@ -12,7 +12,7 @@
     <input
       type="number"
       v-model="numServings"
-      class="grow hidden md:block bg-gray-200 rounded-xl px-2 py-0"
+      class="w-20 hidden md:block bg-gray-200 rounded-xl px-2 py-0"
     >
   </div>
 </template>

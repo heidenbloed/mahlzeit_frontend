@@ -6,11 +6,56 @@
 import RecipeDetail from "@/components/RecipeDetail.vue"
 
 const recipeData = {
-  name: "Kaiserschmarrn mit viel Liebe und Nüssen",
+  name: "Kaiserschmarrn mit viel Liebe und Nüssen (unglaublich langer Rezeptname)",
   prepTime: 110,
   source: "Rezept von Omi, kann man aber auch im Internet finden, wenn man danach sucht",
   numServings: 3,
   ingredients: [
+    {
+      name: "Ultralanger Zutatenname, der ja durchaus mal vorkommen kann",
+      unit: "Stk.",
+      quantity: 1
+    },
+    {
+      name: "Butter",
+      unit: "Pfund",
+      quantity: 5
+    },
+    {
+      name: "Zucker",
+      unit: "kg",
+      quantity: 37
+    },
+    {
+      name: "Liebe",
+      unit: "Stk.",
+      quantity: 1
+    },
+    {
+      name: "Butter",
+      unit: "Pfund",
+      quantity: 5
+    },
+    {
+      name: "Zucker",
+      unit: "kg",
+      quantity: 37
+    },
+    {
+      name: "Liebe",
+      unit: "Stk.",
+      quantity: 1
+    },
+    {
+      name: "Butter",
+      unit: "Pfund",
+      quantity: 5
+    },
+    {
+      name: "Zucker",
+      unit: "kg",
+      quantity: 37
+    },
     {
       name: "Liebe",
       unit: "Stk.",

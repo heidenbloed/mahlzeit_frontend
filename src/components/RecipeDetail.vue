@@ -1,12 +1,12 @@
 <template>
-  <main class="flex flex-wrap bg-white rounded-xl">
-    <div class="max-w-lg">
+  <main class="max-w-4xl mx-auto bg-white rounded-xl">
+    <div class="max-w-4xl mx-auto">
       <RecipeImageSlides/>
     </div>
     
 
-    <article class="max-w-lg xl:max-w-none p-4 font-sans tracking-tight text-gray-700">
-      <h1 class="font-semibold text-2xl">
+    <article class="p-4 font-sans tracking-tight text-gray-700">
+      <h1 class="font-semibold text-2xl mb-1">
         {{recipeData.name}}
       </h1>
       <p>
@@ -17,7 +17,7 @@
         {{recipeData.source}}
       </p>
       
-      <section class="mt-4 p-2 border border-gray-700 rounded-xl">
+      <section class="mt-4 p-2 bg-stone-100 rounded-xl">
         <h2 class="font-semibold text-lg">
           Zutaten
         </h2>
@@ -32,17 +32,23 @@
         </ul>
       </section>
 
-      <section class="mt-4 p-2 border border-gray-700 rounded-xl">
+      <section class="mt-4 p-2 bg-stone-100 rounded-xl">
         <h2 class="font-semibold text-lg">
           Schlagwörter
         </h2>
-        <div class="mt-2 flex flex-wrap gap-x-1 gap-y-1">
+        <div class="mt-2 flex flex-wrap gap-x-2 gap-y-1">
           <RecipeLabel
             v-for="label in recipeData.labels"
             :name="label.name"
             :category="label.category"
           />
         </div>
+      </section>
+
+      <section class="mt-4 flex justify-center gap-2">
+        <IconButton type="primary">shopping_cart</IconButton>
+        <IconButton type="secondary">edit</IconButton>
+        <IconButton type="secondary">share</IconButton>
       </section>
     </article>
   </main>
@@ -51,8 +57,9 @@
 <script setup lang="ts">
 import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
+import RecipeLabel from "@/components/RecipeLabel.vue";
+import IconButton from "@/components/IconButton.vue";
 import { computed, ref } from "vue";
-import RecipeLabel from "./RecipeLabel.vue";
 
 interface Ingredient {
   quantity: number;

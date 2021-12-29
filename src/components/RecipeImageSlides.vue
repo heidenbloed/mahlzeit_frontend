@@ -18,7 +18,7 @@
       v-for="(imageUrl, index) in imageUrls"
       :virtualIndex="index"
     >
-      <img :src="imageUrl" class="w-full h-full object-cover aspect-[1/1] rounded-none md:rounded-xl"/>
+      <img :src="imageUrl" class="w-full h-full object-cover aspect-[3/2] rounded-none md:rounded-xl"/>
     </swiper-slide>
     
     <div class="absolute top-0 left-0 h-full z-10 flex flex-col place-content-center">

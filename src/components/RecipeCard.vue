@@ -1,14 +1,14 @@
 <template>
-  <div class="max-w-md bg-white rounded-xl shadow-xl">
+  <RoundedCard>
     <div class="rounded-xl overflow-hidden">
       <img :src="imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
     </div>
     <div class="p-4 flex flex-row">
       <div class="grow pr-4">
-        <div class="font-sans font-semibold tracking-tight text-2xl text-gray-700">
+        <h1 class="font-semibold tracking-tight text-2xl text-gray-700">
           <slot name=title></slot>
-        </div>
-        <div class="font-sans tracking-tight text-gray-700">
+        </h1>
+        <div class="tracking-tight text-gray-700">
           <slot name=description></slot>
         </div>
       </div>
@@ -21,10 +21,11 @@
         </IconButton>
       </div>
     </div>
-  </div>
+  </RoundedCard>
 </template>
 
 <script setup lang="ts">
+import RoundedCard from "@/components/RoundedCard.vue";
 import IconButton from "@/components/IconButton.vue";
 
 const props = defineProps<{

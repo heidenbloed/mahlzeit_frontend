@@ -3,6 +3,7 @@ import TabsView from '@/components/TabsView.vue'
 import ExamplePage from '@/components/ExamplePage.vue'
 import RecipesGridView from '@/components/RecipesGridView.vue'
 import RecipeDetailView from "@/components/RecipeDetailView.vue"
+import PlanningGridView from "@/components/PlanningGridView.vue"
 
 const routes = [
   {
@@ -23,7 +24,7 @@ const routes = [
       },
       {
         path: 'plan/',
-        component: ExamplePage,
+        component: PlanningGridView,
       },
       {
         path: 'cart/',

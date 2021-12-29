@@ -1,6 +1,6 @@
 <template>
   <span 
-    class=" px-2 py-0 rounded-xl border"
+    class=" px-2 py-1 rounded-xl"
     :class="categoryClasses"
   >
     {{name}}
@@ -26,7 +26,7 @@ const categoryClasses = computed(() => {
     return "border-amber-600 bg-amber-100 text-amber-600"
   }
   else {
-    return "border-stone-800 bg-stone-100 text-stone-800"
+    return "border-red-800 bg-red-100 text-red-800"
   }
 });
 </script>
