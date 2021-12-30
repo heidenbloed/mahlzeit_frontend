@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import TabsView from '@/components/TabsView.vue'
-import ExamplePage from '@/components/ExamplePage.vue'
 import RecipesGridView from '@/components/RecipesGridView.vue'
 import RecipeDetailView from "@/components/RecipeDetailView.vue"
 import PlanningGridView from "@/components/PlanningGridView.vue"
+import ShoppingListView from "@/components/ShoppingListView.vue"
 
 const routes = [
   {
@@ -28,7 +28,7 @@ const routes = [
       },
       {
         path: 'cart/',
-        component: ExamplePage,
+        component: ShoppingListView,
       },
     ]
   }

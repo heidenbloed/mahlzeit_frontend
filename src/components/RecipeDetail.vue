@@ -5,22 +5,25 @@
     </div>
     
 
-    <article class="p-4 font-sans tracking-tight text-gray-700">
-      <h1 class="font-semibold text-2xl mb-1">
-        {{recipeData.name}}
-      </h1>
-      <p>
-        <span v-if="prepTimeFullHours > 0">{{prepTimeFullHours}}h </span>
-        <span>{{prepTimeRemaindingMinutes}}min</span>
-      </p>
-      <p>
-        {{recipeData.source}}
-      </p>
-      
-      <section class="mt-4 p-2 bg-stone-100 rounded-xl">
-        <h2 class="font-semibold text-lg">
-          Zutaten
-        </h2>
+    <article class="p-4 font-sans tracking-tight text-gray-700 flex flex-col gap-4">
+      <section>
+        <h1 class="font-semibold text-2xl mb-1">
+          {{recipeData.name}}
+        </h1>
+        <p>
+          <span v-if="prepTimeFullHours > 0">
+            {{prepTimeFullHours}}h
+          </span>
+          <span>
+            {{prepTimeRemaindingMinutes}}min
+          </span>
+        </p>
+        <p>
+          {{recipeData.source}}
+        </p>
+      </section>
+
+      <SubSection title="Zutaten">
         <ServingsSlider
           :defaultNumServings="recipeData.numServings"
           v-model="numServings"
@@ -30,12 +33,9 @@
             {{scaleServings(ingredient.quantity)}} {{ingredient.unit}} {{ingredient.name}}
           </li>
         </ul>
-      </section>
+      </SubSection>
 
-      <section class="mt-4 p-2 bg-stone-100 rounded-xl">
-        <h2 class="font-semibold text-lg">
-          Schlagwörter
-        </h2>
+      <SubSection title="Schlagwörter">
         <div class="mt-2 flex flex-wrap gap-x-2 gap-y-1">
           <RecipeLabel
             v-for="label in recipeData.labels"
@@ -43,9 +43,9 @@
             :category="label.category"
           />
         </div>
-      </section>
+      </SubSection>
 
-      <section class="mt-4 flex justify-center gap-2">
+      <section class="flex justify-center gap-2">
         <IconButton type="primary">shopping_cart</IconButton>
         <IconButton type="secondary">edit</IconButton>
         <IconButton type="secondary">share</IconButton>
@@ -59,6 +59,7 @@ import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
 import RecipeLabel from "@/components/RecipeLabel.vue";
 import IconButton from "@/components/IconButton.vue";
+import SubSection from '@/components/SubSection.vue';
 import { computed, ref } from "vue";
 
 interface Ingredient {

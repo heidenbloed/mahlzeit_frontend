@@ -1,7 +1,7 @@
 <template>
   <TabBar>
     <template v-slot:logo>
-      <div class="text-center text-4xl logo">
+      <div class="text-center text-4xl logo text-red-500">
         RezeptDB
       </div>
     </template>

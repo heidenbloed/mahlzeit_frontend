@@ -5,7 +5,7 @@
     </div>
     <div class="p-4 grow">
       <h1 class="font-semibold tracking-tight text-2xl text-gray-700">
-        <slot></slot>
+        {{recipeName}}
       </h1>
       <ServingsSlider
         :defaultNumServings="defaultNumServings"
@@ -30,8 +30,9 @@ import IconButton from "@/components/IconButton.vue";
 import { ref, watchEffect } from "vue";
 
 const props = defineProps<{
+  recipeName: string,
   imageUrl: string,
-  defaultNumServings: number
+  defaultNumServings: number,
 }>();
 const emit = defineEmits(["update:modelValue"]);
 

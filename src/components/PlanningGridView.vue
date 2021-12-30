@@ -10,11 +10,10 @@
     </RoundedCard>
     <PlanningCard
       v-for="i in Array(5).keys()"
+      recipeName="Salatschüssel"
       imageUrl="https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg"
       :defaultNumServings="i"
-    >
-      Salatschüssel
-    </PlanningCard>
+    />
   </CardGrid>
 </template>
 
