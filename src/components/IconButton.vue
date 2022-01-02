@@ -1,10 +1,10 @@
 <template>
   <RoundedButton
-    class="w-12 h-12"
+    class="w-10 h-10 flex justify-center items-center"
     :type="type"
   >
     <div
-      class="material-icons-outlined text-2xl"
+      class="icon-md"
     >
       <slot></slot>
     </div>

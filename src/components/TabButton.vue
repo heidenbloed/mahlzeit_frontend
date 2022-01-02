@@ -2,7 +2,7 @@
   <a :href="url" class="h-full">
     <button class="px-6 h-full border-red-500 focus:outline-none focus:bg-white" :class="tabActive ? 'text-red-500 border-t-4 lg:border-b-4 lg:border-t-0' : 'text-neutral-600'">
       <span class="lg:inline-flex flex-wrap gap-3 items-center">
-        <div v-if="iconName" class="text-2xl material-icons-outlined">
+        <div v-if="iconName" class="icon-md">
           {{iconName}}
         </div>
         <div>

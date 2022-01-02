@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-4 my-2 w-full md:w-auto">
-    <span class="material-icons-outlined">people</span>
+    <span class="icon-md">people</span>
     <span class="block md:hidden">{{numServings}}</span>
     <input 
       type="range"
