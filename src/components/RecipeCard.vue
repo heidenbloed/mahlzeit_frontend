@@ -1,15 +1,15 @@
 <template>
   <RoundedCard>
     <div class="rounded-xl overflow-hidden">
-      <img :src="imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
+      <img :src="recipeCardData.imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
     </div>
     <div class="p-4 flex flex-row">
       <div class="grow pr-4">
         <h1 class="font-semibold tracking-tight text-2xl text-gray-700">
-          <slot name=title></slot>
+          {{recipeCardData.name}}
         </h1>
         <div class="tracking-tight text-gray-700">
-          <slot name=description></slot>
+          <RecipeDurationLabel :prepTime="recipeCardData.prepTime"/>
         </div>
       </div>
       <div class="flex flex-row gap-2">
@@ -27,8 +27,15 @@
 <script setup lang="ts">
 import RoundedCard from "@/components/RoundedCard.vue";
 import IconButton from "@/components/IconButton.vue";
+import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
+
+interface RecipeCardData {
+  name: string;
+  prepTime: number;
+  imageUrl: string;
+}
 
 const props = defineProps<{
-  imageUrl: string
+  recipeCardData: RecipeCardData
 }>();
 </script>

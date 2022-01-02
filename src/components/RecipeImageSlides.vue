@@ -52,12 +52,7 @@ const swiperModules = [Virtual, Navigation, Pagination, A11y];
 const props = defineProps({
   imageUrls: {
     type: Array,
-    required: false,
-    default: [
-      "https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg",
-      "https://ais.kochbar.de/kbrezept/284621_878966/24-05goci/600x450/254/burger-rezept-bild-nr-1187.jpg",
-      "https://www.ndr.de/pizza460_v-contentxl.jpg"
-    ]
+    required: true,
   }
 });
 

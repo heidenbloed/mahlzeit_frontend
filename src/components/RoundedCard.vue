@@ -8,7 +8,11 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  noWidthLimit: boolean
-}>();
+defineProps({
+  noWidthLimit: {
+    type: Boolean,
+    default: false,
+    required: false
+  }
+});
 </script>

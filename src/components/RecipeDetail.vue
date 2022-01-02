@@ -1,7 +1,7 @@
 <template>
   <main class="max-w-4xl mx-auto bg-white rounded-xl">
     <div class="max-w-4xl mx-auto">
-      <RecipeImageSlides/>
+      <RecipeImageSlides :imageUrls="recipeData.imageUrls"/>
     </div>
     
 
@@ -11,12 +11,7 @@
           {{recipeData.name}}
         </h1>
         <p>
-          <span v-if="prepTimeFullHours > 0">
-            {{prepTimeFullHours}}h
-          </span>
-          <span>
-            {{prepTimeRemaindingMinutes}}min
-          </span>
+          <RecipeDurationLabel :prepTime="recipeData.prepTime"/>
         </p>
         <p>
           {{recipeData.source}}
@@ -58,6 +53,7 @@
 import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
 import RecipeLabel from "@/components/RecipeLabel.vue";
+import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import IconButton from "@/components/IconButton.vue";
 import SubSection from '@/components/SubSection.vue';
 import { computed, ref } from "vue";
@@ -80,14 +76,12 @@ interface RecipeData {
   numServings: number;
   ingredients: [Ingredient];
   labels: [Label];
+  imageUrls: [string]
 }
 
 const props = defineProps<{
   recipeData: RecipeData
 }>();
-
-const prepTimeFullHours = computed(() => Math.floor(props.recipeData.prepTime / 60));
-const prepTimeRemaindingMinutes = computed(() => props.recipeData.prepTime % 60);
 
 const numServings = ref(props.recipeData.numServings);
 function scaleServings(quantity: number) {
