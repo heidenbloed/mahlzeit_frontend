@@ -12,7 +12,10 @@
     </SubSection>
     
     <section class="flex justify-center gap-2">
-      <IconButton type="primary">copy</IconButton>
+      <RoundedButton type="primary">
+        <span class="icon-md">copy</span>
+        <span>Einkaufsliste kopieren</span>
+      </RoundedButton>
     </section>
   </main>
 </template>
@@ -20,5 +23,5 @@
 <script setup lang="ts">
 import SubSection from '@/components/SubSection.vue';
 import ShoppingListItem from '@/components/ShoppingListItem.vue';
-import IconButton from '@/components/IconButton.vue';
+import RoundedButton from '@/components/RoundedButton.vue';
 </script>

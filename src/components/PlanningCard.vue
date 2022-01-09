@@ -12,12 +12,14 @@
         v-model="numServings"
       />
       <div class="flex gap-2">
-        <IconButton type="primary">
-          remove_shopping_cart
-        </IconButton>
-        <IconButton type="secondary" @click="$router.push('/recipe/')">
-          info
-        </IconButton>
+        <RoundedButton type="primary">
+          <span class="icon-md">remove_shopping_cart</span>
+          <span>Entfernen</span>
+        </RoundedButton>
+        <RoundedButton type="secondary" @click="$router.push('/recipe/')">
+          <span class="icon-md">info</span>
+          <span>Rezept</span>
+        </RoundedButton>
       </div>
     </div>
   </RoundedCard>
@@ -26,7 +28,7 @@
 <script setup lang="ts">
 import RoundedCard from "@/components/RoundedCard.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
-import IconButton from "@/components/IconButton.vue";
+import RoundedButton from "@/components/RoundedButton.vue";
 import { ref, watchEffect } from "vue";
 
 const props = defineProps<{

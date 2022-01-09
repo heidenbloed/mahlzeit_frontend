@@ -40,10 +40,23 @@
         </div>
       </SubSection>
 
-      <section class="flex justify-center gap-2">
-        <IconButton type="primary">shopping_cart</IconButton>
-        <IconButton type="secondary">edit</IconButton>
-        <IconButton type="secondary">share</IconButton>
+      <section class="flex flex-wrap justify-center gap-2">
+        <RoundedButton type="primary">
+          <span class="icon-md">shopping_cart</span>
+          <span>Einkaufen</span>
+        </RoundedButton>
+        <RoundedButton type="secondary">
+          <span class="icon-md">edit</span>
+          <span>Bearbeiten</span>
+        </RoundedButton>
+        <RoundedButton type="secondary">
+          <span class="icon-md">share</span>
+          <span>Teilen</span>
+        </RoundedButton>
+        <RoundedButton type="secondary">
+          <span class="icon-md">delete</span>
+          <span>Löschen</span>
+        </RoundedButton>
       </section>
     </article>
   </main>
@@ -54,7 +67,7 @@ import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
 import RecipeLabel from "@/components/RecipeLabel.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
-import IconButton from "@/components/IconButton.vue";
+import RoundedButton from "@/components/RoundedButton.vue";
 import SubSection from '@/components/SubSection.vue';
 import { computed, ref } from "vue";
 

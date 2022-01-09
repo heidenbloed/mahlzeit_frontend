@@ -1,19 +1,26 @@
 <template>
-  <span 
-    class=" px-2 py-1 rounded-xl"
+  <component
+    :is="closeable? 'button' : 'span'" 
+    class="inline-flex px-2 py-1 rounded-xl items-center gap-1"
     :class="categoryClasses"
   >
-    {{name}}
-  </span>
+    <span>{{name}}</span>
+    <span v-if="closeable" class="icon-sm">close</span>
+  </component>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 
-const props = defineProps<{
-  name: string,
-  category: string
-}>();
+const props = defineProps({
+  name: String,
+  category: String,
+  closeable: {
+    type: Boolean,
+    default: false,
+    requried: false,
+  }
+});
 
 const categoryClasses = computed(() => {
   if (props.category === "diet"){

@@ -1,19 +1,19 @@
 <template>
-  <div class="flex gap-4 my-2 w-full md:w-auto">
+  <div class="flex gap-4 my-2 w-full md:w-auto items-center">
     <span class="icon-md">people</span>
     <span class="block md:hidden">{{numServings}}</span>
     <input 
       type="range"
-      v-model="numServings"
+      v-model.number="numServings"
       min="1"
       max="15"
       class="grow block md:hidden accent-red-500"
     >
     <input
       type="number"
+      class="w-24 hidden md:block bg-stone-200 rounded-xl focus:ring-2 focus:ring-red-500 px-2 border-0"
       v-model="numServings"
-      class="w-20 hidden md:block bg-gray-200 rounded-xl px-2 py-0"
-    >
+    />
   </div>
 </template>
 
