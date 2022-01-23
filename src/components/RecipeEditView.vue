@@ -10,10 +10,37 @@ const recipeData = {
   prepTime: 110,
   source: "Rezept von Omi",
   numServings: 3,
-  imageUrls: [
-    "https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg",
-    "https://ais.kochbar.de/kbrezept/284621_878966/24-05goci/600x450/254/burger-rezept-bild-nr-1187.jpg",
-    "https://www.ndr.de/pizza460_v-contentxl.jpg"
+  images: [
+    {
+      id: 0,
+      url: "https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg",
+      order: 0,
+    },
+    {
+      id: 1,
+      url: "https://ais.kochbar.de/kbrezept/284621_878966/24-05goci/600x450/254/burger-rezept-bild-nr-1187.jpg",
+      order: 1,
+    },
+    {
+      id: 2,
+      url: "https://www.ndr.de/pizza460_v-contentxl.jpg",
+      order: 2,
+    },
+    {
+      id: 3,
+      url: "https://www.ndr.de/pizza460_v-contentxl.jpg",
+      order: 3,
+    },
+    {
+      id: 4,
+      url: "https://www.ndr.de/pizza460_v-contentxl.jpg",
+      order: 4,
+    },
+    {
+      id: 5,
+      url: "https://www.ndr.de/pizza460_v-contentxl.jpg",
+      order: 5,
+    },
   ],
   ingredients: [
     {

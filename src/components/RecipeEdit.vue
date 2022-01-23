@@ -30,7 +30,9 @@
       </SubSection>
 
       <SubSection title="Fotos">
-        todo
+        <RecipeImageSorter
+          :images="currentRecipeData.images"
+        />
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
@@ -54,27 +56,34 @@ import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import RoundedInput from "@/components/RoundedInput.vue";
 import SubSection from '@/components/SubSection.vue';
-import { computed, onMounted, reactive, ref } from "vue";
+import RecipeImageSorter from "@/components/RecipeImageSorter.vue";
+import { reactive } from "vue";
 
-interface Ingredient {
+interface RecipeIngredient {
   quantity: number;
   unit: string;
   name: string;
 }
 
-interface Label {
+interface RecipeLabel {
   name: string;
   category: string;
 }
+
+interface RecipeImage {
+  id: number;
+  url: String;
+  order: number;
+};
 
 interface RecipeData {
   name: string;
   prepTime: number;
   source: string;
   numServings: number;
-  ingredients: [Ingredient];
-  labels: [Label];
-  imageUrls: [string]
+  ingredients: [RecipeIngredient];
+  labels: [RecipeLabel];
+  images: [RecipeImage]
 }
 
 const props = defineProps<{

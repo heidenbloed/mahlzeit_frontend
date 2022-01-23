@@ -57,7 +57,6 @@ const props = defineProps({
 const inputElement = ref<HTMLInputElement>();
 const inputStr = ref<String>(props.modelValue);
 
-
 function focusInput(){
   inputElement.value?.focus();
 }
@@ -67,6 +66,4 @@ function clearInput(){
 }
 
 defineExpose({focusInput});
-
-onMounted(() => console.log(props.modelValue));
 </script>
