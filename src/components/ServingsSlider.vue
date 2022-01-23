@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4 my-2 w-full md:w-auto items-center">
     <span class="icon-md">people</span>
-    <span class="block md:hidden">{{numServings}}</span>
+    <span class="block md:hidden w-4">{{numServings}}</span>
     <input 
       type="range"
       v-model.number="numServings"

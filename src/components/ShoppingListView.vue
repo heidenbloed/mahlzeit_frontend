@@ -12,9 +12,9 @@
     </SubSection>
     
     <section class="flex justify-center gap-2">
-      <RoundedButton type="primary">
-        <span class="icon-md">copy</span>
-        <span>Einkaufsliste kopieren</span>
+      <RoundedButton type="raised">
+        <template #icon>copy</template>
+        <template #default>Kopieren</template>
       </RoundedButton>
     </section>
   </main>

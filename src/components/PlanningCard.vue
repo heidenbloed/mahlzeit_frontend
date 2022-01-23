@@ -1,25 +1,26 @@
 <template>
-  <RoundedCard class="flex">
-    <div class="w-24 md:w-40 rounded-xl overflow-hidden">
-      <img :src="imageUrl" alt="recipe image" class="h-full object-cover object-center">
-    </div>
-    <div class="p-4 grow">
-      <h1 class="font-semibold tracking-tight text-2xl text-gray-700">
-        {{recipeName}}
-      </h1>
-      <ServingsSlider
-        :defaultNumServings="defaultNumServings"
-        v-model="numServings"
-      />
-      <div class="flex gap-2">
-        <RoundedButton type="primary">
-          <span class="icon-md">remove_shopping_cart</span>
-          <span>Entfernen</span>
-        </RoundedButton>
-        <RoundedButton type="secondary" @click="$router.push('/recipe/')">
-          <span class="icon-md">info</span>
-          <span>Rezept</span>
-        </RoundedButton>
+  <RoundedCard>
+    <div class="flex">
+      <button
+        @click="$router.push('/recipe/')"
+        class="w-1/4 md:w-1/3 rounded-l-xl overflow-hidden"
+      >
+        <img :src="imageUrl" alt="recipe image" class="h-full object-cover object-center">
+      </button>
+      <div class="inline-block p-2 md:p-4 w-3/4 md:w-2/3  overflow-hidden">
+        <h1 class="font-semibold text-xl md:text-2xl text-gray-700 truncate">
+          {{recipeName}}
+        </h1>
+        <ServingsSlider
+          :defaultNumServings="defaultNumServings"
+          v-model="numServings"
+        />
+        <div class="flex justify-end">
+          <RoundedButton type="flat">
+            <template v-slot:icon>remove_shopping_cart</template>
+            <template v-slot:default>Entfernen</template>
+          </RoundedButton>
+        </div>
       </div>
     </div>
   </RoundedCard>

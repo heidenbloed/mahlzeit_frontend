@@ -8,10 +8,11 @@
       class="fixed inset-0 bg-black opacity-30 z-2 transition-opacity duration-300"
     />
   </transition>
-  <div class="w-full col-span-1 lg:col-span-2 xl:col-span-3 relative">
+  <div class="z-10 w-full col-span-1 lg:col-span-2 xl:col-span-3 relative">
     <div
       ref="barCard"
-      class="absolute w-full"
+      class="w-full"
+      :class="showAutoCompleteList? 'absolute' : ''"
       @focusout="handleFocusOutEvent"
     >
       <RoundedCard
@@ -78,7 +79,7 @@
       </RoundedCard>
     </div>
     
-    <div :style="{height: `${heightOfBarClosedAutoCmpl}px`}"></div>
+    <div v-show="showAutoCompleteList" :style="{height: `${heightOfBarClosedAutoCmpl}px`}"></div>
   </div>
 </template>
 

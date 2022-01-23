@@ -41,21 +41,21 @@
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="primary">
-          <span class="icon-md">shopping_cart</span>
-          <span>Einkaufen</span>
+        <RoundedButton type="flat">
+          <template v-slot:icon>delete</template>
+          <template v-slot:default>Löschen</template>
         </RoundedButton>
-        <RoundedButton type="secondary">
-          <span class="icon-md">edit</span>
-          <span>Bearbeiten</span>
+        <RoundedButton type="flat">
+          <template v-slot:icon>edit</template>
+          <template v-slot:default>Bearbeiten</template>
         </RoundedButton>
-        <RoundedButton type="secondary">
-          <span class="icon-md">share</span>
-          <span>Teilen</span>
+        <RoundedButton type="flat">
+          <template v-slot:icon>share</template>
+          <template v-slot:default>Teilen</template>
         </RoundedButton>
-        <RoundedButton type="secondary">
-          <span class="icon-md">delete</span>
-          <span>Löschen</span>
+        <RoundedButton type="flat">
+          <template v-slot:icon>shopping_cart</template>
+          <template v-slot:default>Einkaufen</template>
         </RoundedButton>
       </section>
     </article>

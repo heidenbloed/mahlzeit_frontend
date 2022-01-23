@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      "sans": ["Rubik", "sans-serif"],
+      "button": ["Raleway", "sans-serif"],
+    }
   },
   plugins: [
     require("@tailwindcss/forms"),

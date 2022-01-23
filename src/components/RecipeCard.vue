@@ -1,26 +1,24 @@
 <template>
-  <RoundedCard>
-    <button class="appearance-none text-left"  @click="$router.push('/recipe/')">
-      <div class="rounded-xl overflow-hidden">
-        <img :src="recipeCardData.imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
-      </div>
-      <div class="p-4 flex flex-row items-center">
-        <div class="grow pr-4">
-          <h1 class="font-semibold tracking-tight text-2xl text-gray-700">
-            {{recipeCardData.name}}
-          </h1>
-          <div class="tracking-tight text-gray-700">
-            <RecipeDurationLabel :prepTime="recipeCardData.prepTime"/>
-          </div>
+  <RoundedCard class="flex flex-col">
+    <button
+      @click="$router.push('/recipe/')"
+      class="rounded-t-xl overflow-hidden relative"
+    >
+      <img :src="recipeCardData.imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
+      <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-transparent to-black/50"></div>
+      <div class="absolute bottom-2 left-3 text-white tracking-tight">
+        <div class="font-semibold text-2xl">
+          {{recipeCardData.name}}
         </div>
-        <div class="inline-flex flex-row gap-2">
-          <RoundedButton type="primary" @click.stop>
-            <span class="icon-md">shopping_cart</span>
-            <span>Einkaufen</span>
-          </RoundedButton>
-        </div>
+        <RecipeDurationLabel :prepTime="recipeCardData.prepTime"/>
       </div>
     </button>
+    <div class="p-2 flex justify-end">
+      <RoundedButton type="flat" @click.stop>
+        <template v-slot:icon>shopping_cart</template>
+        <template v-slot:default>Einkaufen</template>
+      </RoundedButton>
+    </div>
   </RoundedCard>
 </template>
 

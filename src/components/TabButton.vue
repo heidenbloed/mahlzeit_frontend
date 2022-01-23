@@ -1,13 +1,14 @@
 <template>
   <a :href="url" class="h-full">
-    <button class="px-6 h-full border-red-500 focus:outline-none focus:bg-white" :class="tabActive ? 'text-red-500 border-t-4 lg:border-b-4 lg:border-t-0' : 'text-neutral-600'">
-      <span class="lg:inline-flex flex-wrap gap-3 items-center">
-        <div v-if="iconName" class="icon-md">
-          {{iconName}}
-        </div>
-        <div>
-          <slot></slot>
-        </div>
+    <button
+      class="px-6 h-full flex flex-col md:flex-row gap-x-3 gap-y-2 justify-center place-items-center border-red-500 focus:outline-none focus:bg-white"
+      :class="tabActive ? 'text-red-500 border-t-4 md:border-b-4 md:border-t-0' : 'text-neutral-600'"
+    >
+      <span v-if="iconName" class="icon-md">
+        {{iconName}}
+      </span>
+      <span>
+        <slot></slot>
       </span>
     </button>
   </a>
