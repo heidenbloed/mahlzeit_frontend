@@ -1,6 +1,6 @@
 <template>
   <button
-    class="h-10 rounded-lg px-2 py-1 font-semibold inline-flex items-center justify-center"
+    class="h-10 rounded-lg px-2 font-semibold inline-flex items-center justify-center"
     :class="additionalButtonClasses"
   >
     <span class="icon-md">
