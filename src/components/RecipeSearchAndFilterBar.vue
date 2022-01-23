@@ -21,22 +21,23 @@
       >
         <section
           tabindex="0"
-          class="bg-stone-200 rounded-xl focus-within:ring-2 ring-red-500 px-2"
+          class="bg-stone-200 rounded-xl focus-within:ring-2 ring-red-500 px-0"
         >
-          <div class="flex flex-row items-center">
-            <span class="icon-md">search</span>
-            <input
-              type="search"
-              class="border-0 grow bg-transparent focus:ring-0"
-              v-model="searchString"
-              ref="searchInput"
-            />
-            <button class="icon-md">clear</button>
-          </div>
+          <RoundedInput
+            inputType="search"
+            noRing
+            v-model="searchString"
+            ref="searchInput"
+            clearable
+          >
+            <template #before>
+              <span class="icon-md">search</span>
+            </template>
+          </RoundedInput>
 
           <ul
             v-show="showAutoCompleteList"
-            class="p-2 grid grid-cols-1 auto-rows-fr items-center gap-2"
+            class="p-4 grid grid-cols-1 auto-rows-fr items-center gap-2"
           >
             <li v-for="autoCompleteOption in autoCompleteList">
               <button
@@ -85,7 +86,8 @@
 
 <script setup lang="ts">
 import RoundedCard from "@/components/RoundedCard.vue";
-import RecipeLabel from "@/components/RecipeLabel.vue"
+import RecipeLabel from "@/components/RecipeLabel.vue";
+import RoundedInput from "@/components/RoundedInput.vue"
 import { ref, computed, watchEffect, onMounted, nextTick } from "vue";
 
 type Label = {
@@ -102,7 +104,8 @@ type AutoCompleteLabelOption = {
 type AutoCompleteOption = AutoCompleteRecipeOption | AutoCompleteLabelOption;
 
 const searchString = ref("");
-const searchInput = ref<HTMLInputElement|null>(null);
+const searchInput = ref<InstanceType<typeof RoundedInput>>(
+);
 const showAutoCompleteList = ref(false);
 const labelFilterList = ref<Label[]>([]);
 const barCard = ref<HTMLElement|null>(null);
@@ -151,9 +154,7 @@ async function selectAutoCompleteOption(autoCompleteOption: AutoCompleteOption){
   } else {
     searchString.value = autoCompleteOption.proposal;
   }
-  if (searchInput.value instanceof HTMLInputElement){
-    searchInput.value.focus();
-  }
+  searchInput.value?.focusInput();
   if ((autoCompleteOption as AutoCompleteLabelOption).category !== undefined) {
     showAutoCompleteList.value = false;
     await nextTick();
