@@ -3,7 +3,7 @@
     <RoundedCard noWidthLimit class="w-full p-2 md:p-4 col-span-1 lg:col-span-2 xl:col-span-3">
       <div class="flex flex-col md:flex-row gap-1 md:gap-2 justify-center items-center">
         <span class="flex flex-wrap items-center justify-center gap-1 md:gap-2">
-          <ServingsSlider :defaultNumServings="4" class=""/>
+          <ServingsSlider :modelValue="4" class=""/>
           <RoundedButton type="flat">
             <template v-slot:icon>approval</template>
             <template v-slot:default>Für alle übernehmen</template>

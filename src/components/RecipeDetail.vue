@@ -20,7 +20,6 @@
 
       <SubSection title="Zutaten">
         <ServingsSlider
-          :defaultNumServings="recipeData.numServings"
           v-model="numServings"
         />
         <ul>

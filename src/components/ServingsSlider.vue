@@ -9,22 +9,25 @@
       max="15"
       class="grow block md:hidden accent-red-500"
     >
-    <input
-      type="number"
-      class="w-24 hidden md:block bg-stone-200 rounded-xl focus:ring-2 focus:ring-red-500 px-2 border-0"
-      v-model="numServings"
+    <RoundedInput
+      inputType="number"
+      class="w-20 hidden md:block"
+      v-model.number="numServings"
     />
+    {{numServings}}
   </div>
 </template>
 
 <script setup lang="ts">
+import RoundedInput from "@/components/RoundedInput.vue";
 import { ref, watchEffect } from "vue";
 
-const emit = defineEmits(["update:modelValue"]);
-const props = defineProps<{
-  defaultNumServings: number
-}>();
 
-const numServings = ref(props.defaultNumServings);
+const props = defineProps<{
+  modelValue: number
+}>();
+const emit = defineEmits(["update:modelValue"]);
+
+const numServings = ref(props.modelValue);
 watchEffect(() => emit("update:modelValue", numServings.value));
 </script>

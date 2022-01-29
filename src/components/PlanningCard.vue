@@ -12,7 +12,6 @@
           {{recipeName}}
         </h1>
         <ServingsSlider
-          :defaultNumServings="defaultNumServings"
           v-model="numServings"
         />
         <div class="flex justify-end">
