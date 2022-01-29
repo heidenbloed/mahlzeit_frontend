@@ -8,7 +8,7 @@
     </div>
   </header>
   <div class="h-16 mb-4 hidden md:block"></div>
-    <div class="container mx-auto">
+    <div class="container mx-auto scroll-mt-5">
       <slot name="content"></slot>
     </div>
   <div class="h-16 md:h-4 mt-2 md:mt-0"></div>
@@ -17,5 +17,11 @@
 <style scoped>
 .shadow-t-lg {
   box-shadow: 0 -10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+</style>
+
+<style>
+* {
+  @apply scroll-mb-16 md:scroll-mt-16;
 }
 </style>

@@ -22,7 +22,7 @@
     </swiper-slide>
     
     <div class="absolute top-0 left-0 h-full z-10 flex flex-col place-content-center">
-      <button class="slide-prev-btn cursor-pointer leading-none text-white bg-white/30 rounded-r-xl p-1 hidden md:block">
+      <button class="slide-prev-btn cursor-pointer leading-none text-red-500 bg-white/40 rounded-r-xl p-1 hidden md:block">
         <span class="icon-2xl">
           navigate_before
 
@@ -30,7 +30,7 @@
       </button>
     </div>
     <div class="absolute top-0 right-0 h-full z-10 flex flex-col place-content-center">
-      <button class="slide-next-btn z-10cursor-pointer right-0 leading-none text-white bg-white/30 rounded-l-xl p-1 hidden md:block">
+      <button class="slide-next-btn z-10cursor-pointer right-0 leading-none text-red-500 bg-white/40 rounded-l-xl p-1 hidden md:block">
         <span class="icon-2xl">
           navigate_next
         </span>

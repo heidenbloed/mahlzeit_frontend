@@ -1,7 +1,8 @@
 <template>
   <div
-    class="bg-stone-200 rounded-xl flex ring-red-500 px-2 items-center gap-2"
+    class="bg-stone-200 border-0 rounded-xl flex ring-red-500 py-0 px-2 items-center gap-2"
     :class="noRing? '' : 'focus-within:ring-2'"
+    ref="inputContainer"
   >
     <slot name="before"></slot>
     <div class="relative grow py-2" @click="focusInput">
@@ -13,9 +14,8 @@
       </div>
       <input
         :type="inputType"
-        class="w-full bg-transparent focus:ring-0 border-0 p-0"
-        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        v-model="inputStr"
+        class="w-full bg-transparent focus:ring-0 border-0 p-0 align-middle"
+        v-model="internalModelValue"
         ref="inputElement"
       >
     </div>
@@ -29,11 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref, defineEmits, watchEffect } from "vue";
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: [String, Number],
     default: "",
   },
   label: {
@@ -51,17 +51,29 @@ const props = defineProps({
   noRing: {
     type: Boolean,
     default: false,
-  }
+  },
 });
+const emit = defineEmits(['update:modelValue'])
 
 const inputElement = ref<HTMLInputElement>();
-const inputStr = ref<String>(props.modelValue);
+const inputContainer = ref<HTMLDivElement>();
+const internalModelValue = ref<String>("");
 
+
+watchEffect(() => {
+  internalModelValue.value = props.modelValue.toString();
+});
+watchEffect(() => {
+  inputContainer.value?.scrollIntoView({
+    block: "nearest"
+  });
+  emit('update:modelValue', internalModelValue.value);
+});
 function focusInput(){
   inputElement.value?.focus();
 }
 function clearInput(){
-  inputStr.value = "";
+  internalModelValue.value = "";
   focusInput();
 }
 
