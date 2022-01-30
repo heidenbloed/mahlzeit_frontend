@@ -1,93 +1,65 @@
 <template>
-  <transition
-    enterFromClass="opacity-0"
-    leaveToClass="opacity-0"
-  >
-    <div
-      v-show="showAutoCompleteList"
-      class="fixed inset-0 bg-black opacity-30 z-20 transition-opacity duration-300"
-    />
-  </transition>
-  <div class="w-full col-span-1 lg:col-span-2 xl:col-span-3 relative">
-    <div
-      ref="barCard"
-      class="w-full"
-      :class="showAutoCompleteList? 'absolute z-30' : ''"
-      @focusout="handleFocusOutEvent"
+  <div class="w-full col-span-1 lg:col-span-2 xl:col-span-3">
+    <RoundedCard
+      noWidthLimit
+      class="p-4 flex flex-col gap-4"
     >
-      <RoundedCard
-        noWidthLimit
-        class="p-4 flex flex-col gap-4"
+      <AutoCompleteInput
+        v-model="searchString"
+        :autoCompleteList="autoCompleteList"
+        @on-auto-complete-option-selected="selectAutoCompleteOption"
+        clearable
       >
-        <section
-          tabindex="0"
-          class="bg-stone-200 rounded-xl focus-within:ring-2 ring-red-500 px-0"
-        >
-          <RoundedInput
-            inputType="search"
-            noRing
-            v-model="searchString"
-            ref="searchInput"
-            clearable
-          >
-            <template #before>
-              <span class="icon-md">search</span>
-            </template>
-          </RoundedInput>
-
-          <ul
-            v-show="showAutoCompleteList"
-            class="p-4 grid grid-cols-1 auto-rows-fr items-center gap-2"
-          >
-            <li v-for="autoCompleteOption in autoCompleteList">
-              <button
-                class="w-full text-left"
-                @click="selectAutoCompleteOption(autoCompleteOption)"
-              >
-                <RecipeLabel
-                  v-if="autoCompleteOption.category !== undefined"
-                  :name="autoCompleteOption.proposal"
-                  :category="autoCompleteOption.category"
-                />
-                <span v-else>
-                  {{autoCompleteOption.proposal}}
-                </span>
-              </button>
-            </li>
-          </ul>
-        </section>
-
-        <section
-          v-show="labelFilterList.length > 0"
-          class="bg-stone-200 rounded-xl p-2 flex gap-2 items-center"
-        >
-          <span class="icon-md">filter_alt</span>
-          <ul
-            class="inline-flex grow flex-row flex-wrap gap-2"
-          >
-            <li
-              v-for="label in labelFilterList"
-            >
+        <template #beforeInput>
+          <span class="icon-md">search</span>
+        </template>
+        <template #autoCompleteOption="searchOption">
+          <div class="flex items-center gap-2">
+            <template v-if="searchOption.option.category !== undefined">
+              <span class="icon-md">label</span>
               <RecipeLabel
-                :name="label.name"
-                :category="label.category"
-                closeable
+                :name="searchOption.option.proposal"
+                :category="searchOption.option.category"
               />
-            </li>
-          </ul>
-          <button class="icon-md">clear</button>
-        </section>
-      </RoundedCard>
-    </div>
-    
-    <div v-show="showAutoCompleteList" :style="{height: `${heightOfBarClosedAutoCmpl}px`}"></div>
+            </template>
+            <template v-else>
+              <span class="icon-md">dinner_dining</span>
+              <span>
+                {{searchOption.option.proposal}}
+              </span>
+            </template>
+          </div>
+        </template>
+      </AutoCompleteInput>
+
+      <div
+        v-show="labelFilterList.length > 0"
+        class="bg-stone-200 rounded-xl p-2 flex gap-2 items-center"
+      >
+        <span class="icon-md">filter_alt</span>
+        <ul
+          class="inline-flex grow flex-row flex-wrap gap-2"
+        >
+          <li
+            v-for="label in labelFilterList"
+          >
+            <RecipeLabel
+              :name="label.name"
+              :category="label.category"
+              closeable
+            />
+          </li>
+        </ul>
+        <button class="icon-md">clear</button>
+      </div>
+    </RoundedCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import RoundedCard from "@/components/RoundedCard.vue";
 import RecipeLabel from "@/components/RecipeLabel.vue";
-import RoundedInput from "@/components/RoundedInput.vue"
+import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
 import { ref, computed, watchEffect, onMounted, nextTick } from "vue";
 
 type Label = {
@@ -104,27 +76,7 @@ type AutoCompleteLabelOption = {
 type AutoCompleteOption = AutoCompleteRecipeOption | AutoCompleteLabelOption;
 
 const searchString = ref("");
-const searchInput = ref<InstanceType<typeof RoundedInput>>(
-);
-const showAutoCompleteList = ref(false);
 const labelFilterList = ref<Label[]>([]);
-const barCard = ref<HTMLElement|null>(null);
-const heightOfBarClosedAutoCmpl = ref(0);
-
-function updateHeightOfBar() {
-  if (barCard.value instanceof HTMLElement){
-    heightOfBarClosedAutoCmpl.value = (barCard.value as HTMLElement).clientHeight;
-  }
-}
-onMounted(updateHeightOfBar);
-
-watchEffect(() => {
-  if(searchString.value.length > 0){
-    showAutoCompleteList.value = true;
-  } else {
-    showAutoCompleteList.value = false;
-  }
-})
 
 const autoCompleteList = computed(() => [
   {
@@ -153,24 +105,9 @@ async function selectAutoCompleteOption(autoCompleteOption: AutoCompleteOption){
     searchString.value = "";
   } else {
     searchString.value = autoCompleteOption.proposal;
-  }
-  searchInput.value?.focusInput();
-  if ((autoCompleteOption as AutoCompleteLabelOption).category !== undefined) {
-    showAutoCompleteList.value = false;
-    await nextTick();
-    updateHeightOfBar();
-  } else {
-    await nextTick();
-    showAutoCompleteList.value = false;
-  }
-}
-
-function handleFocusOutEvent(event: FocusEvent){
-  if(event.relatedTarget instanceof Node && barCard.value?.contains(event.relatedTarget)) {
-    console.debug("Focus lost to child.");
-  } else {
-    console.debug("Focus lost to other component.");
-    showAutoCompleteList.value = false;
+    if (document.activeElement !== undefined && typeof (document.activeElement as HTMLInputElement).blur == "function") {
+      (document.activeElement as HTMLInputElement).blur();
+    }
   }
 }
 </script>
