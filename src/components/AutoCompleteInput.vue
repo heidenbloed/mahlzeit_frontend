@@ -10,7 +10,6 @@
     <RoundedInput
       v-model="internalModelValue"
       :inputType="inputType"
-      class="static"
       noRing
       :clearable="clearable"
     >
@@ -21,7 +20,7 @@
 
     <ul
       v-show="showAutoCompleteList"
-      class="w-full bg-stone-200  ring-2 ring-red-500 p-2 grid grid-cols-1items-center gap-2 absolute z-30 top-auto"
+      class="w-full bg-stone-200  ring-2 ring-red-500 p-2 grid grid-cols-1items-center gap-2 absolute top-auto z-10"
       :class="openListUpwards ? 'bottom-full rounded-t-xl' : 'rounded-b-xl'"
     >
       <li v-for="autoCompleteOption in autoCompleteList" class="items-center">

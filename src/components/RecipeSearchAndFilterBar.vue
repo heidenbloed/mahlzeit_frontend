@@ -5,14 +5,14 @@
   >
     <div
       v-show="showAutoCompleteList"
-      class="fixed inset-0 bg-black opacity-30 z-2 transition-opacity duration-300"
+      class="fixed inset-0 bg-black opacity-30 z-20 transition-opacity duration-300"
     />
   </transition>
-  <div class="z-10 w-full col-span-1 lg:col-span-2 xl:col-span-3 relative">
+  <div class="w-full col-span-1 lg:col-span-2 xl:col-span-3 relative">
     <div
       ref="barCard"
       class="w-full"
-      :class="showAutoCompleteList? 'absolute' : ''"
+      :class="showAutoCompleteList? 'absolute z-30' : ''"
       @focusout="handleFocusOutEvent"
     >
       <RoundedCard
