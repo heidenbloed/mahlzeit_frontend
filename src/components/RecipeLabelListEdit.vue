@@ -15,7 +15,7 @@
       clearable
     >
       <template #beforeInput>
-        <span class="icon-md">add</span>
+        <span class="icon-md">add_circle_outline</span>
       </template>
       <template #autoCompleteOption="labelOption">
         <div class="flex items-center gap-2">
