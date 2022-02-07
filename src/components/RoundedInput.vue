@@ -7,7 +7,7 @@
     <slot name="before"></slot>
     <div class="relative grow py-2" @click="focusInput">
       <div
-        v-show="label.length > 0"
+        v-if="label.length > 0"
         class="text-stone-500 text-sm"
       >
         {{label}}
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 
 const props = defineProps({
   modelValue: {

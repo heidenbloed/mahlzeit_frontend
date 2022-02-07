@@ -1,31 +1,38 @@
 <template>
-  <div
-    tabindex="0"
-    class="bg-stone-200 focus-within:ring-2 ring-red-500 px-0 relative"
-    :class="dynamicInputContainerClasses"
-    ref="inputContainer"
-    @focusin="focusInside = true"
-    @focusout="handleFocusOutEvent"
+  <!-- <transition
+    enterFromClass="opacity-0"
+    leaveToClass="opacity-0"
   >
-    <RoundedInput
-      v-model="internalModelValue"
-      :inputType="inputType"
-      noRing
-      :clearable="clearable"
-    >
-      <template #before>
-        <slot name="beforeInput"></slot>
-      </template>
-    </RoundedInput>
-
-    <ul
+    <div
       v-show="showAutoCompleteList"
-      class="w-full bg-stone-200  ring-2 ring-red-500 p-2 grid grid-cols-1items-center gap-2 absolute top-auto z-10"
-      :class="openListUpwards ? 'bottom-full rounded-t-xl' : 'rounded-b-xl'"
-    >
-      <li v-for="autoCompleteOption in autoCompleteList" class="items-center">
+      class="fixed inset-0 bg-black opacity-30 z-20 transition-opacity duration-300"
+    />
+  </transition> -->
+
+  <RoundedDropdown
+    v-model:showDropdown="showAutoCompleteList"
+  >
+    <template #input>
+      <RoundedInput
+        v-model="internalModelValue"
+        :inputType="inputType"
+        :label="label"
+        :clearable="clearable"
+        class="h-full"
+        noRing
+      >
+        <template #before>
+          <slot name="beforeInput"></slot>
+        </template>
+      </RoundedInput>
+    </template>
+
+    <template #dropdown>
+      <li
+        v-for="autoCompleteOption in autoCompleteList" class="items-center"
+      >
         <button
-          class="w-full h-full text-left break-words"
+          class="w-full h-10 text-left break-words"
           @click="onAutoCompleteOptionSelected(autoCompleteOption)"
         >
           <slot
@@ -36,17 +43,22 @@
           </slot>
         </button>
       </li>
-    </ul>
-  </div>
+    </template>
+  </RoundedDropdown>
 </template>
 
 <script setup lang="ts">
 import RoundedInput from "@/components/RoundedInput.vue"
+import RoundedDropdown from "@/components/RoundedDropdown.vue";
 import { ref, watchEffect, PropType, computed } from "vue";
 
 const props = defineProps({
   modelValue: {
     type: [String, Number],
+    default: "",
+  },
+  label: {
+    type: String,
     default: "",
   },
   inputType: {
@@ -66,28 +78,9 @@ const emit = defineEmits(["update:modelValue", "onAutoCompleteOptionSelected"]);
 
 const internalModelValue = ref<string>("");
 const showAutoCompleteList = ref(false);
-const openListUpwards = ref(true);
-const inputContainer = ref<HTMLDivElement>();
-const focusInside = ref(false);
-
-const dynamicInputContainerClasses = computed(() => {
-  if (showAutoCompleteList.value) {
-    if (openListUpwards.value) {
-      return "rounded-b-xl";
-    } else {
-      return "rounded-t-xl";
-    }
-  } else {
-    return "rounded-xl";
-  }
-});
 
 watchEffect(() => {
-  if(internalModelValue.value?.length > 0 && focusInside.value && props.autoCompleteList.length > 0){
-    showAutoCompleteList.value = true;
-  } else {
-    showAutoCompleteList.value = false;
-  }
+  showAutoCompleteList.value = internalModelValue.value?.length > 0 && props.autoCompleteList.length > 0;
 });
 watchEffect(() => {
   internalModelValue.value = props.modelValue.toString();
@@ -95,20 +88,9 @@ watchEffect(() => {
 watchEffect(() => {
   emit("update:modelValue", internalModelValue.value);
 });
-watchEffect(() => {
-  if (showAutoCompleteList.value && inputContainer.value !== undefined) {
-    const topOffset = inputContainer.value.offsetTop - window.scrollY;
-    openListUpwards.value = topOffset > window.screen.height / 2;
-  }
-});
 
 function onAutoCompleteOptionSelected(autoCompleteOption: String){
   showAutoCompleteList.value = false;
   emit("onAutoCompleteOptionSelected", autoCompleteOption);
-};
-function handleFocusOutEvent(event: FocusEvent){
-  if(!(event.relatedTarget instanceof Node) || !(inputContainer.value?.contains(event.relatedTarget))) {
-    focusInside.value = false;
-  }
 };
 </script>
