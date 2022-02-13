@@ -1,7 +1,7 @@
 <template>
-  <section class="p-2 bg-stone-100 rounded-xl">
-    <h2 class="font-semibold text-lg mb-2">
-      {{title}}
+  <section class="rounded-xl bg-stone-100 p-2">
+    <h2 class="mb-2 text-lg font-semibold">
+      {{ title }}
     </h2>
     <slot></slot>
   </section>
@@ -9,6 +9,6 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  title: string,
+  title: string;
 }>();
 </script>

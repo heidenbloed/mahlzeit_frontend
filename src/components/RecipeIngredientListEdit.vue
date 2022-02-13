@@ -1,5 +1,7 @@
 <template>
   <div class="mb-2 flex flex-col gap-2">
+    <ServingsSlider v-model="_numServings" />
+
     <div
       v-for="(ingredient, ingredientIdx) in ingredientList"
       class="flex flex-row gap-2"
@@ -43,6 +45,7 @@
 
 <script setup lang="ts">
 import RecipeIngredientEdit from "@/components/RecipeIngredientEdit.vue";
+import ServingsSlider from "@/components/ServingsSlider.vue";
 import { reactive, watchEffect, ref } from "vue";
 
 interface IngredientUnit {
@@ -69,8 +72,9 @@ interface RecipeIngredient {
 
 const props = defineProps<{
   modelValue: RecipeIngredient[];
+  numServings: number;
 }>();
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "update:numServings"]);
 
 const ingredientList = reactive(props.modelValue);
 const ingredientEdit = reactive(
@@ -79,6 +83,7 @@ const ingredientEdit = reactive(
     return map;
   }, new Map())
 );
+const _numServings = ref(props.numServings);
 
 function addNewEmptyIngredient() {
   ingredientList.push({
@@ -97,5 +102,8 @@ function addNewEmptyIngredient() {
 
 watchEffect(() => {
   emit("update:modelValue", ingredientList.values);
+});
+watchEffect(() => {
+  emit("update:numServings", _numServings.value);
 });
 </script>

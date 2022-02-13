@@ -1,20 +1,19 @@
 <template>
-  <div class="flex gap-4 my-2 w-full md:w-auto items-center">
+  <div class="my-2 flex w-full items-center gap-4 md:w-auto">
     <span class="icon-md">people</span>
-    <span class="block md:hidden w-4">{{numServings}}</span>
-    <input 
+    <span class="block w-4 md:hidden">{{ numServings }}</span>
+    <input
       type="range"
       v-model.number="numServings"
       min="1"
       max="15"
-      class="grow block md:hidden accent-red-500"
-    >
+      class="block grow accent-red-500 md:hidden"
+    />
     <RoundedInput
       inputType="number"
-      class="w-20 hidden md:block"
+      class="hidden w-20 md:block"
       v-model.number="numServings"
     />
-    {{numServings}}
   </div>
 </template>
 
@@ -22,9 +21,8 @@
 import RoundedInput from "@/components/RoundedInput.vue";
 import { ref, watchEffect } from "vue";
 
-
 const props = defineProps<{
-  modelValue: number
+  modelValue: number;
 }>();
 const emit = defineEmits(["update:modelValue"]);
 

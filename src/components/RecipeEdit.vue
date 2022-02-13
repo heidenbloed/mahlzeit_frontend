@@ -23,7 +23,10 @@
       </section>
 
       <SubSection title="Zutaten">
-        <RecipeIngredientListEdit v-model="currentRecipeData.ingredientList" />
+        <RecipeIngredientListEdit
+          v-model="currentRecipeData.ingredientList"
+          v-model:numServings="currentRecipeData.numServings"
+        />
       </SubSection>
 
       <SubSection title="Schlagwörter">
