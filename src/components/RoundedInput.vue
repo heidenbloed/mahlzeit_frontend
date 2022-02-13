@@ -1,29 +1,22 @@
 <template>
   <div
-    class="bg-stone-200 border-0 rounded-xl flex ring-red-500 py-0 px-2 items-center gap-2"
-    :class="noRing? '' : 'focus-within:ring-2'"
+    class="flex items-center gap-2 rounded-xl border-0 bg-stone-200 py-0 px-2 ring-red-500"
+    :class="noRing ? '' : 'focus-within:ring-2'"
     ref="inputContainer"
   >
     <slot name="before"></slot>
     <div class="relative grow py-2" @click="focusInput">
-      <div
-        v-if="label.length > 0"
-        class="text-stone-500 text-sm"
-      >
-        {{label}}
+      <div v-if="label.length > 0" class="text-sm text-stone-500">
+        {{ label }}
       </div>
       <input
         :type="inputType"
-        class="w-full bg-transparent focus:ring-0 border-0 p-0 align-middle"
+        class="w-full border-0 bg-transparent p-0 align-middle focus:ring-0"
         v-model="internalModelValue"
         ref="inputElement"
-      >
+      />
     </div>
-    <button
-      v-if="clearable"
-      class="icon-md"
-      @click="clearInput"
-    >clear</button>
+    <button v-if="clearable" class="icon-md" @click="clearInput">clear</button>
     <slot name="after"></slot>
   </div>
 </template>
@@ -53,29 +46,28 @@ const props = defineProps({
     default: false,
   },
 });
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"]);
 
 const inputElement = ref<HTMLInputElement>();
 const inputContainer = ref<HTMLDivElement>();
 const internalModelValue = ref<String>("");
-
 
 watchEffect(() => {
   internalModelValue.value = props.modelValue.toString();
 });
 watchEffect(() => {
   inputContainer.value?.scrollIntoView({
-    block: "nearest"
+    block: "nearest",
   });
-  emit('update:modelValue', internalModelValue.value);
+  emit("update:modelValue", internalModelValue.value);
 });
-function focusInput(){
+function focusInput() {
   inputElement.value?.focus();
 }
-function clearInput(){
+function clearInput() {
   internalModelValue.value = "";
   focusInput();
 }
 
-defineExpose({focusInput});
+defineExpose({ focusInput });
 </script>

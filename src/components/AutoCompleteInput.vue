@@ -9,9 +9,7 @@
     />
   </transition> -->
 
-  <RoundedDropdown
-    v-model:showDropdown="showAutoCompleteList"
-  >
+  <RoundedDropdown :showDropdown="showAutoCompleteList">
     <template #input>
       <RoundedInput
         v-model="internalModelValue"
@@ -20,6 +18,7 @@
         :clearable="clearable"
         class="h-full"
         noRing
+        @input="showAutoCompleteList = autoCompleteList.length > 0"
       >
         <template #before>
           <slot name="beforeInput"></slot>
@@ -28,18 +27,13 @@
     </template>
 
     <template #dropdown>
-      <li
-        v-for="autoCompleteOption in autoCompleteList" class="items-center"
-      >
+      <li v-for="autoCompleteOption in autoCompleteList" class="items-center">
         <button
-          class="w-full h-10 text-left break-words"
+          class="h-10 w-full break-words text-left"
           @click="onAutoCompleteOptionSelected(autoCompleteOption)"
         >
-          <slot
-            name="autoCompleteOption"
-            :option="autoCompleteOption"
-          >
-            <span>{{autoCompleteOption}}</span>
+          <slot name="autoCompleteOption" :option="autoCompleteOption">
+            <span>{{ autoCompleteOption }}</span>
           </slot>
         </button>
       </li>
@@ -48,9 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import RoundedInput from "@/components/RoundedInput.vue"
+import RoundedInput from "@/components/RoundedInput.vue";
 import RoundedDropdown from "@/components/RoundedDropdown.vue";
-import { ref, watchEffect, PropType, computed } from "vue";
+import { ref, watchEffect, PropType } from "vue";
 
 const props = defineProps({
   modelValue: {
@@ -71,8 +65,8 @@ const props = defineProps({
   },
   autoCompleteList: {
     type: Array as PropType<string[]>,
-    required: true
-  }
+    required: true,
+  },
 });
 const emit = defineEmits(["update:modelValue", "onAutoCompleteOptionSelected"]);
 
@@ -80,17 +74,14 @@ const internalModelValue = ref<string>("");
 const showAutoCompleteList = ref(false);
 
 watchEffect(() => {
-  showAutoCompleteList.value = internalModelValue.value?.length > 0 && props.autoCompleteList.length > 0;
-});
-watchEffect(() => {
   internalModelValue.value = props.modelValue.toString();
 });
 watchEffect(() => {
   emit("update:modelValue", internalModelValue.value);
 });
 
-function onAutoCompleteOptionSelected(autoCompleteOption: String){
+function onAutoCompleteOptionSelected(autoCompleteOption: String) {
   showAutoCompleteList.value = false;
   emit("onAutoCompleteOptionSelected", autoCompleteOption);
-};
+}
 </script>
