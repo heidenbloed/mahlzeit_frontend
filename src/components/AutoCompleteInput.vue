@@ -12,7 +12,7 @@
   <RoundedDropdown :showDropdown="showAutoCompleteList">
     <template #input>
       <RoundedInput
-        v-model="internalModelValue"
+        v-model="_modelValue"
         :inputType="inputType"
         :label="label"
         :clearable="clearable"
@@ -70,14 +70,14 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue", "onAutoCompleteOptionSelected"]);
 
-const internalModelValue = ref<string>("");
+const _modelValue = ref<string>("");
 const showAutoCompleteList = ref(false);
 
 watchEffect(() => {
-  internalModelValue.value = props.modelValue.toString();
+  _modelValue.value = props.modelValue.toString();
 });
 watchEffect(() => {
-  emit("update:modelValue", internalModelValue.value);
+  emit("update:modelValue", _modelValue.value);
 });
 
 function onAutoCompleteOptionSelected(autoCompleteOption: String) {

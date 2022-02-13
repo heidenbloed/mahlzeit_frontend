@@ -1,5 +1,5 @@
 <template>
-  <Listbox v-model="internalModelValue" v-slot="{ open }">
+  <Listbox v-model="_modelValue" v-slot="{ open }">
     <RoundedDropdown :showDropdown="open">
       <template #input>
         <ListboxButton class="flex w-full flex-row items-center gap-2 p-2">
@@ -10,7 +10,7 @@
             >
               {{ label }}
             </ListboxLabel>
-            <span>{{ internalModelValue.name }}</span>
+            <span>{{ _modelValue.name }}</span>
           </div>
 
           <span class="icon-md">keyboard_arrow_down</span>
@@ -31,7 +31,7 @@
                 <span
                   class="icon-md"
                   :class="
-                    internalModelValue.id === option.id
+                    _modelValue.id === option.id
                       ? 'visible'
                       : 'invisible'
                   "
@@ -82,12 +82,12 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue"]);
 
-const internalModelValue = ref<SelectOption>(props.modelValue);
+const _modelValue = ref<SelectOption>(props.modelValue);
 
 watchEffect(() => {
-  internalModelValue.value = props.modelValue;
+  _modelValue.value = props.modelValue;
 });
 watchEffect(() => {
-  emit("update:modelValue", internalModelValue.value);
+  emit("update:modelValue", _modelValue.value);
 });
 </script>

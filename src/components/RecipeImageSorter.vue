@@ -1,19 +1,19 @@
 <template>
-  <draggable 
+  <draggable
     v-model="sortedImages"
     item-key="id"
     direction="horizontal"
     tag="div"
-    class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 auto-rows-fr gap-1"
-    fallbackTolerance=3
+    class="grid auto-rows-fr grid-cols-3 gap-1 md:grid-cols-4 lg:grid-cols-5"
+    fallbackTolerance="3"
     :delay="isTouchDevice() ? 200 : 10"
     chosenClass="border-2"
-    @choose="drag=true"
-    @end="drag=false"
+    @choose="drag = true"
+    @end="drag = false"
   >
-    <template #item="{element}">
+    <template #item="{ element }">
       <div
-        class="w-full rounded-xl overflow-hidden relative cursor-grab border-red-500"
+        class="relative w-full cursor-grab overflow-hidden rounded-xl border-red-500"
         :key="element.id"
       >
         <img
@@ -24,11 +24,9 @@
         />
         <div
           v-show="!drag"
-          class="absolute right-0 top-0 bg-white/70 rounded-bl-xl"
+          class="absolute right-0 top-0 rounded-bl-xl bg-white/70"
         >
-          <RoundedButton
-            type="flat"
-          >
+          <RoundedButton type="flat">
             <template #icon>remove_circle_outline</template>
           </RoundedButton>
         </div>
@@ -36,10 +34,7 @@
     </template>
 
     <template #footer>
-      <RoundedButton
-        class="w-full min-h-full"
-        type="raised"
-      >
+      <RoundedButton class="min-h-full w-full" type="raised">
         <template #icon>add_circle_outline</template>
       </RoundedButton>
     </template>
@@ -47,25 +42,29 @@
 </template>
 
 <script setup lang="ts">
-import RoundedButton from "@/components/RoundedButton.vue"
-import draggable from 'vuedraggable';
+import RoundedButton from "@/components/RoundedButton.vue";
+import draggable from "vuedraggable";
 import { ref } from "vue";
 
 interface RecipeImage {
   id: number;
   url: String;
   order: number;
-};
+}
 
 const props = defineProps<{
-  images: [RecipeImage]
+  images: [RecipeImage];
 }>();
 
 const drag = ref(false);
 
-const sortedImages = ref([...props.images].sort((elemA, elemB) => {return elemA.order - elemB.order }));
+const sortedImages = ref(
+  [...props.images].sort((elemA, elemB) => {
+    return elemA.order - elemB.order;
+  })
+);
 
 function isTouchDevice() {
-  return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 }
 </script>

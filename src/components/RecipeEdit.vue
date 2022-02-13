@@ -1,5 +1,5 @@
 <template>
-  <main class="mx-auto max-w-4xl rounded-xl bg-white">
+  <main class="mx-auto max-w-4xl rounded-b-xl bg-white md:rounded-t-xl">
     <article
       class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
     >

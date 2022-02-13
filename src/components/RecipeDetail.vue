@@ -1,30 +1,30 @@
 <template>
-  <main class="max-w-4xl mx-auto bg-white rounded-xl">
-    <div class="max-w-4xl mx-auto">
-      <RecipeImageSlides :imageUrls="recipeData.imageUrls"/>
+  <main class="mx-auto max-w-4xl rounded-xl bg-white">
+    <div class="mx-auto max-w-4xl">
+      <RecipeImageSlides :imageUrls="recipeData.imageUrls" />
     </div>
-    
 
-    <article class="p-4 font-sans tracking-tight text-gray-700 flex flex-col gap-4">
+    <article
+      class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
+    >
       <section>
-        <h1 class="font-semibold text-2xl mb-1">
-          {{recipeData.name}}
+        <h1 class="mb-1 text-2xl font-semibold">
+          {{ recipeData.name }}
         </h1>
         <p>
-          <RecipeDurationLabel :prepTime="recipeData.prepTime"/>
+          <RecipeDurationLabel :prepTime="recipeData.prepTime" />
         </p>
         <p>
-          {{recipeData.source}}
+          {{ recipeData.source }}
         </p>
       </section>
 
       <SubSection title="Zutaten">
-        <ServingsSlider
-          v-model="numServings"
-        />
+        <ServingsSlider v-model="numServings" />
         <ul>
           <li v-for="ingredient in recipeData.ingredients">
-            {{scaleServings(ingredient.quantity)}} {{ingredient.unit}} {{ingredient.name}}
+            {{ scaleServings(ingredient.quantity) }} {{ ingredient.unit }}
+            {{ ingredient.name }}
           </li>
         </ul>
       </SubSection>
@@ -67,7 +67,7 @@ import ServingsSlider from "@/components/ServingsSlider.vue";
 import RecipeLabel from "@/components/RecipeLabel.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
-import SubSection from '@/components/SubSection.vue';
+import SubSection from "@/components/SubSection.vue";
 import { computed, ref } from "vue";
 
 interface Ingredient {
@@ -88,16 +88,17 @@ interface RecipeData {
   numServings: number;
   ingredients: [Ingredient];
   labels: [Label];
-  imageUrls: [string]
+  imageUrls: [string];
 }
 
 const props = defineProps<{
-  recipeData: RecipeData
+  recipeData: RecipeData;
 }>();
 
 const numServings = ref(props.recipeData.numServings);
 function scaleServings(quantity: number) {
-  let scaledQunatity = numServings.value * quantity / props.recipeData.numServings;
+  let scaledQunatity =
+    (numServings.value * quantity) / props.recipeData.numServings;
   scaledQunatity = Math.round(scaledQunatity * 10) / 10;
   return scaledQunatity;
 }

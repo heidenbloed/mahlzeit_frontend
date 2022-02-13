@@ -1,9 +1,6 @@
 <template>
-  <div class="w-full col-span-1 lg:col-span-2 xl:col-span-3">
-    <RoundedCard
-      noWidthLimit
-      class="p-4 flex flex-col gap-4"
-    >
+  <div class="col-span-1 w-full lg:col-span-2 xl:col-span-3">
+    <RoundedCard noWidthLimit class="flex flex-col gap-4 p-4">
       <AutoCompleteInput
         v-model="searchString"
         :autoCompleteList="autoCompleteList"
@@ -25,7 +22,7 @@
             <template v-else>
               <span class="icon-md">dinner_dining</span>
               <span>
-                {{searchOption.option.proposal}}
+                {{ searchOption.option.proposal }}
               </span>
             </template>
           </div>
@@ -34,15 +31,11 @@
 
       <div
         v-show="labelFilterList.length > 0"
-        class="bg-stone-200 rounded-xl p-2 flex gap-2 items-center"
+        class="flex items-center gap-2 rounded-xl bg-stone-200 p-2"
       >
         <span class="icon-md">filter_alt</span>
-        <ul
-          class="inline-flex grow flex-row flex-wrap gap-2"
-        >
-          <li
-            v-for="label in labelFilterList"
-          >
+        <ul class="inline-flex grow flex-row flex-wrap gap-2">
+          <li v-for="label in labelFilterList">
             <RecipeLabel
               :name="label.name"
               :category="label.category"
@@ -63,16 +56,16 @@ import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
 import { ref, computed, watchEffect, onMounted, nextTick } from "vue";
 
 type Label = {
-  name: string
-  category: string
-}
+  name: string;
+  category: string;
+};
 type AutoCompleteRecipeOption = {
-  proposal: string
-}
+  proposal: string;
+};
 type AutoCompleteLabelOption = {
-  proposal: string
-  category: string
-}
+  proposal: string;
+  category: string;
+};
 type AutoCompleteOption = AutoCompleteRecipeOption | AutoCompleteLabelOption;
 
 const searchString = ref("");
@@ -81,31 +74,36 @@ const labelFilterList = ref<Label[]>([]);
 const autoCompleteList = computed(() => [
   {
     proposal: "Einfach",
-    category: "complexity"
+    category: "complexity",
   },
   {
     proposal: "Vegan",
-    category: "diet"
+    category: "diet",
   },
   {
     proposal: "Indisch",
-    category: "cusine"
+    category: "cusine",
   },
   {
     proposal: searchString.value + " recipe proposal",
   },
 ]);
 
-async function selectAutoCompleteOption(autoCompleteOption: AutoCompleteOption){
+async function selectAutoCompleteOption(
+  autoCompleteOption: AutoCompleteOption
+) {
   if ((autoCompleteOption as AutoCompleteLabelOption).category !== undefined) {
     labelFilterList.value.push({
       name: autoCompleteOption.proposal,
       category: (autoCompleteOption as AutoCompleteLabelOption).category,
-    })
+    });
     searchString.value = "";
   } else {
     searchString.value = autoCompleteOption.proposal;
-    if (document.activeElement !== undefined && typeof (document.activeElement as HTMLInputElement).blur == "function") {
+    if (
+      document.activeElement !== undefined &&
+      typeof (document.activeElement as HTMLInputElement).blur == "function"
+    ) {
       (document.activeElement as HTMLInputElement).blur();
     }
   }

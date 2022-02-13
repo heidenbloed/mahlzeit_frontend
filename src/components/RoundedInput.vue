@@ -12,7 +12,7 @@
       <input
         :type="inputType"
         class="w-full appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
-        v-model="internalModelValue"
+        v-model="_modelValue"
         ref="inputElement"
       />
     </div>
@@ -50,22 +50,22 @@ const emit = defineEmits(["update:modelValue"]);
 
 const inputElement = ref<HTMLInputElement>();
 const inputContainer = ref<HTMLDivElement>();
-const internalModelValue = ref<String>("");
+const _modelValue = ref<String>("");
 
 watchEffect(() => {
-  internalModelValue.value = props.modelValue.toString();
+  _modelValue.value = props.modelValue.toString();
 });
 watchEffect(() => {
   inputContainer.value?.scrollIntoView({
     block: "nearest",
   });
-  emit("update:modelValue", internalModelValue.value);
+  emit("update:modelValue", _modelValue.value);
 });
 function focusInput() {
   inputElement.value?.focus();
 }
 function clearInput() {
-  internalModelValue.value = "";
+  _modelValue.value = "";
   focusInput();
 }
 

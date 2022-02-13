@@ -10,7 +10,7 @@
     <slot name="input"></slot>
 
     <ul
-      v-show="showDropdownInternal"
+      v-show="_showDropdown"
       class="absolute z-10 w-full bg-stone-200 p-2 ring-2 ring-red-500"
       :class="openListUpwards ? 'bottom-full rounded-t-xl' : 'rounded-b-xl'"
     >
@@ -33,12 +33,12 @@ const focusInside = ref(false);
 const openListUpwards = ref(false);
 const dropdownContainer = ref<HTMLDivElement>();
 
-const showDropdownInternal = computed(
+const _showDropdown = computed(
   () => props.showDropdown && focusInside.value
 );
 
 const dynamicDropdownContainerClasses = computed(() => {
-  if (showDropdownInternal.value) {
+  if (_showDropdown.value) {
     if (openListUpwards.value) {
       return "rounded-b-xl";
     } else {
@@ -50,7 +50,7 @@ const dynamicDropdownContainerClasses = computed(() => {
 });
 
 watchEffect(() => {
-  if (showDropdownInternal.value && dropdownContainer.value !== undefined) {
+  if (_showDropdown.value && dropdownContainer.value !== undefined) {
     const topOffset = dropdownContainer.value.offsetTop - window.scrollY;
     openListUpwards.value = topOffset > window.screen.height / 2;
   }

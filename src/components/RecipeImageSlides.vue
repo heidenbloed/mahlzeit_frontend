@@ -6,46 +6,48 @@
     virtual
     :navigation="{
       prevEl: '.slide-prev-btn',
-      nextEl: '.slide-next-btn'
+      nextEl: '.slide-next-btn',
     }"
     :pagination="{
       type: 'fraction',
-      renderFraction: renderFraction
+      renderFraction: renderFraction,
     }"
     slideClass="bg-red-500 h-full"
   >
-    <swiper-slide
-      v-for="(imageUrl, index) in imageUrls"
-      :virtualIndex="index"
-    >
-      <img :src="imageUrl" class="w-full h-full object-cover aspect-[3/2] rounded-none md:rounded-t-xl"/>
+    <swiper-slide v-for="(imageUrl, index) in imageUrls" :virtualIndex="index">
+      <img
+        :src="imageUrl"
+        class="aspect-[3/2] h-full w-full rounded-none object-cover md:rounded-t-xl"
+      />
     </swiper-slide>
-    
-    <div class="absolute top-0 left-0 h-full z-10 flex flex-col place-content-center">
-      <button class="slide-prev-btn cursor-pointer leading-none text-red-500 bg-white/40 rounded-r-xl p-1 hidden md:block">
-        <span class="icon-2xl">
-          navigate_before
 
-        </span>
+    <div
+      class="absolute top-0 left-0 z-10 flex h-full flex-col place-content-center"
+    >
+      <button
+        class="slide-prev-btn hidden cursor-pointer rounded-r-xl bg-white/40 p-1 leading-none text-red-500 md:block"
+      >
+        <span class="icon-2xl"> navigate_before </span>
       </button>
     </div>
-    <div class="absolute top-0 right-0 h-full z-10 flex flex-col place-content-center">
-      <button class="slide-next-btn z-10cursor-pointer right-0 leading-none text-red-500 bg-white/40 rounded-l-xl p-1 hidden md:block">
-        <span class="icon-2xl">
-          navigate_next
-        </span>
+    <div
+      class="absolute top-0 right-0 z-10 flex h-full flex-col place-content-center"
+    >
+      <button
+        class="slide-next-btn z-10cursor-pointer right-0 hidden rounded-l-xl bg-white/40 p-1 leading-none text-red-500 md:block"
+      >
+        <span class="icon-2xl"> navigate_next </span>
       </button>
     </div>
-    
   </swiper>
 </template>
 
 <script setup lang="ts">
-import { Virtual, Navigation, Pagination, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Virtual, Navigation, Pagination, A11y } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const swiperModules = [Virtual, Navigation, Pagination, A11y];
 
@@ -53,7 +55,7 @@ const props = defineProps({
   imageUrls: {
     type: Array,
     required: true,
-  }
+  },
 });
 
 const renderFraction = (currentClass: string, totalClass: string) => {

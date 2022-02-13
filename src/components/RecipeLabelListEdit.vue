@@ -1,32 +1,32 @@
 <template>
-    <div class="flex flex-row flex-wrap gap-2 mb-2">
-      <RecipeLabel
-        v-for="(label, idx) in currentRecipeLabels"
-        :name="label.name"
-        :category="label.category"
-        @click="currentRecipeLabels.splice(idx, 1)"
-        closeable
-      />
-    </div>
-    <AutoCompleteInput
-      v-model="newLabelInput"
-      :autoCompleteList="autoCompleteList"
-      @on-auto-complete-option-selected="addNewLabel"
-      clearable
-    >
-      <template #beforeInput>
-        <span class="icon-md">add_circle_outline</span>
-      </template>
-      <template #autoCompleteOption="labelOption">
-        <div class="flex items-center gap-2">
-          <span class="icon-md">label</span>
-          <RecipeLabel
-            :name="labelOption.option.name"
-            :category="labelOption.option.category"
-          />
-        </div>
-      </template>
-    </AutoCompleteInput>
+  <div class="mb-2 flex flex-row flex-wrap gap-2">
+    <RecipeLabel
+      v-for="(label, idx) in _modelValue"
+      :name="label.name"
+      :category="label.category"
+      @click="_modelValue.splice(idx, 1)"
+      closeable
+    />
+  </div>
+  <AutoCompleteInput
+    v-model="newLabelInput"
+    :autoCompleteList="autoCompleteList"
+    @on-auto-complete-option-selected="addNewLabel"
+    clearable
+  >
+    <template #beforeInput>
+      <span class="icon-md">add_circle_outline</span>
+    </template>
+    <template #autoCompleteOption="labelOption">
+      <div class="flex items-center gap-2">
+        <span class="icon-md">label</span>
+        <RecipeLabel
+          :name="labelOption.option.name"
+          :category="labelOption.option.category"
+        />
+      </div>
+    </template>
+  </AutoCompleteInput>
 </template>
 
 <script setup lang="ts">
@@ -40,18 +40,18 @@ interface RecipeLabel {
 }
 
 const props = defineProps<{
-  modelValue: RecipeLabel[]
+  modelValue: RecipeLabel[];
 }>();
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits(["update:modelValue"]);
 
-const currentRecipeLabels = ref(props.modelValue);
+const _modelValue = ref(props.modelValue);
 const newLabelInput = ref("");
 
 watchEffect(() => {
-  currentRecipeLabels.value = props.modelValue;
+  _modelValue.value = props.modelValue;
 });
 watchEffect(() => {
-  emit('update:modelValue', currentRecipeLabels.value);
+  emit("update:modelValue", _modelValue.value);
 });
 
 const autoCompleteList = computed(() => [
@@ -69,8 +69,8 @@ const autoCompleteList = computed(() => [
   },
 ]);
 
-function addNewLabel(newLabel: RecipeLabel){
-  currentRecipeLabels.value.push(newLabel);
+function addNewLabel(newLabel: RecipeLabel) {
+  _modelValue.value.push(newLabel);
   newLabelInput.value = "";
 }
 </script>

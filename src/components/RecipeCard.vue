@@ -2,18 +2,24 @@
   <RoundedCard class="flex flex-col">
     <button
       @click="$router.push('/recipe/')"
-      class="rounded-t-xl overflow-hidden relative"
+      class="relative overflow-hidden rounded-t-xl"
     >
-      <img :src="recipeCardData.imageUrl" alt="recipe image" class="aspect-[2/1] object-cover object-center">
-      <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-transparent to-black/50"></div>
-      <div class="absolute bottom-2 left-3 text-white tracking-tight">
-        <div class="font-semibold text-2xl">
-          {{recipeCardData.name}}
+      <img
+        :src="recipeCardData.imageUrl"
+        alt="recipe image"
+        class="aspect-[2/1] object-cover object-center"
+      />
+      <div
+        class="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-black/50"
+      ></div>
+      <div class="absolute bottom-2 left-3 tracking-tight text-white">
+        <div class="text-2xl font-semibold">
+          {{ recipeCardData.name }}
         </div>
-        <RecipeDurationLabel :prepTime="recipeCardData.prepTime"/>
+        <RecipeDurationLabel :prepTime="recipeCardData.prepTime" />
       </div>
     </button>
-    <div class="p-2 flex justify-end">
+    <div class="flex justify-end p-2">
       <RoundedButton type="flat" @click.stop>
         <template v-slot:icon>shopping_cart</template>
         <template v-slot:default>Einkaufen</template>
@@ -34,6 +40,6 @@ interface RecipeCardData {
 }
 
 const props = defineProps<{
-  recipeCardData: RecipeCardData
+  recipeCardData: RecipeCardData;
 }>();
 </script>
