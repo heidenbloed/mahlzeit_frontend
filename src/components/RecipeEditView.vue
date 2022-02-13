@@ -1,16 +1,16 @@
 <template>
-  <RecipeEdit :initRecipeData="recipeData"/>
+  <RecipeEdit :initRecipeData="recipeData" />
 </template>
 
 <script setup lang="ts">
-import RecipeEdit from "@/components/RecipeEdit.vue"
+import RecipeEdit from "@/components/RecipeEdit.vue";
 
 const recipeData = {
   name: "Kaiserschmarrn mit viel Liebe",
   prepTime: 110,
   source: "Rezept von Omi",
   numServings: 3,
-  images: [
+  imageList: [
     {
       id: 0,
       url: "https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg",
@@ -42,57 +42,83 @@ const recipeData = {
       order: 5,
     },
   ],
-  ingredients: [
+  ingredientList: [
     {
+      id: 0,
       name: "Ultralanger Zutatenname, der ja durchaus mal vorkommen kann",
-      unit: "Stk.",
-      quantity: 1
+      currentUnit: { id: 0, name: "Stk." },
+      quantity: 1,
+      defaultUnit: { id: 0, name: "Stk." },
+      unitConvCurrent: 1,
+      unitConvDefault: 1,
+      setCurrentUnitAsDefault: false,
+      category: { id: 0, name: "Kühlwaren" },
     },
     {
+      id: 1,
       name: "Butter",
-      unit: "Pfund",
-      quantity: 5
+      currentUnit: { id: 1, name: "Pfund" },
+      quantity: 5,
+      defaultUnit: { id: 1, name: "Pfund" },
+      unitConvCurrent: 1,
+      unitConvDefault: 1,
+      setCurrentUnitAsDefault: false,
+      category: { id: 1, name: "Milchprodukte" },
     },
     {
+      id: 2,
       name: "Zucker",
-      unit: "kg",
-      quantity: 37
+      currentUnit: { id: 2, name: "kg" },
+      quantity: 37,
+      defaultUnit: { id: 2, name: "kg" },
+      unitConvCurrent: 1,
+      unitConvDefault: 1,
+      setCurrentUnitAsDefault: false,
+      category: { id: 2, name: "Backzutaten" },
     },
     {
+      id: 3,
       name: "Liebe",
-      unit: "Stk.",
-      quantity: 1
+      currentUnit: { id: 0, name: "Stk" },
+      quantity: 1,
+      defaultUnit: { id: 0, name: "Stk" },
+      unitConvCurrent: 1,
+      unitConvDefault: 1,
+      setCurrentUnitAsDefault: false,
+      category: { id: 3, name: "Fleisch" },
     },
   ],
-  labels: [
+  labelList: [
     {
       name: "Vegan",
-      category: "diet"
+      category: "diet",
     },
     {
       name: "Vegetarisch",
-      category: "diet"
+      category: "diet",
     },
     {
       name: "Einfach",
-      category: "complexity"
+      category: "complexity",
     },
     {
       name: "Schwer",
-      category: "complexity"
+      category: "complexity",
     },
     {
       name: "Indisch",
-      category: "cuisine"
+      category: "cuisine",
     },
     {
       name: "Japanisch",
-      category: "cuisine"
+      category: "cuisine",
     },
     {
       name: "Party",
-      category: "misc"
+      category: "misc",
     },
-  ]
-}
+  ],
+};
+
+console.log("recipeData", recipeData);
 </script>

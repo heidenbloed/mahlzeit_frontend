@@ -11,7 +11,7 @@
       </div>
       <input
         :type="inputType"
-        class="w-full border-0 bg-transparent p-0 align-middle focus:ring-0"
+        class="w-full appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
         v-model="internalModelValue"
         ref="inputElement"
       />

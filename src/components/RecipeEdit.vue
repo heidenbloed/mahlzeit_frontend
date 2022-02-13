@@ -1,7 +1,8 @@
 <template>
-  <main class="max-w-4xl mx-auto bg-white rounded-xl">
-    <article class="p-4 font-sans tracking-tight text-gray-700 flex flex-col gap-4">
-      <!-- {{currentRecipeData}} -->
+  <main class="mx-auto max-w-4xl rounded-xl bg-white">
+    <article
+      class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
+    >
       <section class="flex flex-col gap-2">
         <RoundedInput
           label="Rezeptname"
@@ -20,19 +21,17 @@
           clearable
         />
       </section>
-      
+
       <SubSection title="Zutaten">
-        todo
+        <RecipeIngredientListEdit v-model="currentRecipeData.ingredientList" />
       </SubSection>
 
       <SubSection title="Schlagwörter">
-        todo
+        <RecipeLabelListEdit v-model="currentRecipeData.labelList" />
       </SubSection>
 
       <SubSection title="Fotos">
-        <RecipeImageSorter
-          :images="currentRecipeData.images"
-        />
+        <RecipeImageSorter :images="currentRecipeData.imageList" />
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
@@ -50,19 +49,34 @@
 </template>
 
 <script setup lang="ts">
-import ServingsSlider from "@/components/ServingsSlider.vue";
-import RecipeLabel from "@/components/RecipeLabel.vue";
-import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import RoundedInput from "@/components/RoundedInput.vue";
-import SubSection from '@/components/SubSection.vue';
+import SubSection from "@/components/SubSection.vue";
 import RecipeImageSorter from "@/components/RecipeImageSorter.vue";
+import RecipeLabelListEdit from "@/components/RecipeLabelListEdit.vue";
+import RecipeIngredientListEdit from "@/components/RecipeIngredientListEdit.vue";
 import { reactive } from "vue";
 
-interface RecipeIngredient {
-  quantity: number;
-  unit: string;
+interface IngredientUnit {
+  id: number;
   name: string;
+}
+
+interface IngredientCategory {
+  id: number;
+  name: string;
+}
+
+interface RecipeIngredient {
+  id: number;
+  name: string;
+  quantity: number;
+  currentUnit: IngredientUnit;
+  defaultUnit: IngredientUnit;
+  unitConvCurrent: number;
+  unitConvDefault: number;
+  setCurrentUnitAsDefault: boolean;
+  category: IngredientCategory;
 }
 
 interface RecipeLabel {
@@ -74,20 +88,20 @@ interface RecipeImage {
   id: number;
   url: String;
   order: number;
-};
+}
 
 interface RecipeData {
   name: string;
   prepTime: number;
   source: string;
   numServings: number;
-  ingredients: [RecipeIngredient];
-  labels: [RecipeLabel];
-  images: [RecipeImage]
+  ingredientList: RecipeIngredient[];
+  labelList: RecipeLabel[];
+  imageList: RecipeImage[];
 }
 
 const props = defineProps<{
-  initRecipeData: RecipeData
+  initRecipeData: RecipeData;
 }>();
 
 const currentRecipeData = reactive(props.initRecipeData);

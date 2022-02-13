@@ -2,17 +2,17 @@
   <Listbox v-model="internalModelValue" v-slot="{ open }">
     <RoundedDropdown :showDropdown="open">
       <template #input>
-        <ListboxButton class="w-full flex flex-row items-center gap-2 p-2">
-          <div class="flex flex-col grow">
+        <ListboxButton class="flex w-full flex-row items-center gap-2 p-2">
+          <div class="flex grow flex-col">
             <ListboxLabel
               v-if="label.length > 0"
-              class="text-stone-500 text-sm"
+              class="text-sm text-stone-500"
             >
-              {{label}}
+              {{ label }}
             </ListboxLabel>
             <span>{{ internalModelValue.name }}</span>
           </div>
-          
+
           <span class="icon-md">keyboard_arrow_down</span>
         </ListboxButton>
       </template>
@@ -27,11 +27,18 @@
               :key="option.id"
               :value="option"
             >
-              <li class="flex flex-row gap-2 items-center">
-                <span class="icon-md" :class="selected ? 'visible' : 'invisible'">
+              <li class="flex flex-row items-center gap-2">
+                <span
+                  class="icon-md"
+                  :class="
+                    internalModelValue.id === option.id
+                      ? 'visible'
+                      : 'invisible'
+                  "
+                >
                   check
                 </span>
-                <button class="h-10">
+                <button class="h-10 grow">
                   {{ option.name }}
                 </button>
               </li>
@@ -44,11 +51,17 @@
 </template>
 
 <script setup lang="ts">
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption, ListboxLabel } from '@headlessui/vue';
-import RoundedDropdown from '@/components/RoundedDropdown.vue';
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOptions,
+  ListboxOption,
+  ListboxLabel,
+} from "@headlessui/vue";
+import RoundedDropdown from "@/components/RoundedDropdown.vue";
 import { ref, watchEffect, PropType } from "vue";
 
-interface SelectOption{
+interface SelectOption {
   id: number;
   name: string;
 }
@@ -56,18 +69,18 @@ interface SelectOption{
 const props = defineProps({
   modelValue: {
     type: Object as PropType<SelectOption>,
-    required: true
+    required: true,
   },
   options: {
     type: Array as PropType<SelectOption[]>,
-    required: true
+    required: true,
   },
   label: {
     type: String,
     default: "",
   },
 });
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"]);
 
 const internalModelValue = ref<SelectOption>(props.modelValue);
 
@@ -75,6 +88,6 @@ watchEffect(() => {
   internalModelValue.value = props.modelValue;
 });
 watchEffect(() => {
-  emit('update:modelValue', internalModelValue.value);
+  emit("update:modelValue", internalModelValue.value);
 });
 </script>
