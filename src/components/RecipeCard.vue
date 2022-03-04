@@ -5,7 +5,7 @@
       class="relative overflow-hidden rounded-t-xl"
     >
       <img
-        :src="recipeCardData.imageUrl"
+        :src="firstImageUrl"
         alt="recipe image"
         class="aspect-[2/1] object-cover object-center"
       />
@@ -16,7 +16,7 @@
         <div class="text-2xl font-semibold">
           {{ recipeCardData.name }}
         </div>
-        <RecipeDurationLabel :prepTime="recipeCardData.prepTime" />
+        <RecipeDurationLabel :prepTime="recipeCardData.preparation_time" />
       </div>
     </button>
     <div class="flex justify-end p-2">
@@ -32,14 +32,17 @@
 import RoundedCard from "@/components/RoundedCard.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
-
-interface RecipeCardData {
-  name: string;
-  prepTime: number;
-  imageUrl: string;
-}
+import { RecipeShort } from "../api/recipeDbApi";
+import { computed } from "vue";
+import placeholderImageUrl from "@/assets/placeholder_image.png";
 
 const props = defineProps<{
-  recipeCardData: RecipeCardData;
+  recipeCardData: RecipeShort;
 }>();
+
+const firstImageUrl = computed(() =>
+  props.recipeCardData.first_image
+    ? props.recipeCardData.first_image.image
+    : placeholderImageUrl
+);
 </script>

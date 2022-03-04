@@ -1,7 +1,7 @@
 <template>
-  <main class="mx-auto max-w-4xl rounded-xl bg-white">
+  <main class="mx-auto max-w-4xl rounded-b-xl bg-white md:rounded-t-xl">
     <div class="mx-auto max-w-4xl">
-      <RecipeImageSlides :imageUrls="recipeData.imageUrls" />
+      <RecipeImageSlides :recipeImages="recipeData.recipe_images" />
     </div>
 
     <article
@@ -12,7 +12,7 @@
           {{ recipeData.name }}
         </h1>
         <p>
-          <RecipeDurationLabel :prepTime="recipeData.prepTime" />
+          <RecipeDurationLabel :prepTime="recipeData.preparation_time" />
         </p>
         <p>
           {{ recipeData.source }}
@@ -22,9 +22,10 @@
       <SubSection title="Zutaten">
         <ServingsSlider v-model="numServings" />
         <ul>
-          <li v-for="ingredient in recipeData.ingredients">
-            {{ scaleServings(ingredient.quantity) }} {{ ingredient.unit }}
-            {{ ingredient.name }}
+          <li v-for="quant_ingr in recipeData.quantified_ingredients">
+            {{ getScaledQuantity(quant_ingr.quantity) }}
+            {{ quant_ingr.unit.short_form }}
+            {{ quant_ingr.ingredient.name }}
           </li>
         </ul>
       </SubSection>
@@ -68,38 +69,20 @@ import RecipeLabel from "@/components/RecipeLabel.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import SubSection from "@/components/SubSection.vue";
-import { computed, ref } from "vue";
-
-interface Ingredient {
-  quantity: number;
-  unit: string;
-  name: string;
-}
-
-interface Label {
-  name: string;
-  category: string;
-}
-
-interface RecipeData {
-  name: string;
-  prepTime: number;
-  source: string;
-  numServings: number;
-  ingredients: [Ingredient];
-  labels: [Label];
-  imageUrls: [string];
-}
+import { Recipe } from "../api/recipeDbApi";
+import { ref, watchEffect } from "vue";
 
 const props = defineProps<{
-  recipeData: RecipeData;
+  recipeData: Recipe;
 }>();
 
-const numServings = ref(props.recipeData.numServings);
-function scaleServings(quantity: number) {
-  let scaledQunatity =
-    (numServings.value * quantity) / props.recipeData.numServings;
-  scaledQunatity = Math.round(scaledQunatity * 10) / 10;
-  return scaledQunatity;
+const numServings = ref(0);
+watchEffect(() => {
+  numServings.value = props.recipeData.num_servings;
+});
+function getScaledQuantity(quantity: number) {
+  const scaledQuantity =
+    (numServings.value * quantity) / props.recipeData.num_servings;
+  return Math.round(scaledQuantity * 10) / 10;
 }
 </script>

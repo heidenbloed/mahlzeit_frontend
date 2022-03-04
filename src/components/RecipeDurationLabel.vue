@@ -1,7 +1,7 @@
 <template>
   <span>
     <span v-show="prepTimeFullHours > 0"> {{ prepTimeFullHours }}h </span>
-    <span v-show="prepTimeRemaindingMinutes > 0">
+    <span v-show="prepTimeRemaindingMinutes > 0 || prepTimeFullHours === 0">
       {{ prepTimeRemaindingMinutes }}min
     </span>
   </span>

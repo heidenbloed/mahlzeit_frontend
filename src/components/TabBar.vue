@@ -9,11 +9,13 @@
       <slot name="buttons"></slot>
     </div>
   </header>
-  <div class="mb-4 hidden h-16 md:block"></div>
-  <div class="container mx-auto scroll-mt-5">
-    <slot name="content"></slot>
+  <div class="flex h-full w-full flex-col">
+    <div class="mb-4 hidden h-16 shrink-0 md:block"></div>
+    <div class="container mx-auto grow scroll-mt-5 pb-2 md:pb-4">
+      <slot name="content"></slot>
+    </div>
+    <div class="h-16 shrink-0 md:hidden"></div>
   </div>
-  <div class="mt-2 h-16 md:mt-0 md:h-4"></div>
 </template>
 
 <style>

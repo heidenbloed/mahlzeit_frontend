@@ -1,72 +1,26 @@
 <template>
-  <RecipeDetail :recipeData="recipeData" />
+  <RecipeDetail v-if="recipeData" :recipeData="recipeData" />
+  <LoadingSkeleton v-else />
 </template>
 
 <script setup lang="ts">
 import RecipeDetail from "@/components/RecipeDetail.vue";
+import LoadingSkeleton from "@/components/LoadingSkeleton.vue";
+import { getRecipeDetail, Recipe } from "../api/recipeDbApi";
+import { ref, onMounted, computed } from "vue";
+import { useRoute } from "vue-router";
 
-const recipeData = {
-  name: "Kaiserschmarrn mit viel Liebe und Nüssen (unglaublich langer Rezeptname)",
-  prepTime: 110,
-  source:
-    "Rezept von Omi, kann man aber auch im Internet finden, wenn man danach sucht",
-  numServings: 3,
-  imageUrls: [
-    "https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg",
-    "https://ais.kochbar.de/kbrezept/284621_878966/24-05goci/600x450/254/burger-rezept-bild-nr-1187.jpg",
-    "https://www.ndr.de/pizza460_v-contentxl.jpg",
-  ],
-  ingredients: [
-    {
-      name: "Ultralanger Zutatenname, der ja durchaus mal vorkommen kann",
-      unit: "Stk.",
-      quantity: 1,
-    },
-    {
-      name: "Butter",
-      unit: "Pfund",
-      quantity: 5,
-    },
-    {
-      name: "Zucker",
-      unit: "kg",
-      quantity: 37,
-    },
-    {
-      name: "Liebe",
-      unit: "Stk.",
-      quantity: 1,
-    },
-  ],
-  labels: [
-    {
-      name: "Vegan",
-      category: "diet",
-    },
-    {
-      name: "Vegetarisch",
-      category: "diet",
-    },
-    {
-      name: "Einfach",
-      category: "complexity",
-    },
-    {
-      name: "Schwer",
-      category: "complexity",
-    },
-    {
-      name: "Indisch",
-      category: "cuisine",
-    },
-    {
-      name: "Japanisch",
-      category: "cuisine",
-    },
-    {
-      name: "Party",
-      category: "misc",
-    },
-  ],
-};
+const route = useRoute();
+const recipeId = computed(() => {
+  const id = Number.parseInt(route.params.id as string);
+  if (!Number.isNaN(id)) {
+    return id;
+  }
+  return -1;
+});
+
+const recipeData = ref<Recipe | null>(null);
+onMounted(async () => {
+  recipeData.value = await getRecipeDetail(recipeId.value);
+});
 </script>

@@ -20,7 +20,7 @@ const routes = [
         component: RecipesGridView,
       },
       {
-        path: 'recipe/',
+        path: 'recipe/:id/',
         component: RecipeDetailView,
       },
       {

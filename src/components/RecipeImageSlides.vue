@@ -14,9 +14,9 @@
     }"
     slideClass="bg-red-500 h-full"
   >
-    <swiper-slide v-for="(imageUrl, index) in imageUrls" :virtualIndex="index">
+    <swiper-slide v-for="(image, index) in sortedImages" :virtualIndex="index">
       <img
-        :src="imageUrl"
+        :src="image.image"
         class="aspect-[3/2] h-full w-full rounded-none object-cover md:rounded-t-xl"
       />
     </swiper-slide>
@@ -43,6 +43,8 @@
 </template>
 
 <script setup lang="ts">
+import { RecipeImage } from "../api/recipeDbApi";
+import { computed, PropType } from "vue";
 import { Virtual, Navigation, Pagination, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -52,11 +54,17 @@ import "swiper/css/pagination";
 const swiperModules = [Virtual, Navigation, Pagination, A11y];
 
 const props = defineProps({
-  imageUrls: {
-    type: Array,
+  recipeImages: {
+    type: Array as PropType<RecipeImage[]>,
     required: true,
   },
 });
+
+const sortedImages = computed(() =>
+  props.recipeImages.sort((elemA, elemB) => {
+    return elemA.order - elemB.order;
+  })
+);
 
 const renderFraction = (currentClass: string, totalClass: string) => {
   return `<div><span class="bg-white rounded-xl px-2"><span class=${currentClass}></span> / <span class=${totalClass}></span></span></div>`;
