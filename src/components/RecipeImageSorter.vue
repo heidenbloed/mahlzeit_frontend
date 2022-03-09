@@ -14,11 +14,10 @@
     <template #item="{ element }">
       <div
         class="relative w-full cursor-grab overflow-hidden rounded-xl border-red-500"
-        :key="element.id"
+        :key="element.order"
       >
         <img
-          :src="element.url"
-          :alt="'Foto ' + element.id"
+          :src="element.image"
           class="aspect-square overflow-hidden object-cover"
           @contextmenu.prevent
         />
@@ -44,16 +43,11 @@
 <script setup lang="ts">
 import RoundedButton from "@/components/RoundedButton.vue";
 import draggable from "vuedraggable";
+import { RecipeImageEditData } from "../types/recipeDbTypes";
 import { ref } from "vue";
 
-interface RecipeImage {
-  id: number;
-  url: String;
-  order: number;
-}
-
 const props = defineProps<{
-  images: [RecipeImage];
+  images: RecipeImageEditData[];
 }>();
 
 const drag = ref(false);

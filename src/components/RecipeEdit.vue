@@ -4,37 +4,29 @@
       class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
     >
       <section class="flex flex-col gap-2">
-        <RoundedInput
-          label="Rezeptname"
-          v-model="currentRecipeData.name"
-          clearable
-        />
+        <RoundedInput label="Rezeptname" v-model="_recipeData.name" clearable />
         <RoundedInput
           label="Dauer in Minuten"
           inputType="number"
-          v-model="currentRecipeData.prepTime"
+          v-model="_recipeData.preparation_time"
           clearable
         />
-        <RoundedInput
-          label="Quelle"
-          v-model="currentRecipeData.source"
-          clearable
-        />
+        <RoundedInput label="Quelle" v-model="_recipeData.source" clearable />
       </section>
 
       <SubSection title="Zutaten">
         <RecipeIngredientListEdit
-          v-model="currentRecipeData.ingredientList"
-          v-model:numServings="currentRecipeData.numServings"
+          v-model="_recipeData.quantified_ingredients"
+          v-model:numServings="_recipeData.num_servings"
         />
       </SubSection>
 
       <SubSection title="Schlagwörter">
-        <RecipeLabelListEdit v-model="currentRecipeData.labelList" />
+        <RecipeLabelListEdit v-model="_recipeData.labels" />
       </SubSection>
 
       <SubSection title="Fotos">
-        <RecipeImageSorter :images="currentRecipeData.imageList" />
+        <RecipeImageSorter :images="_recipeData.recipe_images" />
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
@@ -58,54 +50,16 @@ import SubSection from "@/components/SubSection.vue";
 import RecipeImageSorter from "@/components/RecipeImageSorter.vue";
 import RecipeLabelListEdit from "@/components/RecipeLabelListEdit.vue";
 import RecipeIngredientListEdit from "@/components/RecipeIngredientListEdit.vue";
-import { reactive } from "vue";
-
-interface IngredientUnit {
-  id: number;
-  name: string;
-}
-
-interface IngredientCategory {
-  id: number;
-  name: string;
-}
-
-interface RecipeIngredient {
-  id: number;
-  name: string;
-  quantity: number;
-  currentUnit: IngredientUnit;
-  defaultUnit: IngredientUnit;
-  unitConvCurrent: number;
-  unitConvDefault: number;
-  setCurrentUnitAsDefault: boolean;
-  category: IngredientCategory;
-}
-
-interface RecipeLabel {
-  name: string;
-  category: string;
-}
-
-interface RecipeImage {
-  id: number;
-  url: String;
-  order: number;
-}
-
-interface RecipeData {
-  name: string;
-  prepTime: number;
-  source: string;
-  numServings: number;
-  ingredientList: RecipeIngredient[];
-  labelList: RecipeLabel[];
-  imageList: RecipeImage[];
-}
+import { RecipeEditData } from "../types/recipeDbTypes";
+import { reactive, watchEffect } from "vue";
 
 const props = defineProps<{
-  initRecipeData: RecipeData;
+  recipeData: RecipeEditData;
 }>();
+const emit = defineEmits(["update:recipeData"]);
 
-const currentRecipeData = reactive(props.initRecipeData);
+const _recipeData = reactive(props.recipeData);
+watchEffect(() => {
+  emit("update:recipeData", _recipeData);
+});
 </script>

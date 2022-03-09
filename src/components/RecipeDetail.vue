@@ -45,7 +45,10 @@
           <template v-slot:icon>delete</template>
           <template v-slot:default>Löschen</template>
         </RoundedButton>
-        <RoundedButton type="flat">
+        <RoundedButton
+          type="flat"
+          @click="emit('edit')"
+        >
           <template v-slot:icon>edit</template>
           <template v-slot:default>Bearbeiten</template>
         </RoundedButton>
@@ -75,6 +78,7 @@ import { ref, watchEffect } from "vue";
 const props = defineProps<{
   recipeData: RecipeData;
 }>();
+const emit = defineEmits(["edit"]);
 
 const numServings = ref(0);
 watchEffect(() => {

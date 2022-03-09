@@ -12,8 +12,8 @@
         @click="ingredientEdit.set(ingredient.id, true)"
       >
         <span class="grow">
-          {{ ingredient.quantity }} {{ ingredient.currentUnit.name }}
-          {{ ingredient.name }}
+          {{ ingredient.quantity }} {{ ingredient.unit.short_form }}
+          {{ ingredient.ingredientName }}
         </span>
         <span class="icon-md">edit</span>
       </button>
@@ -46,32 +46,11 @@
 <script setup lang="ts">
 import RecipeIngredientEdit from "@/components/RecipeIngredientEdit.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
+import { QuantifiedIngredientEditData } from "../types/recipeDbTypes";
 import { reactive, watchEffect, ref } from "vue";
 
-interface IngredientUnit {
-  id: number;
-  name: string;
-}
-
-interface IngredientCategory {
-  id: number;
-  name: string;
-}
-
-interface RecipeIngredient {
-  id: number;
-  name: string;
-  quantity: number;
-  currentUnit: IngredientUnit;
-  defaultUnit: IngredientUnit;
-  unitConvCurrent: number;
-  unitConvDefault: number;
-  setCurrentUnitAsDefault: boolean;
-  category: IngredientCategory;
-}
-
 const props = defineProps<{
-  modelValue: RecipeIngredient[];
+  modelValue: QuantifiedIngredientEditData[];
   numServings: number;
 }>();
 const emit = defineEmits(["update:modelValue", "update:numServings"]);
@@ -88,14 +67,14 @@ const _numServings = ref(props.numServings);
 function addNewEmptyIngredient() {
   ingredientList.push({
     id: -1,
-    name: "",
+    ingredientName: "",
     quantity: 1,
-    currentUnit: { id: 0, name: "Stk." },
-    defaultUnit: { id: 0, name: "Stk." },
-    unitConvCurrent: 1,
-    unitConvDefault: 1,
-    setCurrentUnitAsDefault: true,
-    category: { id: 0, name: "Tiefkühlwaren" },
+    unit: { id: 0, short_form: "Stk." },
+    defaultUnit: { id: 0, short_form: "Stk." },
+    currentConversionFactor: 1,
+    defaultConversionFactor: 1,
+    setAsDefaultUnit: true,
+    ingredientCategory: { id: 0, name: "Tiefkühlwaren", location_index: 0 },
   });
   ingredientEdit.set(-1, true);
 }

@@ -32,12 +32,8 @@
 <script setup lang="ts">
 import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
 import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
+import { RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect, computed } from "vue";
-
-interface RecipeLabel {
-  name: string;
-  category: string;
-}
 
 const props = defineProps<{
   modelValue: RecipeLabel[];

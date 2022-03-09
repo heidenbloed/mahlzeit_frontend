@@ -10,7 +10,7 @@
       />
 
       <RoundedSelect
-        v-model="currentRecipeIngredient.currentUnit"
+        v-model="currentRecipeIngredient.unit"
         :options="[
           { id: 0, name: 'Stk' },
           { id: 3, name: 'g' },
@@ -22,10 +22,10 @@
       </RoundedSelect>
 
       <AutoCompleteInput
-        v-model="currentRecipeIngredient.name"
+        v-model="currentRecipeIngredient.ingredientName"
         :autoCompleteList="[
-          currentRecipeIngredient.name,
-          currentRecipeIngredient.name,
+          currentRecipeIngredient.ingredientName,
+          currentRecipeIngredient.ingredientName,
         ]"
         label="Zutat"
         class="grow basis-3/4"
@@ -35,7 +35,7 @@
     </div>
 
     <RoundedSelect
-      v-model="currentRecipeIngredient.category"
+      v-model="currentRecipeIngredient.ingredientCategory"
       :options="[
         { id: 0, name: 'Kühlwaren' },
         { id: 1, name: 'Gemüse' },
@@ -60,18 +60,18 @@
         <div class="text-sm text-stone-500">Einheitenumrechnung</div>
         <div class="flex flex-row items-center gap-2">
           <RoundedInput
-            v-model.number="currentRecipeIngredient.unitConvCurrent"
+            v-model.number="currentRecipeIngredient.currentConversionFactor"
             inputType="number"
             class="grow basis-1/2"
           >
             <template #after>
-              <span>{{ currentRecipeIngredient.currentUnit.name }}</span>
+              <span>{{ currentRecipeIngredient.unit.name }}</span>
             </template>
           </RoundedInput>
 
           <span class="icon-md">sync_alt</span>
           <RoundedInput
-            v-model.number="currentRecipeIngredient.unitConvDefault"
+            v-model.number="currentRecipeIngredient.defaultConversionFactor"
             inputType="number"
             class="grow basis-1/2"
           >
@@ -84,14 +84,14 @@
 
       <label for="defaultUnit" class="flex flex-row gap-2">
         <input
-          v-model="currentRecipeIngredient.setCurrentUnitAsDefault"
+          v-model="currentRecipeIngredient.setAsDefaultUnit"
           id="defaultUnit"
           type="checkbox"
           class="h-5 w-5 rounded text-red-500 focus:ring-red-500"
         />
         <div>
           <span class="italic">
-            {{ currentRecipeIngredient.currentUnit.name }}
+            {{ currentRecipeIngredient.unit.name }}
           </span>
           <span> ist die Standardeinheit </span>
         </div>
@@ -104,40 +104,18 @@
 import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
 import RoundedInput from "@/components/RoundedInput.vue";
 import RoundedSelect from "@/components/RoundedSelect.vue";
+import { QuantifiedIngredientEditData } from "../types/recipeDbTypes";
 import { reactive, watchEffect, computed } from "vue";
 
-interface IngredientUnit {
-  id: number;
-  name: string;
-}
-
-interface IngredientCategory {
-  id: number;
-  name: string;
-}
-
-interface RecipeIngredient {
-  id: number;
-  name: string;
-  quantity: number;
-  currentUnit: IngredientUnit;
-  defaultUnit: IngredientUnit;
-  unitConvCurrent: number;
-  unitConvDefault: number;
-  setCurrentUnitAsDefault: boolean;
-  category: IngredientCategory;
-}
-
 const props = defineProps<{
-  modelValue: RecipeIngredient;
+  modelValue: QuantifiedIngredientEditData;
 }>();
 const emit = defineEmits(["update:modelValue"]);
 
 const currentRecipeIngredient = reactive(props.modelValue);
 const showUnitConvForm = computed(
   () =>
-    currentRecipeIngredient.currentUnit.id !==
-    currentRecipeIngredient.defaultUnit.id
+    currentRecipeIngredient.unit.id !== currentRecipeIngredient.defaultUnit.id
 );
 
 watchEffect(() => {
