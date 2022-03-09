@@ -2,7 +2,7 @@
   <div class="col-span-1 w-full lg:col-span-2 xl:col-span-3">
     <RoundedCard noWidthLimit class="flex flex-col gap-4 p-4">
       <AutoCompleteInput
-        v-model="searchString"
+        v-model="_modelValue"
         :autoCompleteList="autoCompleteList"
         @on-auto-complete-option-selected="selectAutoCompleteOption"
         clearable
@@ -10,35 +10,28 @@
         <template #beforeInput>
           <span class="icon-md">search</span>
         </template>
-        <template #autoCompleteOption="searchOption">
+        <template #autoCompleteOption="recipeLabelOption">
           <div class="flex items-center gap-2">
-            <template v-if="searchOption.option.category !== undefined">
-              <span class="icon-md">label</span>
-              <RecipeLabel
-                :name="searchOption.option.proposal"
-                :category="searchOption.option.category"
-              />
-            </template>
-            <template v-else>
-              <span class="icon-md">dinner_dining</span>
-              <span>
-                {{ searchOption.option.proposal }}
-              </span>
-            </template>
+            <span class="icon-md">label</span>
+            <RecipeLabelTag
+              :name="recipeLabelOption.option.name"
+              :category="recipeLabelOption.option.category"
+            />
           </div>
         </template>
       </AutoCompleteInput>
 
       <div
-        v-show="labelFilterList.length > 0"
+        v-show="_labelFilterList.length > 0"
         class="flex items-center gap-2 rounded-xl bg-stone-200 p-2"
       >
         <span class="icon-md">filter_alt</span>
         <ul class="inline-flex grow flex-row flex-wrap gap-2">
-          <li v-for="label in labelFilterList">
-            <RecipeLabel
+          <li v-for="(label, idx) in _labelFilterList">
+            <RecipeLabelTag
               :name="label.name"
               :category="label.category"
+              @click="_labelFilterList.splice(idx, 1)"
               closeable
             />
           </li>
@@ -51,61 +44,48 @@
 
 <script setup lang="ts">
 import RoundedCard from "@/components/RoundedCard.vue";
-import RecipeLabel from "@/components/RecipeLabel.vue";
+import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
 import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
-import { ref, computed, watchEffect, onMounted, nextTick } from "vue";
+import { getRecipeLabelList } from "../api/recipeDbApi";
+import { RecipeLabel } from "../types/recipeDbTypes";
+import { ref, watchEffect, PropType, reactive } from "vue";
 
-type Label = {
-  name: string;
-  category: string;
-};
-type AutoCompleteRecipeOption = {
-  proposal: string;
-};
-type AutoCompleteLabelOption = {
-  proposal: string;
-  category: string;
-};
-type AutoCompleteOption = AutoCompleteRecipeOption | AutoCompleteLabelOption;
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: "",
+  },
+  labelFilterList: {
+    type: Array as PropType<RecipeLabel[]>,
+    default: [],
+  },
+});
+const emit = defineEmits(["update:modelValue", "update:labelFilterList"]);
 
-const searchString = ref("");
-const labelFilterList = ref<Label[]>([]);
+const _modelValue = ref("");
+watchEffect(() => {
+  _modelValue.value = props.modelValue.toString();
+});
+watchEffect(() => {
+  emit("update:modelValue", _modelValue.value);
+});
 
-const autoCompleteList = computed(() => [
-  {
-    proposal: "Einfach",
-    category: "complexity",
-  },
-  {
-    proposal: "Vegan",
-    category: "diet",
-  },
-  {
-    proposal: "Indisch",
-    category: "cusine",
-  },
-  {
-    proposal: searchString.value + " recipe proposal",
-  },
-]);
-
-async function selectAutoCompleteOption(
-  autoCompleteOption: AutoCompleteOption
-) {
-  if ((autoCompleteOption as AutoCompleteLabelOption).category !== undefined) {
-    labelFilterList.value.push({
-      name: autoCompleteOption.proposal,
-      category: (autoCompleteOption as AutoCompleteLabelOption).category,
-    });
-    searchString.value = "";
-  } else {
-    searchString.value = autoCompleteOption.proposal;
-    if (
-      document.activeElement !== undefined &&
-      typeof (document.activeElement as HTMLInputElement).blur == "function"
-    ) {
-      (document.activeElement as HTMLInputElement).blur();
-    }
+const _labelFilterList = ref<RecipeLabel[]>([]);
+const autoCompleteList = ref<RecipeLabel[]>([]);
+watchEffect(async () => {
+  if (_modelValue.value.length > 0) {
+    autoCompleteList.value = await getRecipeLabelList(_modelValue.value);
   }
+});
+watchEffect(() => {
+  _labelFilterList.value = props.labelFilterList;
+});
+watchEffect(() => {
+  emit("update:labelFilterList", _labelFilterList.value);
+});
+
+async function selectAutoCompleteOption(recipeLabel: RecipeLabel) {
+  _labelFilterList.value.push(recipeLabel);
+  _modelValue.value = "";
 }
 </script>

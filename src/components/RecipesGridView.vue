@@ -1,6 +1,9 @@
 <template>
   <CardGrid>
-    <RecipeSearchAndFilterBar />
+    <RecipeSearchAndFilterBar
+      v-model="searchString"
+      v-model:labelFilterList="labelFilterList"
+    />
     <RecipeCard
       v-for="recipeCardData in recipeCardDataList"
       :recipeCardData="recipeCardData"
@@ -12,11 +15,19 @@
 import RecipeCard from "@/components/RecipeCard.vue";
 import CardGrid from "@/components/CardGrid.vue";
 import RecipeSearchAndFilterBar from "@/components/RecipeSearchAndFilterBar.vue";
-import { getRecipeList, RecipeShort } from "../api/recipeDbApi";
-import { ref, onMounted } from "vue";
+import { getRecipeList, RecipeListOrdering } from "../api/recipeDbApi";
+import { RecipeShort, RecipeLabel } from "../types/recipeDbTypes";
+import { ref, watchEffect } from "vue";
 
 const recipeCardDataList = ref<RecipeShort[]>([]);
-onMounted(async () => {
-  recipeCardDataList.value = await getRecipeList();
+
+const searchString = ref("");
+const labelFilterList = ref<RecipeLabel[]>([]);
+watchEffect(async () => {
+  recipeCardDataList.value = await getRecipeList(
+    RecipeListOrdering.updatedAtDescending,
+    searchString.value,
+    labelFilterList.value
+  );
 });
 </script>
