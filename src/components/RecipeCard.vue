@@ -1,7 +1,7 @@
 <template>
   <RoundedCard class="flex flex-col">
     <button
-      @click="$router.push('/recipe/')"
+      @click="$router.push(detailUrl)"
       class="relative overflow-hidden rounded-t-xl"
     >
       <img
@@ -45,4 +45,5 @@ const firstImageUrl = computed(() =>
     ? props.recipeCardData.first_image.image
     : placeholderImageUrl
 );
+const detailUrl = computed(() => `/recipe/${props.recipeCardData.id}/`);
 </script>

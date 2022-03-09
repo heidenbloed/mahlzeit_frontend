@@ -19,6 +19,7 @@
         class="h-full"
         noRing
         @input="showAutoCompleteList = autoCompleteList.length > 0"
+        @keyup="hideAutoCompleteOnEnter"
       >
         <template #before>
           <slot name="beforeInput"></slot>
@@ -83,5 +84,10 @@ watchEffect(() => {
 function onAutoCompleteOptionSelected(autoCompleteOption: String) {
   showAutoCompleteList.value = false;
   emit("onAutoCompleteOptionSelected", autoCompleteOption);
+}
+function hideAutoCompleteOnEnter(event: KeyboardEvent) {
+  if (event.key == "Enter") {
+    showAutoCompleteList.value = false;
+  }
 }
 </script>

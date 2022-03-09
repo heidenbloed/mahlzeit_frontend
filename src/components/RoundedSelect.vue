@@ -31,9 +31,7 @@
                 <span
                   class="icon-md"
                   :class="
-                    _modelValue.id === option.id
-                      ? 'visible'
-                      : 'invisible'
+                    _modelValue.id === option.id ? 'visible' : 'invisible'
                   "
                 >
                   check

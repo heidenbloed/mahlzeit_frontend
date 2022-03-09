@@ -33,9 +33,7 @@ const focusInside = ref(false);
 const openListUpwards = ref(false);
 const dropdownContainer = ref<HTMLDivElement>();
 
-const _showDropdown = computed(
-  () => props.showDropdown && focusInside.value
-);
+const _showDropdown = computed(() => props.showDropdown && focusInside.value);
 
 const dynamicDropdownContainerClasses = computed(() => {
   if (_showDropdown.value) {

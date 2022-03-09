@@ -32,7 +32,7 @@
 
       <SubSection title="Schlagwörter">
         <div class="mt-2 flex flex-wrap gap-x-2 gap-y-1">
-          <RecipeLabel
+          <RecipeLabelTag
             v-for="label in recipeData.labels"
             :name="label.name"
             :category="label.category"
@@ -65,15 +65,15 @@
 <script setup lang="ts">
 import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
-import RecipeLabel from "@/components/RecipeLabel.vue";
+import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import SubSection from "@/components/SubSection.vue";
-import { Recipe } from "../api/recipeDbApi";
+import { RecipeData } from "../types/recipeDbTypes";
 import { ref, watchEffect } from "vue";
 
 const props = defineProps<{
-  recipeData: Recipe;
+  recipeData: RecipeData;
 }>();
 
 const numServings = ref(0);

@@ -1,6 +1,6 @@
 <template>
   <div class="mb-2 flex flex-row flex-wrap gap-2">
-    <RecipeLabel
+    <RecipeLabelTag
       v-for="(label, idx) in _modelValue"
       :name="label.name"
       :category="label.category"
@@ -20,7 +20,7 @@
     <template #autoCompleteOption="labelOption">
       <div class="flex items-center gap-2">
         <span class="icon-md">label</span>
-        <RecipeLabel
+        <RecipeLabelTag
           :name="labelOption.option.name"
           :category="labelOption.option.category"
         />
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import RecipeLabel from "@/components/RecipeLabel.vue";
+import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
 import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
 import { ref, watchEffect, computed } from "vue";
 

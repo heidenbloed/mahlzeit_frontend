@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { RecipeImage } from "../api/recipeDbApi";
+import { RecipeImage } from "../types/recipeDbTypes";
 import { computed, PropType } from "vue";
 import { Virtual, Navigation, Pagination, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
