@@ -29,7 +29,10 @@
         </SubSection>
 
         <SubSection title="Schlagwörter">
-          <RecipeLabelListEdit v-model="_recipeData.labels" />
+          <RecipeLabelListEdit
+            v-model="_recipeData.labels"
+            :allLabels="allLabels"
+          />
         </SubSection>
 
         <SubSection title="Fotos">
@@ -62,6 +65,7 @@ import {
   RecipeEditData,
   Unit,
   IngredientCategory,
+  RecipeLabel,
 } from "../types/recipeDbTypes";
 import { reactive, watchEffect } from "vue";
 
@@ -69,6 +73,7 @@ const props = defineProps<{
   recipeData: RecipeEditData;
   unitList: Unit[];
   ingredientCategoryList: IngredientCategory[];
+  allLabels: RecipeLabel[];
 }>();
 const emit = defineEmits(["update:recipeData"]);
 

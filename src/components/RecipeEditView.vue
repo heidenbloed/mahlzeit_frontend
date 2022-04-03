@@ -1,9 +1,10 @@
 <template>
   <RecipeEdit
-    v-if="recipeData && unitList && ingredientCategoryList"
+    v-if="recipeData && unitList && ingredientCategoryList && allLabels"
     :recipeData="recipeData"
     :unitList="unitList"
     :ingredientCategoryList="ingredientCategoryList"
+    :allLabels="allLabels"
   />
   <LoadingSkeleton v-else />
 </template>
@@ -15,12 +16,14 @@ import {
   getIngredientDetail,
   getUnitList,
   getIngredientCategoryList,
+  getRecipeLabelList,
 } from "../api/recipeDbApi";
 import {
   RecipeData,
   RecipeEditData,
   Unit,
   IngredientCategory,
+  RecipeLabel,
 } from "../types/recipeDbTypes";
 import { onMounted, ref } from "vue";
 
@@ -31,6 +34,7 @@ const props = defineProps<{
 const recipeData = ref<RecipeEditData | null>(null);
 const unitList = ref<Unit[] | null>(null);
 const ingredientCategoryList = ref<IngredientCategory[] | null>(null);
+const allLabels = ref<RecipeLabel[] | null>(null);
 
 onMounted(async () => {
   const { quantified_ingredients, ...otherRecipeData } = props.initRecipeData;
@@ -67,5 +71,6 @@ onMounted(async () => {
   };
   unitList.value = await getUnitList();
   ingredientCategoryList.value = await getIngredientCategoryList();
+  allLabels.value = await getRecipeLabelList();
 });
 </script>

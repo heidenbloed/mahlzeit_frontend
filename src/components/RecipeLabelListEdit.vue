@@ -1,4 +1,5 @@
 <template>
+  <pre class="text-xs">{{ _modelValue }}</pre>
   <div class="mb-2 flex flex-row flex-wrap gap-2">
     <RecipeLabelTag
       v-for="(label, idx) in _modelValue"
@@ -10,7 +11,7 @@
   </div>
   <AutoCompleteInput
     v-model="newLabelInput"
-    :autoCompleteList="autoCompleteList"
+    :autoCompleteList="labelAutoCompleteList"
     @on-auto-complete-option-selected="addNewLabel"
     clearable
   >
@@ -37,6 +38,7 @@ import { ref, watchEffect, computed } from "vue";
 
 const props = defineProps<{
   modelValue: RecipeLabel[];
+  allLabels: RecipeLabel[];
 }>();
 const emit = defineEmits(["update:modelValue"]);
 
@@ -50,20 +52,17 @@ watchEffect(() => {
   emit("update:modelValue", _modelValue.value);
 });
 
-const autoCompleteList = computed(() => [
-  {
-    name: newLabelInput.value,
-    category: "diet",
-  },
-  {
-    name: newLabelInput.value,
-    category: "complexity",
-  },
-  {
-    name: newLabelInput.value,
-    category: "misc",
-  },
-]);
+const labelAutoCompleteList = computed(() => {
+  if (newLabelInput.value.length >= 1) {
+    return props.allLabels.filter(
+      (label) =>
+        label.name.toLowerCase().includes(newLabelInput.value.toLowerCase()) &&
+        !_modelValue.value.includes(label)
+    );
+  } else {
+    return [];
+  }
+});
 
 function addNewLabel(newLabel: RecipeLabel) {
   _modelValue.value.push(newLabel);
