@@ -67,7 +67,9 @@ export interface IngredientEdit {
   unit_conversions: UnitConversionEdit[];
 }
 
-export interface IngredientEditResponse extends IngredientEdit, UpdatedableModel {};
+export interface IngredientEditResponse
+  extends IngredientEdit,
+    UpdatedableModel {}
 
 export interface QuantifiedIngredient extends UpdatedableModel {
   ingredient: IngredientShort;
@@ -104,7 +106,7 @@ export interface RecipeEdit {
   quantified_ingredients: QuantifiedIngredientEdit[];
 }
 
-export interface RecipeEditResponse extends RecipeEdit, UpdatedableModel {};
+export interface RecipeEditResponse extends RecipeEdit, UpdatedableModel {}
 
 export interface QuantifiedIngredientEditData {
   id?: number;
@@ -113,7 +115,7 @@ export interface QuantifiedIngredientEditData {
   ingredientCategory: IngredientCategory;
   quantity: number;
   unit: Unit;
-  defaultUnit: Unit;
+  defaultUnit: Unit | null;
   currentConversionFactor: number;
   defaultConversionFactor: number;
   setAsDefaultUnit: boolean;

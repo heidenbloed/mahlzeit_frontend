@@ -10,7 +10,11 @@
             >
               {{ label }}
             </ListboxLabel>
-            <span>{{ _modelValue.name }}</span>
+            <span>
+              <slot name="selected" :modelValue="_modelValue">
+                {{ _modelValue }}
+              </slot>
+            </span>
           </div>
 
           <span class="icon-md">keyboard_arrow_down</span>
@@ -37,7 +41,9 @@
                   check
                 </span>
                 <button class="h-10 grow">
-                  {{ option.name }}
+                  <slot name="option" :option="option">
+                    {{ option }}
+                  </slot>
                 </button>
               </li>
             </ListboxOption>
@@ -61,7 +67,6 @@ import { ref, watchEffect, PropType } from "vue";
 
 interface SelectOption {
   id: number;
-  name: string;
 }
 
 const props = defineProps({

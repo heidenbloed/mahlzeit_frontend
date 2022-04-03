@@ -20,9 +20,12 @@ const recipeDbApi = axios.create({
   timeout: 30000,
 });
 
-recipeDbApi.interceptors.response.use((response) => response, (error) => {
-  console.error("RecipeDbApi error: " + error);
-});
+recipeDbApi.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("RecipeDbApi error: " + error);
+  }
+);
 
 enum IngredientListOrdering {
   nameAscending = "name",
@@ -49,7 +52,7 @@ async function getRecipeLabelList(search?: string): Promise<RecipeLabel[]> {
   const params = {
     search: search,
   };
-  const response = await recipeDbApi.get("/labels/", {params: params});
+  const response = await recipeDbApi.get("/labels/", { params: params });
   return response.data;
 }
 
@@ -58,12 +61,15 @@ async function getUnitList(): Promise<Unit[]> {
   return response.data;
 }
 
-async function getIngredientList(ordering: IngredientListOrdering, search?: string): Promise<IngredientShort[]>{
+async function getIngredientList(
+  ordering: IngredientListOrdering,
+  search?: string
+): Promise<IngredientShort[]> {
   const params = {
     ordering: ordering,
     search: search,
   };
-  const response = await recipeDbApi.get("/ingredients/", {params: params});
+  const response = await recipeDbApi.get("/ingredients/", { params: params });
   return response.data;
 }
 
@@ -72,13 +78,21 @@ async function getIngredientDetail(id: number): Promise<Ingredient> {
   return response.data;
 }
 
-async function createIngredient(ingredient: IngredientEdit): Promise<IngredientEditResponse> {
+async function createIngredient(
+  ingredient: IngredientEdit
+): Promise<IngredientEditResponse> {
   const response = await recipeDbApi.post("/ingredients/", ingredient);
   return response.data;
 }
 
-async function updateIngredient(id: number, ingredient: Partial<IngredientEdit>): Promise<IngredientEditResponse> {
-  const response = await recipeDbApi.patch("/ingredients/" + id + "/", ingredient);
+async function updateIngredient(
+  id: number,
+  ingredient: Partial<IngredientEdit>
+): Promise<IngredientEditResponse> {
+  const response = await recipeDbApi.patch(
+    "/ingredients/" + id + "/",
+    ingredient
+  );
   return response.data;
 }
 
@@ -86,13 +100,17 @@ async function deleteIngredient(id: number) {
   await recipeDbApi.delete("/ingredients/" + id + "/");
 }
 
-async function getRecipeList(ordering: RecipeListOrdering, search?: string, labels?: RecipeLabel[]): Promise<RecipeShort[]> {
+async function getRecipeList(
+  ordering: RecipeListOrdering,
+  search?: string,
+  labels?: RecipeLabel[]
+): Promise<RecipeShort[]> {
   const params = {
     ordering: ordering,
     search: search,
-    labels: labels?.map(label => label.id).join(","),
+    labels: labels?.map((label) => label.id).join(","),
   };
-  const response = await recipeDbApi.get("/recipes/", {params: params});
+  const response = await recipeDbApi.get("/recipes/", { params: params });
   return response.data;
 }
 
@@ -106,7 +124,10 @@ async function createRecipe(recipe: RecipeEdit): Promise<RecipeEditResponse> {
   return response.data;
 }
 
-async function updateRecipe(id: number, recipe: Partial<RecipeEdit>): Promise<RecipeEditResponse> {
+async function updateRecipe(
+  id: number,
+  recipe: Partial<RecipeEdit>
+): Promise<RecipeEditResponse> {
   const response = await recipeDbApi.patch("/recipes/" + id + "/", recipe);
   return response.data;
 }
@@ -115,24 +136,39 @@ async function deleteRecipe(id: number) {
   await recipeDbApi.delete("/recipes/" + id + "/");
 }
 
-async function createRecipeImage(imageData: RecipeImageEdit): Promise<RecipeImageEditResponse> {
+async function createRecipeImage(
+  imageData: RecipeImageEdit
+): Promise<RecipeImageEditResponse> {
   const formData = new FormData();
-  formData.append('image', imageData.image, `recipe_image_${imageData.recipe}.png`);
-  formData.append('order', imageData.order.toString());
-  formData.append('recipe', imageData.recipe.toString());
-  const response = await recipeDbApi.post("/recipe_image/", formData, {headers: {'Content-Type': 'multipart/form-data'}});
+  formData.append(
+    "image",
+    imageData.image,
+    `recipe_image_${imageData.recipe}.png`
+  );
+  formData.append("order", imageData.order.toString());
+  formData.append("recipe", imageData.recipe.toString());
+  const response = await recipeDbApi.post("/recipe_image/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 
-async function updateRecipeImage(id: number, imageData: Partial<RecipeImageEdit>): Promise<RecipeImageEditResponse> {
+async function updateRecipeImage(
+  id: number,
+  imageData: Partial<RecipeImageEdit>
+): Promise<RecipeImageEditResponse> {
   const formData = new FormData();
   if (imageData.order) {
-    formData.append('order', imageData.order.toString());
+    formData.append("order", imageData.order.toString());
   }
   if (imageData.recipe) {
-    formData.append('recipe', imageData.recipe.toString());
+    formData.append("recipe", imageData.recipe.toString());
   }
-  const response = await recipeDbApi.patch("/recipe_image/" + id + "/", formData, {headers: {'Content-Type': 'multipart/form-data'}});
+  const response = await recipeDbApi.patch(
+    "/recipe_image/" + id + "/",
+    formData,
+    { headers: { "Content-Type": "multipart/form-data" } }
+  );
   return response.data;
 }
 
@@ -159,4 +195,4 @@ export {
   deleteRecipeImage,
   RecipeListOrdering,
   IngredientListOrdering,
-}
+};

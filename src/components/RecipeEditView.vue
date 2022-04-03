@@ -1,20 +1,36 @@
 <template>
-  <RecipeEdit v-if="recipeData" v-model:recipeData="recipeData" />
+  <RecipeEdit
+    v-if="recipeData && unitList && ingredientCategoryList"
+    :recipeData="recipeData"
+    :unitList="unitList"
+    :ingredientCategoryList="ingredientCategoryList"
+  />
   <LoadingSkeleton v-else />
 </template>
 
 <script setup lang="ts">
 import RecipeEdit from "@/components/RecipeEdit.vue";
 import LoadingSkeleton from "@/components/LoadingSkeleton.vue";
-import { getIngredientDetail } from "../api/recipeDbApi";
-import { RecipeData, RecipeEditData } from "../types/recipeDbTypes";
-import { ref, onMounted } from "vue";
+import {
+  getIngredientDetail,
+  getUnitList,
+  getIngredientCategoryList,
+} from "../api/recipeDbApi";
+import {
+  RecipeData,
+  RecipeEditData,
+  Unit,
+  IngredientCategory,
+} from "../types/recipeDbTypes";
+import { onMounted, ref } from "vue";
 
 const props = defineProps<{
   initRecipeData: RecipeData;
 }>();
 
 const recipeData = ref<RecipeEditData | null>(null);
+const unitList = ref<Unit[] | null>(null);
+const ingredientCategoryList = ref<IngredientCategory[] | null>(null);
 
 onMounted(async () => {
   const { quantified_ingredients, ...otherRecipeData } = props.initRecipeData;
@@ -49,5 +65,7 @@ onMounted(async () => {
     quantified_ingredients: quantifiedIngredientsEditData,
     ...otherRecipeData,
   };
+  unitList.value = await getUnitList();
+  ingredientCategoryList.value = await getIngredientCategoryList();
 });
 </script>

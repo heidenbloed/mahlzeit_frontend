@@ -19,7 +19,7 @@
         class="h-full"
         noRing
         @input="showAutoCompleteList = autoCompleteList.length > 0"
-        @keyup="hideAutoCompleteOnEnter"
+        @keyup.enter="showAutoCompleteList = false"
       >
         <template #before>
           <slot name="beforeInput"></slot>
@@ -65,7 +65,7 @@ const props = defineProps({
     default: false,
   },
   autoCompleteList: {
-    type: Array as PropType<string[]>,
+    type: Array,
     required: true,
   },
 });
@@ -81,13 +81,8 @@ watchEffect(() => {
   emit("update:modelValue", _modelValue.value);
 });
 
-function onAutoCompleteOptionSelected(autoCompleteOption: String) {
+function onAutoCompleteOptionSelected(autoCompleteOption: any) {
   showAutoCompleteList.value = false;
   emit("onAutoCompleteOptionSelected", autoCompleteOption);
-}
-function hideAutoCompleteOnEnter(event: KeyboardEvent) {
-  if (event.key == "Enter") {
-    showAutoCompleteList.value = false;
-  }
 }
 </script>
