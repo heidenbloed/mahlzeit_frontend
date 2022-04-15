@@ -2,7 +2,7 @@
   <div class="mb-2 flex flex-col gap-2">
     <ServingsSlider v-model="_numServings" />
 
-    <pre class="text-xs">{{ ingredientList }}</pre>
+    <!-- <pre class="text-xs">{{ ingredientList }}</pre> -->
 
     <div
       v-for="(ingredient, ingredientIdx) in ingredientList"

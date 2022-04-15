@@ -1,5 +1,5 @@
 <template>
-  <pre class="text-xs">{{ _modelValue }}</pre>
+  <!-- <pre class="text-xs">{{ _modelValue }}</pre> -->
   <div class="mb-2 flex flex-row flex-wrap gap-2">
     <RecipeLabelTag
       v-for="(label, idx) in _modelValue"

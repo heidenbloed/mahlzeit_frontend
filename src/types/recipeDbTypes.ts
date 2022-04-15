@@ -123,8 +123,9 @@ export interface QuantifiedIngredientEditData {
 
 export interface RecipeImageEditData {
   id?: number;
-  image: string | Blob;
+  image: string;
   order: number;
+  data?: Blob;
 }
 
 export interface RecipeEditData {

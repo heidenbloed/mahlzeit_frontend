@@ -4,7 +4,11 @@
     :recipeData="recipeData"
     @edit="toggleEditMode"
   />
-  <RecipeEditView v-if="recipeData && editMode" :initRecipeData="recipeData" />
+  <RecipeEditView
+    v-if="recipeData && editMode"
+    :initRecipeData="recipeData"
+    @editFinished="toggleEditMode"
+  />
   <LoadingSkeleton v-if="!recipeData" />
 </template>
 
@@ -34,6 +38,6 @@ onMounted(async () => {
 const editMode = ref(false);
 function toggleEditMode() {
   window.scrollTo(0, 0);
-  editMode.value = true;
+  editMode.value = !editMode.value;
 }
 </script>

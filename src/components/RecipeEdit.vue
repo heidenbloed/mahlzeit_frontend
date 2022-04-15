@@ -1,57 +1,53 @@
 <template>
-  <div class="flex flex-row">
-    <main class="mx-auto max-w-4xl rounded-b-xl bg-white md:rounded-t-xl">
-      <article
-        class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
-      >
-        <section class="flex flex-col gap-2">
-          <RoundedInput
-            label="Rezeptname"
-            v-model="_recipeData.name"
-            clearable
-          />
-          <RoundedInput
-            label="Dauer in Minuten"
-            inputType="number"
-            v-model="_recipeData.preparation_time"
-            clearable
-          />
-          <RoundedInput label="Quelle" v-model="_recipeData.source" clearable />
-        </section>
+  <main class="mx-auto max-w-4xl rounded-b-xl bg-white md:rounded-t-xl">
+    <!-- <pre class="text-xs">{{_recipeData}}</pre> -->
 
-        <SubSection title="Zutaten">
-          <RecipeIngredientListEdit
-            v-model="_recipeData.quantified_ingredients"
-            v-model:numServings="_recipeData.num_servings"
-            :unitList="unitList"
-            :ingredientCategoryList="ingredientCategoryList"
-          />
-        </SubSection>
+    <article
+      class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
+    >
+      <section class="flex flex-col gap-2">
+        <RoundedInput label="Rezeptname" v-model="_recipeData.name" clearable />
+        <RoundedInput
+          label="Dauer in Minuten"
+          inputType="number"
+          v-model="_recipeData.preparation_time"
+          clearable
+        />
+        <RoundedInput label="Quelle" v-model="_recipeData.source" clearable />
+      </section>
 
-        <SubSection title="Schlagwörter">
-          <RecipeLabelListEdit
-            v-model="_recipeData.labels"
-            :allLabels="allLabels"
-          />
-        </SubSection>
+      <SubSection title="Zutaten">
+        <RecipeIngredientListEdit
+          v-model="_recipeData.quantified_ingredients"
+          v-model:numServings="_recipeData.num_servings"
+          :unitList="unitList"
+          :ingredientCategoryList="ingredientCategoryList"
+        />
+      </SubSection>
 
-        <SubSection title="Fotos">
-          <RecipeImageSorter :images="_recipeData.recipe_images" />
-        </SubSection>
+      <SubSection title="Schlagwörter">
+        <RecipeLabelListEdit
+          v-model="_recipeData.labels"
+          :allLabels="allLabels"
+        />
+      </SubSection>
 
-        <section class="flex flex-wrap justify-center gap-2">
-          <RoundedButton type="flat">
-            <template v-slot:icon>save</template>
-            <template v-slot:default>Speichern</template>
-          </RoundedButton>
-          <RoundedButton type="flat">
-            <template v-slot:icon>cancel</template>
-            <template v-slot:default>Abbrechen</template>
-          </RoundedButton>
-        </section>
-      </article>
-    </main>
-  </div>
+      <SubSection title="Fotos">
+        <RecipeImageSorter v-model="_recipeData.recipe_images" />
+      </SubSection>
+
+      <section class="flex flex-wrap justify-center gap-2">
+        <RoundedButton type="flat">
+          <template v-slot:icon>save</template>
+          <template v-slot:default>Speichern</template>
+        </RoundedButton>
+        <RoundedButton type="flat" @click="emit('editFinished')">
+          <template v-slot:icon>cancel</template>
+          <template v-slot:default>Abbrechen</template>
+        </RoundedButton>
+      </section>
+    </article>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -75,7 +71,7 @@ const props = defineProps<{
   ingredientCategoryList: IngredientCategory[];
   allLabels: RecipeLabel[];
 }>();
-const emit = defineEmits(["update:recipeData"]);
+const emit = defineEmits(["update:recipeData", "editFinished"]);
 
 const _recipeData = reactive(props.recipeData);
 watchEffect(() => {

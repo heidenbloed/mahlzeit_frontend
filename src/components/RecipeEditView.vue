@@ -5,6 +5,7 @@
     :unitList="unitList"
     :ingredientCategoryList="ingredientCategoryList"
     :allLabels="allLabels"
+    @editFinished="emit('editFinished')"
   />
   <LoadingSkeleton v-else />
 </template>
@@ -30,6 +31,7 @@ import { onMounted, ref } from "vue";
 const props = defineProps<{
   initRecipeData: RecipeData;
 }>();
+const emit = defineEmits(["editFinished"]);
 
 const recipeData = ref<RecipeEditData | null>(null);
 const unitList = ref<Unit[] | null>(null);
