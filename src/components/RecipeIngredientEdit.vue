@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-2 rounded-xl border-2 border-stone-400 p-2">
-    <pre class="text-xs">{{ currentRecipeIngredient }}</pre>
+    <!-- <pre class="text-xs">{{ currentRecipeIngredient }}</pre> -->
 
     <div class="flex flex-row flex-wrap gap-2 md:flex-nowrap">
       <RoundedInput
@@ -152,7 +152,7 @@ async function onIngredientChange() {
   if (selectedIngredient) {
     selectIngredientFromAutoCompleteList(selectedIngredient);
   } else {
-    currentRecipeIngredient.ingredientId = -1;
+    currentRecipeIngredient.ingredientId = null;
     currentRecipeIngredient.defaultUnit = null;
     currentRecipeIngredient.currentConversionFactor = 1.0;
     currentRecipeIngredient.defaultConversionFactor = 1.0;

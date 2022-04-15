@@ -2,7 +2,7 @@
   <RecipeDetail
     v-if="recipeData && !editMode"
     :recipeData="recipeData"
-    @edit="toggleEditMode"
+    @edit="toggleEditMode(false)"
   />
   <RecipeEditView
     v-if="recipeData && editMode"
@@ -36,8 +36,14 @@ onMounted(async () => {
 });
 
 const editMode = ref(false);
-function toggleEditMode() {
+async function toggleEditMode(reloadRecipeData: boolean) {
+  if(reloadRecipeData){
+    recipeData.value = null;
+  }
   window.scrollTo(0, 0);
   editMode.value = !editMode.value;
+  if(reloadRecipeData){
+    recipeData.value = await getRecipeDetail(recipeId.value);
+  }
 }
 </script>

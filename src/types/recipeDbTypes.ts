@@ -110,7 +110,7 @@ export interface RecipeEditResponse extends RecipeEdit, UpdatedableModel {}
 
 export interface QuantifiedIngredientEditData {
   id?: number;
-  ingredientId?: number;
+  ingredientId: number | null;
   ingredientName: string;
   ingredientCategory: IngredientCategory;
   quantity: number;

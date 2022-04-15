@@ -158,10 +158,10 @@ async function updateRecipeImage(
   imageData: Partial<RecipeImageEdit>
 ): Promise<RecipeImageEditResponse> {
   const formData = new FormData();
-  if (imageData.order) {
+  if (imageData.order !== undefined) {
     formData.append("order", imageData.order.toString());
   }
-  if (imageData.recipe) {
+  if (imageData.recipe !== undefined) {
     formData.append("recipe", imageData.recipe.toString());
   }
   const response = await recipeDbApi.patch(

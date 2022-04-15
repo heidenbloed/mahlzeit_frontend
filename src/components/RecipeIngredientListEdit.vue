@@ -77,8 +77,7 @@ function removeIngredient(ingredientIdx: number) {
 
 function addNewEmptyIngredient() {
   ingredientList.push({
-    id: -1,
-    ingredientId: -1,
+    ingredientId: null,
     ingredientName: "",
     quantity: 1,
     unit: props.unitList[0],

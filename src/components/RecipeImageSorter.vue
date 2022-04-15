@@ -84,6 +84,7 @@ function orderChanged() {
 function removeImage(image: RecipeImageEditData) {
   const imageIdx = sortedImages.value.indexOf(image);
   sortedImages.value.splice(imageIdx, 1);
+  orderChanged();
 }
 function addImage(event: Event) {
   if (event && event.target) {
@@ -93,7 +94,6 @@ function addImage(event: Event) {
       if (imageFile && imageFile["type"].split("/")[0] === "image") {
         const imageUrl = URL.createObjectURL(imageFile);
         sortedImages.value.push({
-          id: -1,
           image: imageUrl,
           order: sortedImages.value.length,
           data: imageFile,

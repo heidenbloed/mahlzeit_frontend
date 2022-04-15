@@ -37,11 +37,11 @@
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="flat">
+        <RoundedButton type="flat" @click="finishEdit(true)">
           <template v-slot:icon>save</template>
           <template v-slot:default>Speichern</template>
         </RoundedButton>
-        <RoundedButton type="flat" @click="emit('editFinished')">
+        <RoundedButton type="flat" @click="finishEdit(false)">
           <template v-slot:icon>cancel</template>
           <template v-slot:default>Abbrechen</template>
         </RoundedButton>
@@ -74,7 +74,12 @@ const props = defineProps<{
 const emit = defineEmits(["update:recipeData", "editFinished"]);
 
 const _recipeData = reactive(props.recipeData);
-watchEffect(() => {
-  emit("update:recipeData", _recipeData);
-});
+
+function finishEdit(saveChanges: boolean) {
+  //todo: data verification
+  if (saveChanges) {
+    emit("update:recipeData", _recipeData);
+  }
+  emit("editFinished", saveChanges);
+}
 </script>
