@@ -45,10 +45,7 @@
           <template v-slot:icon>delete</template>
           <template v-slot:default>Löschen</template>
         </RoundedButton>
-        <RoundedButton
-          type="flat"
-          @click="emit('edit')"
-        >
+        <RoundedButton type="flat" @click="emit('edit')">
           <template v-slot:icon>edit</template>
           <template v-slot:default>Bearbeiten</template>
         </RoundedButton>

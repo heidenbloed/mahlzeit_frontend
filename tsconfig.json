@@ -5,14 +5,13 @@
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
-    "types": [
-      "vite-plugin-pwa/client"
-    ],
+    "types": ["vite-plugin-pwa/client"],
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom", "WebWorker"]
+    "lib": ["esnext", "dom", "WebWorker"],
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
@@ -22,5 +21,10 @@
     "test.ts",
     "**/*.spec.ts",
     "**/*.worker.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

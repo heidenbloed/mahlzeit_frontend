@@ -37,12 +37,12 @@ onMounted(async () => {
 
 const editMode = ref(false);
 async function toggleEditMode(reloadRecipeData: boolean) {
-  if(reloadRecipeData){
+  if (reloadRecipeData) {
     recipeData.value = null;
   }
   window.scrollTo(0, 0);
   editMode.value = !editMode.value;
-  if(reloadRecipeData){
+  if (reloadRecipeData) {
     recipeData.value = await getRecipeDetail(recipeId.value);
   }
 }
