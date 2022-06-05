@@ -2,10 +2,8 @@
   <div class="mb-2 flex flex-col gap-2">
     <ServingsSlider v-model="_numServings" />
 
-    <!-- <pre class="text-xs">{{ ingredientList }}</pre> -->
-
     <div
-      v-for="(ingredient, ingredientIdx) in ingredientList"
+      v-for="(ingredient, ingredientIdx) in _modelValue"
       class="flex flex-row gap-2"
     >
       <button
@@ -22,7 +20,7 @@
 
       <RecipeIngredientEdit
         v-else
-        v-model="ingredientList[ingredientIdx]"
+        v-model="_modelValue[ingredientIdx]"
         :unitList="unitList"
         :ingredientCategoryList="ingredientCategoryList"
         class="grow"
@@ -65,18 +63,18 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["update:modelValue", "update:numServings"]);
 
-const ingredientList = reactive(props.modelValue);
+const _modelValue = ref(props.modelValue);
 const ingredientEdit = ref(new Array(props.modelValue.length).fill(false));
 
 const _numServings = ref(props.numServings);
 
 function removeIngredient(ingredientIdx: number) {
-  ingredientList.splice(ingredientIdx, 1);
+  _modelValue.value.splice(ingredientIdx, 1);
   ingredientEdit.value.splice(ingredientIdx, 1);
 }
 
 function addNewEmptyIngredient() {
-  ingredientList.push({
+  _modelValue.value.push({
     ingredientId: null,
     ingredientName: "",
     quantity: 1,
@@ -91,7 +89,7 @@ function addNewEmptyIngredient() {
 }
 
 watchEffect(() => {
-  emit("update:modelValue", ingredientList.values);
+  emit("update:modelValue", _modelValue.value);
 });
 watchEffect(() => {
   emit("update:numServings", _numServings.value);

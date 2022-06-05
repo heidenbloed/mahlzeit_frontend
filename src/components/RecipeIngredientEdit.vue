@@ -4,7 +4,7 @@
 
     <div class="flex flex-row flex-wrap gap-2 md:flex-nowrap">
       <RoundedInput
-        v-model.number="currentRecipeIngredient.quantity"
+        v-model.number="currentIngredient.quantity"
         inputType="number"
         label="Menge"
         class="grow basis-1/4"
@@ -12,13 +12,13 @@
       />
 
       <RoundedSelect
-        v-model="currentRecipeIngredient.unit"
+        v-model="currentIngredient.unit"
         :options="unitList"
         label="Einheit"
         class="grow basis-1/4"
       >
         <template #selected>
-          {{ currentRecipeIngredient.unit.short_form }}
+          {{ currentIngredient.unit.short_form }}
         </template>
         <template #option="{ option }">
           {{ option.short_form }}
@@ -26,7 +26,7 @@
       </RoundedSelect>
 
       <AutoCompleteInput
-        v-model="currentRecipeIngredient.ingredientName"
+        v-model="currentIngredient.ingredientName"
         :autoCompleteList="ingredientAutoCompleteList"
         @change="onIngredientChange"
         @onAutoCompleteOptionSelected="selectIngredientFromAutoCompleteList"
@@ -41,12 +41,12 @@
     </div>
 
     <RoundedSelect
-      v-model="currentRecipeIngredient.ingredientCategory"
+      v-model="currentIngredient.ingredientCategory"
       :options="ingredientCategoryList"
       label="Kategorie"
     >
       <template #selected>
-        {{ currentRecipeIngredient.ingredientCategory.name }}
+        {{ currentIngredient.ingredientCategory.name }}
       </template>
       <template #option="{ option }">
         {{ option.name }}
@@ -58,23 +58,23 @@
         <div class="text-sm text-stone-500">Einheitenumrechnung</div>
         <div class="flex flex-row items-center gap-2">
           <RoundedInput
-            v-model.number="currentRecipeIngredient.currentConversionFactor"
+            v-model.number="currentIngredient.currentConversionFactor"
             inputType="number"
             class="grow basis-1/2"
           >
             <template #after>
-              <span>{{ currentRecipeIngredient.unit.short_form }}</span>
+              <span>{{ currentIngredient.unit.short_form }}</span>
             </template>
           </RoundedInput>
 
           <span class="icon-md">sync_alt</span>
           <RoundedInput
-            v-model.number="currentRecipeIngredient.defaultConversionFactor"
+            v-model.number="currentIngredient.defaultConversionFactor"
             inputType="number"
             class="grow basis-1/2"
           >
             <template #after>
-              <span>{{ currentRecipeIngredient.defaultUnit?.short_form }}</span>
+              <span>{{ currentIngredient.defaultUnit?.short_form }}</span>
             </template>
           </RoundedInput>
         </div>
@@ -82,14 +82,14 @@
 
       <label for="defaultUnit" class="flex flex-row gap-2">
         <input
-          v-model="currentRecipeIngredient.setAsDefaultUnit"
+          v-model="currentIngredient.setAsDefaultUnit"
           id="defaultUnit"
           type="checkbox"
           class="h-5 w-5 rounded text-red-500 focus:ring-red-500"
         />
         <div>
           <span class="italic">
-            {{ currentRecipeIngredient.unit.short_form }}
+            {{ currentIngredient.unit.short_form }}
           </span>
           <span> ist die Standardeinheit </span>
         </div>
@@ -113,8 +113,9 @@ import {
   IngredientCategory,
   IngredientShort,
   Ingredient,
+  UnitConversion,
 } from "../types/recipeDbTypes";
-import { reactive, watchEffect, computed, ref } from "vue";
+import { reactive, watchEffect, computed, ref, onMounted } from "vue";
 
 const props = defineProps<{
   modelValue: QuantifiedIngredientEditData;
@@ -123,75 +124,80 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["update:modelValue"]);
 
-const currentRecipeIngredient = reactive(props.modelValue);
-watchEffect(() => {
-  emit("update:modelValue", currentRecipeIngredient);
-});
-
+const currentIngredient = reactive(props.modelValue);
 const ingredientAutoCompleteList = ref<IngredientShort[]>([]);
+const ingredientUnitConversions = ref<null | UnitConversion[]>(null);
+
+watchEffect(() => {
+  emit("update:modelValue", currentIngredient);
+});
 watchEffect(async () => {
-  if (currentRecipeIngredient.ingredientName.length >= 1) {
+  if (currentIngredient.ingredientName.length >= 1) {
     ingredientAutoCompleteList.value = await getIngredientList(
       IngredientListOrdering.nameAscending,
-      currentRecipeIngredient.ingredientName
+      currentIngredient.ingredientName
     );
   } else {
     ingredientAutoCompleteList.value = [];
   }
 });
 async function onIngredientChange() {
-  currentRecipeIngredient.ingredientName =
-    currentRecipeIngredient.ingredientName.trim();
+  currentIngredient.ingredientName = currentIngredient.ingredientName.trim();
   const possibleIngredients = await getIngredientList(
     IngredientListOrdering.nameAscending,
-    currentRecipeIngredient.ingredientName
+    currentIngredient.ingredientName
   );
   const selectedIngredient = possibleIngredients.find(
-    (ingredient) => ingredient.name === currentRecipeIngredient.ingredientName
+    (ingredient) =>
+      ingredient.name.toLowerCase() ===
+      currentIngredient.ingredientName.toLowerCase()
   );
   if (selectedIngredient) {
     selectIngredientFromAutoCompleteList(selectedIngredient);
   } else {
-    currentRecipeIngredient.ingredientId = null;
-    currentRecipeIngredient.defaultUnit = null;
-    currentRecipeIngredient.currentConversionFactor = 1.0;
-    currentRecipeIngredient.defaultConversionFactor = 1.0;
-    currentRecipeIngredient.setAsDefaultUnit = false;
+    currentIngredient.ingredientId = null;
+    currentIngredient.defaultUnit = null;
+    currentIngredient.currentConversionFactor = 1.0;
+    currentIngredient.defaultConversionFactor = 1.0;
+    currentIngredient.setAsDefaultUnit = false;
+    ingredientUnitConversions.value = null;
   }
 }
 async function selectIngredientFromAutoCompleteList(
   selectedIngredient: IngredientShort
 ) {
-  // Todo: do not allow the same ingredient twice
   const selectedIngredientDetails = await getIngredientDetail(
     selectedIngredient.id
   );
-  currentRecipeIngredient.ingredientId = selectedIngredient.id;
-  currentRecipeIngredient.ingredientName = selectedIngredient.name;
-  currentRecipeIngredient.ingredientCategory =
-    selectedIngredientDetails.category;
-  currentRecipeIngredient.defaultUnit = selectedIngredientDetails.default_unit;
-  currentRecipeIngredient.setAsDefaultUnit = false;
-  const unitConversion = selectedIngredientDetails.unit_conversions.find(
-    (unitConversion) =>
-      unitConversion.alternative_unit.id === currentRecipeIngredient.unit.id
-  );
-  if (unitConversion) {
-    currentRecipeIngredient.currentConversionFactor =
-      unitConversion.alternative_conversion_factor;
-    currentRecipeIngredient.defaultConversionFactor =
-      unitConversion.default_conversion_factor;
-  } else {
-    currentRecipeIngredient.currentConversionFactor = 1.0;
-    currentRecipeIngredient.defaultConversionFactor = 1.0;
-  }
+  currentIngredient.ingredientId = selectedIngredient.id;
+  currentIngredient.ingredientName = selectedIngredient.name;
+  currentIngredient.ingredientCategory = selectedIngredientDetails.category;
+  currentIngredient.defaultUnit = selectedIngredientDetails.default_unit;
+  currentIngredient.setAsDefaultUnit = false;
+  ingredientUnitConversions.value = selectedIngredientDetails.unit_conversions;
 }
+watchEffect(() => {
+  if (ingredientUnitConversions.value !== null) {
+    const unitConversion = ingredientUnitConversions.value.find(
+      (unitConversion) =>
+        unitConversion.alternative_unit.id === currentIngredient.unit.id
+    );
+    if (unitConversion) {
+      currentIngredient.currentConversionFactor =
+        unitConversion.alternative_conversion_factor;
+      currentIngredient.defaultConversionFactor =
+        unitConversion.default_conversion_factor;
+    } else {
+      currentIngredient.currentConversionFactor = 1.0;
+      currentIngredient.defaultConversionFactor = 1.0;
+    }
+  }
+});
+onMounted(onIngredientChange);
 
 const showUnitConvForm = computed(() => {
-  if (currentRecipeIngredient.defaultUnit !== null) {
-    return (
-      currentRecipeIngredient.unit.id !== currentRecipeIngredient.defaultUnit.id
-    );
+  if (currentIngredient.defaultUnit !== null) {
+    return currentIngredient.unit.id !== currentIngredient.defaultUnit.id;
   } else {
     return false;
   }

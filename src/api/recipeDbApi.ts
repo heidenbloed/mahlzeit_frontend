@@ -16,25 +16,39 @@ import {
 } from "../types/recipeDbTypes";
 
 const recipeDbApi = axios.create({
-  baseURL: `http://192.168.178.53:8000/api`,
+  baseURL: `http://192.168.178.56:8000/api`,
   timeout: 30000,
 });
 
 recipeDbApi.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("RecipeDbApi error: " + error);
+    if (error.response) {
+      console.error(
+        "RecipeDB API Error:",
+        "Data=",
+        error.response.data,
+        "Status=",
+        error.response.status,
+        "Headers=",
+        error.response.headers
+      );
+    } else if (error.request) {
+      console.error("RecipeDB API Error:", error.request);
+    } else {
+      console.error("RecipeDB API Error:", error.message);
+    }
   }
 );
 
-enum IngredientListOrdering {
+export enum IngredientListOrdering {
   nameAscending = "name",
   nameDescending = "-name",
   updatedAtAscending = "updated_at",
   updatedAtDescending = "-updated_at",
 }
 
-enum RecipeListOrdering {
+export enum RecipeListOrdering {
   nameAscending = "name",
   nameDescending = "-name",
   prepTimeAscending = "preparation_time",
@@ -43,12 +57,16 @@ enum RecipeListOrdering {
   updatedAtDescending = "-updated_at",
 }
 
-async function getIngredientCategoryList(): Promise<IngredientCategory[]> {
+export async function getIngredientCategoryList(): Promise<
+  IngredientCategory[]
+> {
   const response = await recipeDbApi.get("/ingredient_categories/");
   return response.data;
 }
 
-async function getRecipeLabelList(search?: string): Promise<RecipeLabel[]> {
+export async function getRecipeLabelList(
+  search?: string
+): Promise<RecipeLabel[]> {
   const params = {
     search: search,
   };
@@ -56,12 +74,12 @@ async function getRecipeLabelList(search?: string): Promise<RecipeLabel[]> {
   return response.data;
 }
 
-async function getUnitList(): Promise<Unit[]> {
+export async function getUnitList(): Promise<Unit[]> {
   const response = await recipeDbApi.get("/units/");
   return response.data;
 }
 
-async function getIngredientList(
+export async function getIngredientList(
   ordering: IngredientListOrdering,
   search?: string
 ): Promise<IngredientShort[]> {
@@ -73,19 +91,19 @@ async function getIngredientList(
   return response.data;
 }
 
-async function getIngredientDetail(id: number): Promise<Ingredient> {
+export async function getIngredientDetail(id: number): Promise<Ingredient> {
   const response = await recipeDbApi.get("/ingredients/" + id + "/");
   return response.data;
 }
 
-async function createIngredient(
+export async function createIngredient(
   ingredient: IngredientEdit
 ): Promise<IngredientEditResponse> {
   const response = await recipeDbApi.post("/ingredients/", ingredient);
   return response.data;
 }
 
-async function updateIngredient(
+export async function updateIngredient(
   id: number,
   ingredient: Partial<IngredientEdit>
 ): Promise<IngredientEditResponse> {
@@ -96,11 +114,11 @@ async function updateIngredient(
   return response.data;
 }
 
-async function deleteIngredient(id: number) {
+export async function deleteIngredient(id: number) {
   await recipeDbApi.delete("/ingredients/" + id + "/");
 }
 
-async function getRecipeList(
+export async function getRecipeList(
   ordering: RecipeListOrdering,
   search?: string,
   labels?: RecipeLabel[]
@@ -114,17 +132,19 @@ async function getRecipeList(
   return response.data;
 }
 
-async function getRecipeDetail(id: number): Promise<RecipeData> {
+export async function getRecipeDetail(id: number): Promise<RecipeData> {
   const response = await recipeDbApi.get("/recipes/" + id + "/");
   return response.data;
 }
 
-async function createRecipe(recipe: RecipeEdit): Promise<RecipeEditResponse> {
+export async function createRecipe(
+  recipe: RecipeEdit
+): Promise<RecipeEditResponse> {
   const response = await recipeDbApi.post("/recipes/", recipe);
   return response.data;
 }
 
-async function updateRecipe(
+export async function updateRecipe(
   id: number,
   recipe: Partial<RecipeEdit>
 ): Promise<RecipeEditResponse> {
@@ -132,11 +152,11 @@ async function updateRecipe(
   return response.data;
 }
 
-async function deleteRecipe(id: number) {
+export async function deleteRecipe(id: number) {
   await recipeDbApi.delete("/recipes/" + id + "/");
 }
 
-async function createRecipeImage(
+export async function createRecipeImage(
   imageData: RecipeImageEdit
 ): Promise<RecipeImageEditResponse> {
   const formData = new FormData();
@@ -153,7 +173,7 @@ async function createRecipeImage(
   return response.data;
 }
 
-async function updateRecipeImage(
+export async function updateRecipeImage(
   id: number,
   imageData: Partial<RecipeImageEdit>
 ): Promise<RecipeImageEditResponse> {
@@ -172,27 +192,6 @@ async function updateRecipeImage(
   return response.data;
 }
 
-async function deleteRecipeImage(id: number) {
+export async function deleteRecipeImage(id: number) {
   await recipeDbApi.delete("/recipe_image/" + id + "/");
 }
-
-export {
-  getIngredientCategoryList,
-  getRecipeLabelList,
-  getUnitList,
-  getIngredientList,
-  getIngredientDetail,
-  createIngredient,
-  updateIngredient,
-  deleteIngredient,
-  getRecipeList,
-  getRecipeDetail,
-  createRecipe,
-  updateRecipe,
-  deleteRecipe,
-  createRecipeImage,
-  updateRecipeImage,
-  deleteRecipeImage,
-  RecipeListOrdering,
-  IngredientListOrdering,
-};
