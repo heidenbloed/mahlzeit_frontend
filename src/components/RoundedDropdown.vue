@@ -1,7 +1,7 @@
 <template>
   <div
     tabindex="0"
-    class="relative bg-stone-200 px-0 ring-red-500 focus-within:ring-2"
+    class="relative h-fit bg-stone-200 px-0 ring-red-500 focus-within:ring-2"
     :class="dynamicDropdownContainerClasses"
     ref="dropdownContainer"
     @focusin="focusInside = true"

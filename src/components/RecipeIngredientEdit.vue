@@ -4,7 +4,9 @@
 
     <div class="flex flex-row flex-wrap gap-2 md:flex-nowrap">
       <RoundedInput
+        :name="'quantity' + ingredientIdx.toString()"
         v-model.number="currentIngredient.quantity"
+        rules="required|number|positive"
         inputType="number"
         label="Menge"
         class="grow basis-1/4"
@@ -26,7 +28,9 @@
       </RoundedSelect>
 
       <AutoCompleteInput
+        :name="'ingredientName' + ingredientIdx.toString()"
         v-model="currentIngredient.ingredientName"
+        rules="required"
         :autoCompleteList="ingredientAutoCompleteList"
         @change="onIngredientChange"
         @onAutoCompleteOptionSelected="selectIngredientFromAutoCompleteList"
@@ -58,7 +62,9 @@
         <div class="text-sm text-stone-500">Einheitenumrechnung</div>
         <div class="flex flex-row items-center gap-2">
           <RoundedInput
+            :name="'currentConversionFactor' + ingredientIdx.toString()"
             v-model.number="currentIngredient.currentConversionFactor"
+            rules="required|number|positive"
             inputType="number"
             class="grow basis-1/2"
           >
@@ -69,7 +75,9 @@
 
           <span class="icon-md">sync_alt</span>
           <RoundedInput
+            :name="'defaultConversionFactor' + ingredientIdx.toString()"
             v-model.number="currentIngredient.defaultConversionFactor"
+            rules="required|number|positive"
             inputType="number"
             class="grow basis-1/2"
           >
@@ -112,7 +120,6 @@ import {
   Unit,
   IngredientCategory,
   IngredientShort,
-  Ingredient,
   UnitConversion,
 } from "../types/recipeDbTypes";
 import { reactive, watchEffect, computed, ref, onMounted } from "vue";
@@ -121,6 +128,7 @@ const props = defineProps<{
   modelValue: QuantifiedIngredientEditData;
   unitList: Unit[];
   ingredientCategoryList: IngredientCategory[];
+  ingredientIdx: number;
 }>();
 const emit = defineEmits(["update:modelValue"]);
 

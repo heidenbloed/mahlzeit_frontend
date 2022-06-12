@@ -14,8 +14,10 @@
     "@headlessui/vue": "^1.4.2",
     "@tailwindcss/forms": "^0.4.0",
     "@types/swiper": "^5.4.3",
+    "@vueuse/core": "^8.6.0",
     "axios": "^0.27.2",
     "swiper": "^7.3.3",
+    "vee-validate": "^4.5.11",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12",
     "vuedraggable": "^4.1.0"

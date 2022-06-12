@@ -9,48 +9,61 @@
     />
   </transition> -->
 
-  <RoundedDropdown :showDropdown="showAutoCompleteList">
-    <template #input>
-      <RoundedInput
-        v-model="_modelValue"
-        :inputType="inputType"
-        :label="label"
-        :clearable="clearable"
-        class="h-full"
-        noRing
-        @input="showAutoCompleteList = autoCompleteList.length > 0"
-        @keyup.enter="showAutoCompleteList = false"
-      >
-        <template #before>
-          <slot name="beforeInput"></slot>
-        </template>
-      </RoundedInput>
-    </template>
-
-    <template #dropdown>
-      <li v-for="autoCompleteOption in autoCompleteList" class="items-center">
-        <button
-          class="h-10 w-full break-words text-left"
-          @click="onAutoCompleteOptionSelected(autoCompleteOption)"
+  <div>
+    <RoundedDropdown :showDropdown="showAutoCompleteList">
+      <template #input>
+        <RoundedInput
+          v-model="_modelValue"
+          :inputType="inputType"
+          :label="label"
+          :clearable="clearable"
+          :name="name"
+          :rules="rules"
+          noRing
+          :errorMsgContainerId="errorMsgContainerId"
+          @input="showAutoCompleteList = autoCompleteList.length > 0"
+          @keyup.enter="showAutoCompleteList = false"
         >
-          <slot name="autoCompleteOption" :option="autoCompleteOption">
-            <span>{{ autoCompleteOption }}</span>
-          </slot>
-        </button>
-      </li>
-    </template>
-  </RoundedDropdown>
+          <template #before>
+            <slot name="beforeInput"></slot>
+          </template>
+        </RoundedInput>
+      </template>
+
+      <template #dropdown>
+        <li v-for="autoCompleteOption in autoCompleteList" class="items-center">
+          <button
+            class="h-10 w-full break-words text-left"
+            @click="onAutoCompleteOptionSelected(autoCompleteOption)"
+            type="button"
+          >
+            <slot name="autoCompleteOption" :option="autoCompleteOption">
+              <span>{{ autoCompleteOption }}</span>
+            </slot>
+          </button>
+        </li>
+      </template>
+    </RoundedDropdown>
+    <div id="errMsg"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import RoundedInput from "@/components/RoundedInput.vue";
 import RoundedDropdown from "@/components/RoundedDropdown.vue";
-import { ref, watchEffect, PropType } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   modelValue: {
     type: [String, Number],
     default: "",
+  },
+  rules: {
+    type: String,
   },
   label: {
     type: String,
@@ -71,18 +84,29 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue", "onAutoCompleteOptionSelected"]);
 
-const _modelValue = ref<string>("");
+const _modelValue = ref<string>(props.modelValue.toString());
 const showAutoCompleteList = ref(false);
 
-watchEffect(() => {
-  _modelValue.value = props.modelValue.toString();
+watch(_modelValue, (newVal, prevVal) => {
+  emit("update:modelValue", newVal);
 });
-watchEffect(() => {
-  emit("update:modelValue", _modelValue.value);
-});
+watch(
+  () => props.modelValue,
+  (newVal, prevVal) => {
+    const propModelValue = newVal.toString();
+    if (_modelValue.value != propModelValue) {
+      _modelValue.value = propModelValue;
+    }
+  }
+);
 
 function onAutoCompleteOptionSelected(autoCompleteOption: any) {
   showAutoCompleteList.value = false;
   emit("onAutoCompleteOptionSelected", autoCompleteOption);
 }
+
+const errorMsgContainerId = ref<string | null>(null);
+onMounted(() => {
+  errorMsgContainerId.value = "#errMsg";
+});
 </script>

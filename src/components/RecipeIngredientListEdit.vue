@@ -10,6 +10,7 @@
         v-if="!ingredientEdit[ingredientIdx]"
         class="flex grow items-center gap-1 rounded-xl bg-stone-200 p-2 align-middle"
         @click="ingredientEdit[ingredientIdx] = true"
+        type="button"
       >
         <span class="grow">
           {{ ingredient.quantity }} {{ ingredient.unit.short_form }}
@@ -23,6 +24,7 @@
         v-model="_modelValue[ingredientIdx]"
         :unitList="unitList"
         :ingredientCategoryList="ingredientCategoryList"
+        :ingredientIdx="ingredientIdx"
         class="grow"
       />
 
@@ -30,6 +32,7 @@
         <button
           class="flex h-full w-10 items-center justify-center rounded-xl bg-stone-200"
           @click="removeIngredient(ingredientIdx)"
+          type="button"
         >
           <span class="icon-md">delete</span>
         </button>

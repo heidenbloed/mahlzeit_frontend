@@ -1,6 +1,6 @@
 <template>
   <ReloadPWA />
-  <div class="h-screen w-screen overflow-auto bg-stone-200">
+  <div class="h-full w-full overflow-auto bg-stone-200">
     <router-view></router-view>
   </div>
 </template>

@@ -3,6 +3,7 @@
     <RecipeSearchAndFilterBar
       v-model="searchString"
       v-model:labelFilterList="labelFilterList"
+      name="recipeSearchBar"
     />
     <RecipeCard
       v-for="recipeCardData in recipeCardDataList"

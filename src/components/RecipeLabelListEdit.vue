@@ -10,6 +10,7 @@
     />
   </div>
   <AutoCompleteInput
+    name="newLabelInput"
     v-model="newLabelInput"
     :autoCompleteList="labelAutoCompleteList"
     @on-auto-complete-option-selected="addNewLabel"

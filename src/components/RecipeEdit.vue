@@ -1,69 +1,74 @@
 <template>
   <main class="mx-auto max-w-4xl rounded-b-xl bg-white md:rounded-t-xl">
-    <!-- <pre class="text-xs">{{_recipeData}}</pre> -->
+    <article class="p-4 font-sans tracking-tight text-gray-700">
+      <ValidatingForm
+        class="flex flex-col gap-4"
+        @save="finishEdit(true)"
+        @cancel="finishEdit(false)"
+      >
+        <section class="flex flex-col gap-2">
+          <RoundedInput
+            name="recipeName"
+            label="Rezeptname"
+            v-model="_recipeData.name"
+            rules="required"
+            clearable
+          />
+          <RoundedInput
+            name="prepTime"
+            label="Dauer in Minuten"
+            inputType="number"
+            v-model.number="_recipeData.preparation_time"
+            rules="required|number|positive|integer"
+            clearable
+          />
+          <RoundedInput
+            name="source"
+            label="Quelle"
+            v-model="_recipeData.source"
+            rules="required"
+            clearable
+          />
+        </section>
 
-    <article
-      class="flex flex-col gap-4 p-4 font-sans tracking-tight text-gray-700"
-    >
-      <section class="flex flex-col gap-2">
-        <RoundedInput label="Rezeptname" v-model="_recipeData.name" clearable />
-        <RoundedInput
-          label="Dauer in Minuten"
-          inputType="number"
-          v-model="_recipeData.preparation_time"
-          clearable
-        />
-        <RoundedInput label="Quelle" v-model="_recipeData.source" clearable />
-      </section>
+        <SubSection title="Zutaten">
+          <RecipeIngredientListEdit
+            v-model="_recipeData.quantified_ingredients"
+            v-model:numServings="_recipeData.num_servings"
+            :unitList="unitList"
+            :ingredientCategoryList="ingredientCategoryList"
+          />
+        </SubSection>
 
-      <SubSection title="Zutaten">
-        <RecipeIngredientListEdit
-          v-model="_recipeData.quantified_ingredients"
-          v-model:numServings="_recipeData.num_servings"
-          :unitList="unitList"
-          :ingredientCategoryList="ingredientCategoryList"
-        />
-      </SubSection>
+        <SubSection title="Schlagwörter">
+          <RecipeLabelListEdit
+            v-model="_recipeData.labels"
+            :allLabels="allLabels"
+          />
+        </SubSection>
 
-      <SubSection title="Schlagwörter">
-        <RecipeLabelListEdit
-          v-model="_recipeData.labels"
-          :allLabels="allLabels"
-        />
-      </SubSection>
-
-      <SubSection title="Fotos">
-        <RecipeImageSorter v-model="_recipeData.recipe_images" />
-      </SubSection>
-
-      <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="flat" @click="finishEdit(true)">
-          <template v-slot:icon>save</template>
-          <template v-slot:default>Speichern</template>
-        </RoundedButton>
-        <RoundedButton type="flat" @click="finishEdit(false)">
-          <template v-slot:icon>cancel</template>
-          <template v-slot:default>Abbrechen</template>
-        </RoundedButton>
-      </section>
+        <SubSection title="Fotos">
+          <RecipeImageSorter v-model="_recipeData.recipe_images" />
+        </SubSection>
+      </ValidatingForm>
     </article>
   </main>
 </template>
 
 <script setup lang="ts">
-import RoundedButton from "@/components/RoundedButton.vue";
 import RoundedInput from "@/components/RoundedInput.vue";
 import SubSection from "@/components/SubSection.vue";
 import RecipeImageSorter from "@/components/RecipeImageSorter.vue";
 import RecipeLabelListEdit from "@/components/RecipeLabelListEdit.vue";
 import RecipeIngredientListEdit from "@/components/RecipeIngredientListEdit.vue";
+import ValidatingForm from "@/components/ValidatingForm.vue";
 import {
   RecipeEditData,
   Unit,
   IngredientCategory,
   RecipeLabel,
 } from "../types/recipeDbTypes";
-import { reactive, watchEffect } from "vue";
+import { reactive } from "vue";
 
 const props = defineProps<{
   recipeData: RecipeEditData;
@@ -76,7 +81,7 @@ const emit = defineEmits(["update:recipeData", "editFinished"]);
 const _recipeData = reactive(props.recipeData);
 
 function finishEdit(saveChanges: boolean) {
-  //todo: data verification
+  debugger;
   if (saveChanges) {
     emit("update:recipeData", _recipeData);
   }

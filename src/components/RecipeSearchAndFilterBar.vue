@@ -3,6 +3,7 @@
     <RoundedCard noWidthLimit class="flex flex-col gap-4 p-4">
       <AutoCompleteInput
         v-model="_modelValue"
+        :name="name"
         :autoCompleteList="autoCompleteList"
         @on-auto-complete-option-selected="selectAutoCompleteOption"
         clearable
@@ -51,6 +52,10 @@ import { RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect, PropType, reactive } from "vue";
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   modelValue: {
     type: String,
     default: "",

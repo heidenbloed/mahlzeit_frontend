@@ -2,6 +2,7 @@
   <button
     class="inline-flex h-10 items-center justify-center rounded-lg px-2 font-semibold"
     :class="additionalButtonClasses"
+    :type="buttonType"
   >
     <span class="icon-md">
       <slot name="icon"></slot>
@@ -15,13 +16,16 @@
 <script setup lang="ts">
 import { computed, useSlots } from "vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "flat",
-    validator: (val: string) => ["primary", "raised", "flat"].includes(val),
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    type?: "primary" | "raised" | "flat";
+    buttonType?: "button" | "submit" | "reset";
+  }>(),
+  {
+    type: "flat",
+    buttonType: "button",
+  }
+);
 const slots = useSlots();
 
 const additionalButtonClasses = computed(() => {

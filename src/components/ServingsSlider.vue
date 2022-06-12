@@ -13,6 +13,8 @@
       inputType="number"
       class="hidden w-20 md:block"
       v-model.number="_modelValue"
+      name="servingSlider"
+      rules="required|number|positive|integer"
     />
   </div>
 </template>

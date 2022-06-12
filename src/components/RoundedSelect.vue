@@ -1,5 +1,5 @@
 <template>
-  <Listbox v-model="_modelValue" v-slot="{ open }">
+  <Listbox v-model="_modelValue" v-slot="{ open }" class="h-fit bg-stone-200">
     <RoundedDropdown :showDropdown="open">
       <template #input>
         <ListboxButton class="flex w-full flex-row items-center gap-2 p-2">
@@ -40,7 +40,7 @@
                 >
                   check
                 </span>
-                <button class="h-10 grow">
+                <button class="h-10 grow" type="button">
                   <slot name="option" :option="option">
                     {{ option }}
                   </slot>
