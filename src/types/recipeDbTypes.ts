@@ -113,11 +113,11 @@ export interface QuantifiedIngredientEditData {
   ingredientId: number | null;
   ingredientName: string;
   ingredientCategory: IngredientCategory;
-  quantity: number;
+  quantity: number | string;
   unit: Unit;
   defaultUnit: Unit | null;
-  currentConversionFactor: number;
-  defaultConversionFactor: number;
+  currentConversionFactor: number | string;
+  defaultConversionFactor: number | string;
   setAsDefaultUnit: boolean;
 }
 

@@ -42,6 +42,7 @@
     <button
       class="flex items-center justify-center gap-1 rounded-xl bg-stone-200 p-2 align-middle"
       @click="addNewEmptyIngredient"
+      type="button"
     >
       <span class="icon-md">add_circle_outline</span>
     </button>
@@ -80,7 +81,7 @@ function addNewEmptyIngredient() {
   _modelValue.value.push({
     ingredientId: null,
     ingredientName: "",
-    quantity: 1,
+    quantity: "",
     unit: props.unitList[0],
     defaultUnit: props.unitList[0],
     currentConversionFactor: 1.0,

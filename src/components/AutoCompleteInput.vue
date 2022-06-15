@@ -1,14 +1,4 @@
 <template>
-  <!-- <transition
-    enterFromClass="opacity-0"
-    leaveToClass="opacity-0"
-  >
-    <div
-      v-show="showAutoCompleteList"
-      class="fixed inset-0 bg-black opacity-30 z-20 transition-opacity duration-300"
-    />
-  </transition> -->
-
   <div>
     <RoundedDropdown :showDropdown="showAutoCompleteList">
       <template #input>
@@ -44,14 +34,14 @@
         </li>
       </template>
     </RoundedDropdown>
-    <div id="errMsg"></div>
+    <div :id="errMsgDivId"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import RoundedInput from "@/components/RoundedInput.vue";
 import RoundedDropdown from "@/components/RoundedDropdown.vue";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 
 const props = defineProps({
   name: {
@@ -105,8 +95,9 @@ function onAutoCompleteOptionSelected(autoCompleteOption: any) {
   emit("onAutoCompleteOptionSelected", autoCompleteOption);
 }
 
+const errMsgDivId = computed<string>(() => props.name + "ErrMsg");
 const errorMsgContainerId = ref<string | null>(null);
 onMounted(() => {
-  errorMsgContainerId.value = "#errMsg";
+  errorMsgContainerId.value = "#" + errMsgDivId.value;
 });
 </script>

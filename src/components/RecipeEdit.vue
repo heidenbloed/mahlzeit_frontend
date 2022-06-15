@@ -81,7 +81,6 @@ const emit = defineEmits(["update:recipeData", "editFinished"]);
 const _recipeData = reactive(props.recipeData);
 
 function finishEdit(saveChanges: boolean) {
-  debugger;
   if (saveChanges) {
     emit("update:recipeData", _recipeData);
   }

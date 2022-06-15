@@ -122,7 +122,7 @@ import {
   IngredientShort,
   UnitConversion,
 } from "../types/recipeDbTypes";
-import { reactive, watchEffect, computed, ref, onMounted } from "vue";
+import { reactive, watch, watchEffect, computed, ref, onMounted } from "vue";
 
 const props = defineProps<{
   modelValue: QuantifiedIngredientEditData;
@@ -139,16 +139,19 @@ const ingredientUnitConversions = ref<null | UnitConversion[]>(null);
 watchEffect(() => {
   emit("update:modelValue", currentIngredient);
 });
-watchEffect(async () => {
-  if (currentIngredient.ingredientName.length >= 1) {
-    ingredientAutoCompleteList.value = await getIngredientList(
-      IngredientListOrdering.nameAscending,
-      currentIngredient.ingredientName
-    );
-  } else {
-    ingredientAutoCompleteList.value = [];
+watch(
+  () => currentIngredient.ingredientName,
+  async () => {
+    if (currentIngredient.ingredientName.length >= 1) {
+      ingredientAutoCompleteList.value = await getIngredientList(
+        IngredientListOrdering.nameAscending,
+        currentIngredient.ingredientName
+      );
+    } else {
+      ingredientAutoCompleteList.value = [];
+    }
   }
-});
+);
 async function onIngredientChange() {
   currentIngredient.ingredientName = currentIngredient.ingredientName.trim();
   const possibleIngredients = await getIngredientList(
@@ -184,7 +187,7 @@ async function selectIngredientFromAutoCompleteList(
   currentIngredient.setAsDefaultUnit = false;
   ingredientUnitConversions.value = selectedIngredientDetails.unit_conversions;
 }
-watchEffect(() => {
+watch(ingredientUnitConversions, () => {
   if (ingredientUnitConversions.value !== null) {
     const unitConversion = ingredientUnitConversions.value.find(
       (unitConversion) =>

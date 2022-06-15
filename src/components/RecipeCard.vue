@@ -32,7 +32,7 @@
 import RoundedCard from "@/components/RoundedCard.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
-import { RecipeShort } from "../api/recipeDbApi";
+import { RecipeShort } from "../types/recipeDbTypes";
 import { computed } from "vue";
 import placeholderImageUrl from "@/assets/placeholder_image.png";
 

@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 const props = defineProps({
   showDropdown: {
@@ -47,8 +47,8 @@ const dynamicDropdownContainerClasses = computed(() => {
   }
 });
 
-watchEffect(() => {
-  if (_showDropdown.value && dropdownContainer.value !== undefined) {
+watch(_showDropdown, (showDropdownValue) => {
+  if (showDropdownValue && dropdownContainer.value !== undefined) {
     const topOffset = dropdownContainer.value.offsetTop - window.scrollY;
     openListUpwards.value = topOffset > window.screen.height / 2;
   }

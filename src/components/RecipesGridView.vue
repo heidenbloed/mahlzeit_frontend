@@ -9,6 +9,9 @@
       v-for="recipeCardData in recipeCardDataList"
       :recipeCardData="recipeCardData"
     />
+    <FloatingActionButton @click="$router.push('/recipe/new/')">
+      add
+    </FloatingActionButton>
   </CardGrid>
 </template>
 
@@ -16,6 +19,7 @@
 import RecipeCard from "@/components/RecipeCard.vue";
 import CardGrid from "@/components/CardGrid.vue";
 import RecipeSearchAndFilterBar from "@/components/RecipeSearchAndFilterBar.vue";
+import FloatingActionButton from "@/components/FloatingActionButton.vue";
 import { getRecipeList, RecipeListOrdering } from "../api/recipeDbApi";
 import { RecipeShort, RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect } from "vue";

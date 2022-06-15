@@ -100,7 +100,7 @@ watch(
   (newVal, prevVal) => {
     const propModelValue = newVal.toString();
     if (_modelValue.value != propModelValue) {
-      _modelValue.value = propModelValue;
+      resetField({ value: propModelValue, touched: false });
     }
   }
 );

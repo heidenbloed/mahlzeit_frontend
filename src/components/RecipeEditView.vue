@@ -96,6 +96,9 @@ async function onEditFinished(saveChanges: boolean) {
       const quantifiedIngredientList: Array<QuantifiedIngredientEdit> =
         await Promise.all(
           recipeData.value.quantified_ingredients.map(async (quantIngr) => {
+            if (typeof quantIngr.quantity !== "number") {
+              quantIngr.quantity = parseFloat(quantIngr.quantity);
+            }
             if (quantIngr.ingredientId === null) {
               const newIngredient = await createIngredient({
                 name: quantIngr.ingredientName,
@@ -115,7 +118,11 @@ async function onEditFinished(saveChanges: boolean) {
               if (quantIngr.setAsDefaultUnit) {
                 ingredientUpdateData["default_unit"] = quantIngr.unit.id;
               }
-              if (quantIngr.defaultUnit !== quantIngr.unit) {
+              if (
+                quantIngr.defaultUnit !== quantIngr.unit &&
+                typeof quantIngr.defaultConversionFactor === "number" &&
+                typeof quantIngr.currentConversionFactor === "number"
+              ) {
                 let unit_conversion = null;
                 if (quantIngr.setAsDefaultUnit && quantIngr.defaultUnit) {
                   unit_conversion = {
