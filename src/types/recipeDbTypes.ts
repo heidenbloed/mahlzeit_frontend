@@ -113,11 +113,11 @@ export interface QuantifiedIngredientEditData {
   ingredientId: number | null;
   ingredientName: string;
   ingredientCategory: IngredientCategory;
-  quantity: number | string;
+  quantity: number | "";
   unit: Unit;
   defaultUnit: Unit | null;
-  currentConversionFactor: number | string;
-  defaultConversionFactor: number | string;
+  currentConversionFactor: number | "";
+  defaultConversionFactor: number | "";
   setAsDefaultUnit: boolean;
 }
 
@@ -131,7 +131,7 @@ export interface RecipeImageEditData {
 export interface RecipeEditData {
   id?: number;
   name: string;
-  preparation_time: number;
+  preparation_time: number | "";
   source: string;
   num_servings: number;
   labels: RecipeLabel[];

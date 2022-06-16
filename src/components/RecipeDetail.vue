@@ -41,7 +41,7 @@
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="flat">
+        <RoundedButton type="flat" @click="emit('delete')">
           <template v-slot:icon>delete</template>
           <template v-slot:default>Löschen</template>
         </RoundedButton>
@@ -75,7 +75,7 @@ import { ref, watchEffect } from "vue";
 const props = defineProps<{
   recipeData: RecipeData;
 }>();
-const emit = defineEmits(["edit"]);
+const emit = defineEmits(["edit", "delete"]);
 
 const numServings = ref(0);
 watchEffect(() => {

@@ -3,9 +3,10 @@
     v-if="recipeData && !editMode"
     :recipeData="recipeData"
     @edit="toggleEditMode(false)"
+    @delete="removeRecipe"
   />
   <RecipeEditView
-    v-if="recipeData && editMode"
+    v-if="(recipeData || isNewRecipe) && editMode"
     :initRecipeData="recipeData"
     @editFinished="toggleEditMode"
   />
@@ -16,34 +17,47 @@
 import RecipeDetail from "@/components/RecipeDetail.vue";
 import LoadingSkeleton from "@/components/LoadingSkeleton.vue";
 import RecipeEditView from "@/components/RecipeEditView.vue";
-import { getRecipeDetail } from "../api/recipeDbApi";
+import { getRecipeDetail, deleteRecipe } from "../api/recipeDbApi";
 import { RecipeData } from "../types/recipeDbTypes";
-import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted, computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
+const router = useRouter();
 const route = useRoute();
+const isNewRecipe = computed(() => route.params.id === "new");
 const recipeId = computed(() => {
-  const id = Number.parseInt(route.params.id as string);
-  if (!Number.isNaN(id)) {
+  const id = parseInt(route.params.id as string);
+  if (!isNaN(id)) {
     return id;
   }
   return -1;
 });
 
 const recipeData = ref<RecipeData | null>(null);
-onMounted(async () => {
-  recipeData.value = await getRecipeDetail(recipeId.value);
-});
+async function reloadRecipeData() {
+  if (recipeId.value >= 0) {
+    recipeData.value = await getRecipeDetail(recipeId.value);
+  }
+}
+onMounted(reloadRecipeData);
+watch(() => route.params.id, reloadRecipeData);
 
-const editMode = ref(false);
-async function toggleEditMode(reloadRecipeData: boolean) {
-  if (reloadRecipeData) {
+const editMode = ref(isNewRecipe.value);
+async function toggleEditMode(reload: boolean) {
+  if (reload) {
     recipeData.value = null;
   }
   window.scrollTo(0, 0);
   editMode.value = !editMode.value;
-  if (reloadRecipeData) {
-    recipeData.value = await getRecipeDetail(recipeId.value);
+  if (reload) {
+    reloadRecipeData();
+  }
+}
+
+async function removeRecipe() {
+  if (recipeId.value >= 0) {
+    await deleteRecipe(recipeId.value);
+    router.push("/recipes/");
   }
 }
 </script>
