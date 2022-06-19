@@ -26,7 +26,6 @@
             name="source"
             label="Quelle"
             v-model="_recipeData.source"
-            rules="required"
             clearable
           />
         </section>

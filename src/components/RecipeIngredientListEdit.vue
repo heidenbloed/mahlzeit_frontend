@@ -40,12 +40,16 @@
     </div>
 
     <button
-      class="flex items-center justify-center gap-1 rounded-xl bg-stone-200 p-2 align-middle"
+      class="flex items-center justify-center gap-1 rounded-xl p-2 align-middle"
+      :class="addButtonColor"
       @click="addNewEmptyIngredient"
       type="button"
     >
       <span class="icon-md">add_circle_outline</span>
     </button>
+    <div v-if="errorMessage" class="text-sm text-red-500">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 
@@ -57,7 +61,8 @@ import {
   Unit,
   IngredientCategory,
 } from "../types/recipeDbTypes";
-import { reactive, watchEffect, ref } from "vue";
+import { watchEffect, ref, computed, watch } from "vue";
+import { useField } from "vee-validate";
 
 const props = defineProps<{
   modelValue: QuantifiedIngredientEditData[];
@@ -69,8 +74,29 @@ const emit = defineEmits(["update:modelValue", "update:numServings"]);
 
 const _modelValue = ref(props.modelValue);
 const ingredientEdit = ref(new Array(props.modelValue.length).fill(false));
-
 const _numServings = ref(props.numServings);
+
+const numIngredients = computed(() => _modelValue.value.length);
+function ingredientListMustBeNonEmpty(value: any) {
+  if (numIngredients.value == 0) {
+    return "Das Rezept muss mindestens eine Zutat haben";
+  }
+  return true;
+}
+const { errorMessage, validate } = useField("", ingredientListMustBeNonEmpty, {
+  validateOnMount: false,
+  validateOnValueUpdate: false,
+});
+watch(numIngredients, () => {
+  validate();
+});
+const addButtonColor = computed(() => {
+  if (errorMessage.value) {
+    return "bg-red-100";
+  } else {
+    return "bg-stone-200";
+  }
+});
 
 function removeIngredient(ingredientIdx: number) {
   _modelValue.value.splice(ingredientIdx, 1);

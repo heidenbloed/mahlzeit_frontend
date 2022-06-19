@@ -5,21 +5,22 @@
       v-model:labelFilterList="labelFilterList"
       name="recipeSearchBar"
     />
-    <div class="w-full hidden md:flex lg:col-span-2 xl:col-span-3 flex-row justify-center">
+    <div
+      class="hidden w-full flex-row justify-center md:flex lg:col-span-2 xl:col-span-3"
+    >
       <RoundedButton type="primary" @click="$router.push('/recipe/new/')">
-        <template #default>
-          Neues Rezept
-        </template>
-        <template #icon>
-          add
-        </template>
+        <template #default> Neues Rezept </template>
+        <template #icon> add </template>
       </RoundedButton>
     </div>
     <RecipeCard
       v-for="recipeCardData in recipeCardDataList"
       :recipeCardData="recipeCardData"
     />
-    <FloatingActionButton class="block md:hidden" @click="$router.push('/recipe/new/')">
+    <FloatingActionButton
+      class="block md:hidden"
+      @click="$router.push('/recipe/new/')"
+    >
       add
     </FloatingActionButton>
   </CardGrid>

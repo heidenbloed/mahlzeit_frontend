@@ -14,7 +14,7 @@
         <p>
           <RecipeDurationLabel :prepTime="recipeData.preparation_time" />
         </p>
-        <p>
+        <p v-if="recipeData.source.length > 0">
           {{ recipeData.source }}
         </p>
       </section>
@@ -30,7 +30,7 @@
         </ul>
       </SubSection>
 
-      <SubSection title="Schlagwörter">
+      <SubSection title="Schlagwörter" v-if="recipeData.labels.length > 0">
         <div class="mt-2 flex flex-wrap gap-x-2 gap-y-1">
           <RecipeLabelTag
             v-for="label in recipeData.labels"
