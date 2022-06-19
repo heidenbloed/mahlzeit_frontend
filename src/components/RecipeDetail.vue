@@ -12,10 +12,13 @@
           {{ recipeData.name }}
         </h1>
         <p>
-          <RecipeDurationLabel :prepTime="recipeData.preparation_time" />
+          <RecipeDurationLabel
+            :prepTime="recipeData.preparation_time"
+            withIcon
+          />
         </p>
         <p v-if="recipeData.source.length > 0">
-          {{ recipeData.source }}
+          <RecipeSourceLabel :source="recipeData.source" />
         </p>
       </section>
 
@@ -67,6 +70,7 @@ import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
 import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
+import RecipeSourceLabel from "@/components/RecipeSourceLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import SubSection from "@/components/SubSection.vue";
 import { RecipeData } from "../types/recipeDbTypes";
