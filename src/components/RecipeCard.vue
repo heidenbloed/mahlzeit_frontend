@@ -20,9 +20,9 @@
       </div>
     </button>
     <div class="flex justify-end p-2">
-      <RoundedButton type="flat" @click.stop>
-        <template v-slot:icon>shopping_cart</template>
-        <template v-slot:default>Einkaufen</template>
+      <RoundedButton type="flat" @click="toggleRecipePlanning">
+        <template v-slot:icon>{{planningButtonIcon}}</template>
+        <template v-slot:default>{{planningButtonText}}</template>
       </RoundedButton>
     </div>
   </RoundedCard>
@@ -34,6 +34,7 @@ import RoundedButton from "@/components/RoundedButton.vue";
 import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
 import { RecipeShort } from "../types/recipeDbTypes";
 import { computed } from "vue";
+import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import placeholderImageUrl from "@/assets/placeholder_image.png";
 
 const props = defineProps<{
@@ -46,4 +47,18 @@ const firstImageUrl = computed(() =>
     : placeholderImageUrl
 );
 const detailUrl = computed(() => `/recipe/${props.recipeCardData.id}/`);
+
+const {
+  toggleRecipePlanning: _toggleRecipePlanning,
+  planningButtonIcon,
+  planningButtonText,
+} = usePlannedRecipesStoreForRecipe(props.recipeCardData.id);
+function toggleRecipePlanning(){
+  _toggleRecipePlanning({
+    id: props.recipeCardData.id,
+    name: props.recipeCardData.name,
+    numServings: 4,
+    image: firstImageUrl.value,
+  });
+};
 </script>

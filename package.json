@@ -17,6 +17,7 @@
     "@vueuse/core": "^8.6.0",
     "axios": "^0.27.2",
     "normalize-url": "^7.0.3",
+    "pinia": "^2.0.14",
     "swiper": "^7.3.3",
     "vee-validate": "^4.5.11",
     "vue": "^3.2.31",

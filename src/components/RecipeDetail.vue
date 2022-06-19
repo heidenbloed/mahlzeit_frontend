@@ -56,9 +56,9 @@
           <template v-slot:icon>share</template>
           <template v-slot:default>Teilen</template>
         </RoundedButton>
-        <RoundedButton type="flat">
-          <template v-slot:icon>shopping_cart</template>
-          <template v-slot:default>Einkaufen</template>
+        <RoundedButton type="flat" @click="toggleRecipePlanning">
+          <template v-slot:icon>{{planningButtonIcon}}</template>
+          <template v-slot:default>{{planningButtonText}}</template>
         </RoundedButton>
       </section>
     </article>
@@ -74,7 +74,9 @@ import RecipeSourceLabel from "@/components/RecipeSourceLabel.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import SubSection from "@/components/SubSection.vue";
 import { RecipeData } from "../types/recipeDbTypes";
-import { ref, watchEffect } from "vue";
+import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
+import { ref, watchEffect, computed, watch } from "vue";
+import placeholderImageUrl from "@/assets/placeholder_image.png";
 
 const props = defineProps<{
   recipeData: RecipeData;
@@ -89,5 +91,32 @@ function getScaledQuantity(quantity: number) {
   const scaledQuantity =
     (numServings.value * quantity) / props.recipeData.num_servings;
   return Math.round(scaledQuantity * 10) / 10;
-}
+};
+
+const firstImageUrl = computed(() => {
+  if (props.recipeData.recipe_images.length > 0) {
+    return props.recipeData.recipe_images.reduce((prev, current) => {
+      if (prev.order > current.order) {
+        return prev
+      } else {
+        return current
+      }
+    }).image;
+  } else {
+    return placeholderImageUrl;
+  }
+});
+const {
+  toggleRecipePlanning: _toggleRecipePlanning,
+  planningButtonIcon,
+  planningButtonText,
+} = usePlannedRecipesStoreForRecipe(props.recipeData.id);
+function toggleRecipePlanning(){
+  _toggleRecipePlanning({
+    id: props.recipeData.id,
+    name: props.recipeData.name,
+    numServings: numServings.value,
+    image: firstImageUrl.value,
+  });
+};
 </script>
