@@ -24,6 +24,7 @@
       add
     </FloatingActionButton>
   </CardGrid>
+  <div class="h-24 md:hidden"></div>
 </template>
 
 <script setup lang="ts">

@@ -10,7 +10,7 @@
     :initRecipeData="recipeData"
     @editFinished="toggleEditMode"
   />
-  <LoadingSkeleton v-if="!recipeData" />
+  <LoadingSkeleton v-if="!recipeData && !isNewRecipe" />
 </template>
 
 <script setup lang="ts">
