@@ -29,5 +29,8 @@ const props = defineProps<{
 const emit = defineEmits(["update:modelValue"]);
 
 const _modelValue = ref(props.modelValue);
+watchEffect(() => {
+  _modelValue.value = props.modelValue;
+});
 watchEffect(() => emit("update:modelValue", _modelValue.value));
 </script>

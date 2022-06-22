@@ -21,8 +21,8 @@
     </button>
     <div class="flex justify-end p-2">
       <RoundedButton type="flat" @click="toggleRecipePlanning">
-        <template v-slot:icon>{{planningButtonIcon}}</template>
-        <template v-slot:default>{{planningButtonText}}</template>
+        <template v-slot:icon>{{ planningButtonIcon }}</template>
+        <template v-slot:default>{{ planningButtonText }}</template>
       </RoundedButton>
     </div>
   </RoundedCard>
@@ -53,12 +53,12 @@ const {
   planningButtonIcon,
   planningButtonText,
 } = usePlannedRecipesStoreForRecipe(props.recipeCardData.id);
-function toggleRecipePlanning(){
+function toggleRecipePlanning() {
   _toggleRecipePlanning({
     id: props.recipeCardData.id,
     name: props.recipeCardData.name,
     numServings: 4,
     image: firstImageUrl.value,
   });
-};
+}
 </script>

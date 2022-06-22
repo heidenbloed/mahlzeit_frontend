@@ -8,30 +8,28 @@
         class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
       >
         <span class="flex flex-wrap items-center justify-center gap-1 md:gap-2">
-          <ServingsSlider :modelValue="4" class="" />
-          <RoundedButton type="flat">
+          <ServingsSlider v-model="numServingsForAll" class="" />
+          <RoundedButton
+            type="flat"
+            @click="plannedRecipes.updateAllNumServings(numServingsForAll)"
+          >
             <template v-slot:icon>approval</template>
             <template v-slot:default>Für alle übernehmen</template>
           </RoundedButton>
         </span>
         <div class="h-px self-stretch bg-stone-800 md:h-auto md:w-px"></div>
-        <RoundedButton type="secondary">
+        <RoundedButton type="secondary" @click="plannedRecipes.clearList">
           <template v-slot:icon>remove_shopping_cart</template>
           <template v-slot:default>Liste leeren</template>
         </RoundedButton>
       </div>
     </RoundedCard>
     <PlanningCard
-      v-for="name in [
-        'Salatschüssel',
-        'Falaffelbällchen mit Vanilleeis und Brombeeren',
-        'Salatschüssel mit Käse',
-        'Salatschüssel (vegan)',
-        'Linsengemüse mit Orecchiette',
-      ]"
-      :recipeName="name"
-      imageUrl="https://i0.web.de/image/496/34720496,pd=3,f=sdata169/abnehmen-bewusst-essen.jpg"
-      :defaultNumServings="4"
+      v-for="plannedRecipe in plannedRecipes.list"
+      :recipeId="plannedRecipe.id"
+      :recipeName="plannedRecipe.name"
+      :imageUrl="plannedRecipe.image"
+      :numServings="plannedRecipe.numServings"
     />
     <!-- <RoundedCard noWidthLimit class="w-full p-4 col-span-1 lg:col-span-2 xl:col-span-3">
       <div class="flex flex-col md:flex-row gap-4 items-center justify-center">
@@ -50,4 +48,13 @@ import RoundedCard from "@/components/RoundedCard.vue";
 import PlanningCard from "@/components/PlanningCard.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
+import { usePlannedRecipesStore } from "../stores/plannedRecipes";
+import { ref, watch } from "vue";
+
+const numServingsForAll = ref(4);
+const plannedRecipes = usePlannedRecipesStore();
+
+watch(plannedRecipes.list, () => {
+  "plannedRecipes updated";
+});
 </script>

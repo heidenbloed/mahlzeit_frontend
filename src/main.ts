@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { createPinia } from 'pinia';
+import { createPinia } from "pinia";
 import { defineRule } from "vee-validate";
 import router from "./router";
 import App from "./App.vue";

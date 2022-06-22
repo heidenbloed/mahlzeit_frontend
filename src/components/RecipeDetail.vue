@@ -57,8 +57,8 @@
           <template v-slot:default>Teilen</template>
         </RoundedButton>
         <RoundedButton type="flat" @click="toggleRecipePlanning">
-          <template v-slot:icon>{{planningButtonIcon}}</template>
-          <template v-slot:default>{{planningButtonText}}</template>
+          <template v-slot:icon>{{ planningButtonIcon }}</template>
+          <template v-slot:default>{{ planningButtonText }}</template>
         </RoundedButton>
       </section>
     </article>
@@ -91,15 +91,15 @@ function getScaledQuantity(quantity: number) {
   const scaledQuantity =
     (numServings.value * quantity) / props.recipeData.num_servings;
   return Math.round(scaledQuantity * 10) / 10;
-};
+}
 
 const firstImageUrl = computed(() => {
   if (props.recipeData.recipe_images.length > 0) {
     return props.recipeData.recipe_images.reduce((prev, current) => {
-      if (prev.order > current.order) {
-        return prev
+      if (prev.order < current.order) {
+        return prev;
       } else {
-        return current
+        return current;
       }
     }).image;
   } else {
@@ -111,12 +111,12 @@ const {
   planningButtonIcon,
   planningButtonText,
 } = usePlannedRecipesStoreForRecipe(props.recipeData.id);
-function toggleRecipePlanning(){
+function toggleRecipePlanning() {
   _toggleRecipePlanning({
     id: props.recipeData.id,
     name: props.recipeData.name,
     numServings: numServings.value,
     image: firstImageUrl.value,
   });
-};
+}
 </script>
