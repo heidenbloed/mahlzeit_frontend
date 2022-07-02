@@ -17,7 +17,11 @@
     </section>
 
     <section class="flex justify-center gap-2">
-      <RoundedButton type="raised">
+      <RoundedButton
+        type="raised"
+        @click="copyToClipboard"
+        :disabled="!copyIsSupported"
+      >
         <template #icon>copy</template>
         <template #default>Kopieren</template>
       </RoundedButton>
@@ -31,7 +35,8 @@ import ShoppingListItem from "@/components/ShoppingListItem.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import { CategorizedShoppingListItem } from "../types/shoppingListTypes";
 import { IngredientCategory } from "../types/recipeDbTypes";
-import { computed } from "@vue/reactivity";
+import { useClipboard } from "@vueuse/core";
+import { computed } from "vue";
 
 const props = defineProps<{
   list: CategorizedShoppingListItem[];
@@ -76,4 +81,25 @@ const sortedList = computed(() => {
     return prev;
   }, [] as ShoppingListGroup[]);
 });
+
+const listAsString = computed(() => {
+  return sortedList.value
+    .map((shoppingListGroup) => {
+      const { category, groupItems } = shoppingListGroup;
+      const groupString = groupItems
+        .map((item) => {
+          return `${Math.round(item.quantity * 10) / 10}${item.unitShortForm} ${
+            item.ingredientName
+          }`;
+        })
+        .join("\n");
+      return `---${category.name.toUpperCase()}---\n${groupString}`;
+    })
+    .join("\n");
+});
+
+const { copy: _copyToClipboard, isSupported: copyIsSupported } = useClipboard();
+function copyToClipboard() {
+  _copyToClipboard(listAsString.value);
+}
 </script>

@@ -30,6 +30,7 @@
       :recipeName="plannedRecipe.name"
       :imageUrl="plannedRecipe.image"
       :numServings="plannedRecipe.numServings"
+      :key="plannedRecipe.id"
     />
   </CardGrid>
 </template>
