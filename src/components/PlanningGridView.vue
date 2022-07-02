@@ -31,14 +31,6 @@
       :imageUrl="plannedRecipe.image"
       :numServings="plannedRecipe.numServings"
     />
-    <!-- <RoundedCard noWidthLimit class="w-full p-4 col-span-1 lg:col-span-2 xl:col-span-3">
-      <div class="flex flex-col md:flex-row gap-4 items-center justify-center">
-        <RoundedButton type="secondary">
-          <template v-slot:icon>remove_shopping_cart</template>
-          <template v-slot:default>Liste leeren</template>
-        </RoundedButton>
-      </div>
-    </RoundedCard> -->
   </CardGrid>
 </template>
 
@@ -49,12 +41,8 @@ import PlanningCard from "@/components/PlanningCard.vue";
 import RoundedButton from "@/components/RoundedButton.vue";
 import ServingsSlider from "@/components/ServingsSlider.vue";
 import { usePlannedRecipesStore } from "../stores/plannedRecipes";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const numServingsForAll = ref(4);
 const plannedRecipes = usePlannedRecipesStore();
-
-watch(plannedRecipes.list, () => {
-  "plannedRecipes updated";
-});
 </script>

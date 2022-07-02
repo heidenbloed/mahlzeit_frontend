@@ -44,7 +44,7 @@
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="flat" @click="emit('delete')">
+        <RoundedButton type="flat" @click="deleteRecipe">
           <template v-slot:icon>delete</template>
           <template v-slot:default>Löschen</template>
         </RoundedButton>
@@ -75,7 +75,7 @@ import RoundedButton from "@/components/RoundedButton.vue";
 import SubSection from "@/components/SubSection.vue";
 import { RecipeData } from "../types/recipeDbTypes";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
-import { ref, watchEffect, computed, watch } from "vue";
+import { ref, watchEffect, computed } from "vue";
 import placeholderImageUrl from "@/assets/placeholder_image.png";
 
 const props = defineProps<{
@@ -108,6 +108,7 @@ const firstImageUrl = computed(() => {
 });
 const {
   toggleRecipePlanning: _toggleRecipePlanning,
+  removeFromPlannedRecipes,
   planningButtonIcon,
   planningButtonText,
 } = usePlannedRecipesStoreForRecipe(props.recipeData.id);
@@ -118,5 +119,10 @@ function toggleRecipePlanning() {
     numServings: numServings.value,
     image: firstImageUrl.value,
   });
+}
+
+function deleteRecipe() {
+  removeFromPlannedRecipes();
+  emit("delete");
 }
 </script>
