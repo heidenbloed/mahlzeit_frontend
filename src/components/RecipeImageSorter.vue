@@ -99,7 +99,7 @@ function addImage(event: Event) {
           data: imageFile,
         });
       }
-      //Todo: warn when the file is not an image file
+      //Todo: warn when the file is not an image file (or not supported format like webp)
     }
   }
 }

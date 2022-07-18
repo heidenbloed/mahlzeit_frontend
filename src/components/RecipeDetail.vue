@@ -52,10 +52,6 @@
           <template v-slot:icon>edit</template>
           <template v-slot:default>Bearbeiten</template>
         </RoundedButton>
-        <RoundedButton type="flat">
-          <template v-slot:icon>share</template>
-          <template v-slot:default>Teilen</template>
-        </RoundedButton>
         <RoundedButton type="flat" @click="toggleRecipePlanning">
           <template v-slot:icon>{{ planningButtonIcon }}</template>
           <template v-slot:default>{{ planningButtonText }}</template>

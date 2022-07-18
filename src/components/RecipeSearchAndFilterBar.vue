@@ -37,7 +37,7 @@
             />
           </li>
         </ul>
-        <button class="icon-md">clear</button>
+        <button class="icon-md" @click="clearLabelFilterList">clear</button>
       </div>
     </RoundedCard>
   </div>
@@ -79,7 +79,10 @@ const _labelFilterList = ref<RecipeLabel[]>([]);
 const autoCompleteList = ref<RecipeLabel[]>([]);
 watchEffect(async () => {
   if (_modelValue.value.length > 0) {
-    autoCompleteList.value = await getRecipeLabelList(_modelValue.value);
+    const filteredLabelList = await getRecipeLabelList(_modelValue.value);
+    autoCompleteList.value = filteredLabelList.filter((label) => {
+      return _labelFilterList.value.findIndex((filterListLabel) => filterListLabel.id === label.id) < 0;
+    });
   }
 });
 watchEffect(() => {
@@ -89,8 +92,11 @@ watchEffect(() => {
   emit("update:labelFilterList", _labelFilterList.value);
 });
 
-async function selectAutoCompleteOption(recipeLabel: RecipeLabel) {
+function selectAutoCompleteOption(recipeLabel: RecipeLabel) {
   _labelFilterList.value.push(recipeLabel);
   _modelValue.value = "";
+}
+function clearLabelFilterList(){
+  _labelFilterList.value = [];
 }
 </script>

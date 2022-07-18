@@ -16,7 +16,7 @@ import {
 } from "../types/recipeDbTypes";
 
 const recipeDbApi = axios.create({
-  baseURL: `http://192.168.178.56:8000/api`,
+  baseURL: `https://recipedb-api.heidenblut.eu/api`,
   timeout: 30000,
 });
 
