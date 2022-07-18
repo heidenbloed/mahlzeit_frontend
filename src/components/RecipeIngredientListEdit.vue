@@ -54,8 +54,8 @@
 </template>
 
 <script setup lang="ts">
-import RecipeIngredientEdit from "@/components/RecipeIngredientEdit.vue";
-import ServingsSlider from "@/components/ServingsSlider.vue";
+import RecipeIngredientEdit from "./RecipeIngredientEdit.vue";
+import ServingsSlider from "./ServingsSlider.vue";
 import {
   QuantifiedIngredientEditData,
   Unit,

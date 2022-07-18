@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import SubSection from "@/components/SubSection.vue";
-import ShoppingListItem from "@/components/ShoppingListItem.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
+import SubSection from "./SubSection.vue";
+import ShoppingListItem from "./ShoppingListItem.vue";
+import RoundedButton from "./RoundedButton.vue";
 import { CategorizedShoppingListItem } from "../types/shoppingListTypes";
 import { IngredientCategory } from "../types/recipeDbTypes";
 import { useClipboard } from "@vueuse/core";

@@ -32,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
-import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
+import RecipeLabelTag from "./RecipeLabelTag.vue";
+import AutoCompleteInput from "./AutoCompleteInput.vue";
 import { RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect, computed } from "vue";
 

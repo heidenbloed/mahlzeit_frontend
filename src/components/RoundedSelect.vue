@@ -62,7 +62,7 @@ import {
   ListboxOption,
   ListboxLabel,
 } from "@headlessui/vue";
-import RoundedDropdown from "@/components/RoundedDropdown.vue";
+import RoundedDropdown from "./RoundedDropdown.vue";
 import { ref, watchEffect, PropType } from "vue";
 
 interface SelectOption {

@@ -39,8 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import RoundedInput from "@/components/RoundedInput.vue";
-import RoundedDropdown from "@/components/RoundedDropdown.vue";
+import RoundedInput from "./RoundedInput.vue";
+import RoundedDropdown from "./RoundedDropdown.vue";
 import { onMounted, ref, watch, computed } from "vue";
 
 const props = defineProps({
@@ -96,7 +96,7 @@ function onAutoCompleteOptionSelected(autoCompleteOption: any) {
 }
 
 const errMsgDivId = computed<string>(() => props.name + "ErrMsg");
-const errorMsgContainerId = ref<string | null>(null);
+const errorMsgContainerId = ref<string | undefined>(undefined);
 onMounted(() => {
   errorMsgContainerId.value = "#" + errMsgDivId.value;
 });

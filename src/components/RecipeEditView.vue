@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import RecipeEdit from "@/components/RecipeEdit.vue";
-import LoadingSkeleton from "@/components/LoadingSkeleton.vue";
+import RecipeEdit from "./RecipeEdit.vue";
+import LoadingSkeleton from "./LoadingSkeleton.vue";
 import {
   getIngredientDetail,
   getUnitList,

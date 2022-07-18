@@ -1,5 +1,10 @@
 <template>
-  <RoundedButton class="w-10" :type="type">
+  <RoundedButton
+    class="w-10"
+    :type="type"
+    :buttonType="buttonType"
+    :disabled="disabled"
+  >
     <span class="icon-md">
       <slot></slot>
     </span>
@@ -7,13 +12,18 @@
 </template>
 
 <script setup lang="ts">
-import RoundedButton from "@/components/RoundedButton.vue";
+import RoundedButton from "./RoundedButton.vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "primary",
-    validator: (val: string) => ["primary", "secondary"].includes(val),
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    type?: "primary" | "raised" | "flat";
+    buttonType?: "button" | "submit" | "reset";
+    disabled?: boolean;
+  }>(),
+  {
+    type: "flat",
+    buttonType: "button",
+    disabled: false,
+  }
+);
 </script>

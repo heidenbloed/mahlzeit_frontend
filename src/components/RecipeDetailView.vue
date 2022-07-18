@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import RecipeDetail from "@/components/RecipeDetail.vue";
-import LoadingSkeleton from "@/components/LoadingSkeleton.vue";
-import RecipeEditView from "@/components/RecipeEditView.vue";
+import RecipeDetail from "./RecipeDetail.vue";
+import LoadingSkeleton from "./LoadingSkeleton.vue";
+import RecipeEditView from "./RecipeEditView.vue";
 import { getRecipeDetail, deleteRecipe } from "../api/recipeDbApi";
 import { RecipeData } from "../types/recipeDbTypes";
 import { ref, onMounted, computed, watch } from "vue";

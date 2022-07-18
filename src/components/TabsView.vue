@@ -19,6 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import TabBar from "@/components/TabBar.vue";
-import TabButton from "@/components/TabButton.vue";
+import TabBar from "./TabBar.vue";
+import TabButton from "./TabButton.vue";
 </script>

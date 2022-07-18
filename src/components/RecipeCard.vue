@@ -29,13 +29,13 @@
 </template>
 
 <script setup lang="ts">
-import RoundedCard from "@/components/RoundedCard.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
-import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
+import RoundedCard from "./RoundedCard.vue";
+import RoundedButton from "./RoundedButton.vue";
+import RecipeDurationLabel from "./RecipeDurationLabel.vue";
 import { RecipeShort } from "../types/recipeDbTypes";
 import { computed } from "vue";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
-import placeholderImageUrl from "@/assets/placeholder_image.png";
+import placeholderImageUrl from "../assets/placeholder_image.png";
 
 const props = defineProps<{
   recipeCardData: RecipeShort;

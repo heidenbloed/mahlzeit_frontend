@@ -27,9 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import RoundedCard from "@/components/RoundedCard.vue";
-import ServingsSlider from "@/components/ServingsSlider.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
+import RoundedCard from "./RoundedCard.vue";
+import ServingsSlider from "./ServingsSlider.vue";
+import RoundedButton from "./RoundedButton.vue";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import { computed } from "vue";
 

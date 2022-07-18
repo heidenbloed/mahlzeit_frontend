@@ -4,8 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import ShoppingList from "@/components/ShoppingList.vue";
-import LoadingSkeleton from "@/components/LoadingSkeleton.vue";
+import ShoppingList from "./ShoppingList.vue";
+import LoadingSkeleton from "./LoadingSkeleton.vue";
 import { getRecipeDetail, getIngredientDetail } from "../api/recipeDbApi";
 import { QuantifiedIngredient } from "../types/recipeDbTypes";
 import { CategorizedShoppingListItem } from "../types/shoppingListTypes";

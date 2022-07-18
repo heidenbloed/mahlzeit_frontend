@@ -18,7 +18,7 @@
           </RoundedButton>
         </span>
         <div class="h-px self-stretch bg-stone-800 md:h-auto md:w-px"></div>
-        <RoundedButton type="secondary" @click="plannedRecipes.clearList">
+        <RoundedButton type="flat" @click="plannedRecipes.clearList">
           <template v-slot:icon>remove_shopping_cart</template>
           <template v-slot:default>Liste leeren</template>
         </RoundedButton>
@@ -36,11 +36,11 @@
 </template>
 
 <script setup lang="ts">
-import CardGrid from "@/components/CardGrid.vue";
-import RoundedCard from "@/components/RoundedCard.vue";
-import PlanningCard from "@/components/PlanningCard.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
-import ServingsSlider from "@/components/ServingsSlider.vue";
+import CardGrid from "./CardGrid.vue";
+import RoundedCard from "./RoundedCard.vue";
+import PlanningCard from "./PlanningCard.vue";
+import RoundedButton from "./RoundedButton.vue";
+import ServingsSlider from "./ServingsSlider.vue";
 import { usePlannedRecipesStore } from "../stores/plannedRecipes";
 import { ref } from "vue";
 

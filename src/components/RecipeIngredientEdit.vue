@@ -107,9 +107,9 @@
 </template>
 
 <script setup lang="ts">
-import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
-import RoundedInput from "@/components/RoundedInput.vue";
-import RoundedSelect from "@/components/RoundedSelect.vue";
+import AutoCompleteInput from "./AutoCompleteInput.vue";
+import RoundedInput from "./RoundedInput.vue";
+import RoundedSelect from "./RoundedSelect.vue";
 import {
   getIngredientList,
   IngredientListOrdering,

@@ -28,11 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import RecipeCard from "@/components/RecipeCard.vue";
-import CardGrid from "@/components/CardGrid.vue";
-import RecipeSearchAndFilterBar from "@/components/RecipeSearchAndFilterBar.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
-import FloatingActionButton from "@/components/FloatingActionButton.vue";
+import RecipeCard from "./RecipeCard.vue";
+import CardGrid from "./CardGrid.vue";
+import RecipeSearchAndFilterBar from "./RecipeSearchAndFilterBar.vue";
+import RoundedButton from "./RoundedButton.vue";
+import FloatingActionButton from "./FloatingActionButton.vue";
 import { getRecipeList, RecipeListOrdering } from "../api/recipeDbApi";
 import { RecipeShort, RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect } from "vue";

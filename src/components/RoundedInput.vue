@@ -43,39 +43,25 @@
 import { ref, computed, watch } from "vue";
 import { useField } from "vee-validate";
 
-const props = defineProps({
-  modelValue: {
-    type: [String, Number],
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  label: {
-    type: String,
-    default: "",
-  },
-  inputType: {
-    type: String,
-    default: "text",
-  },
-  rules: {
-    type: String,
-  },
-  clearable: {
-    type: Boolean,
-    default: false,
-  },
-  noRing: {
-    type: Boolean,
-    default: false,
-  },
-  errorMsgContainerId: {
-    type: String,
-    default: null,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    modelValue: string | number;
+    name: string;
+    label?: string;
+    inputType?: string;
+    rules?: string;
+    clearable?: boolean;
+    noRing?: boolean;
+    errorMsgContainerId?: string;
+  }>(),
+  {
+    label: "",
+    inputType: "text",
+    clearable: false,
+    noRing: false,
+  }
+);
+
 const emit = defineEmits(["update:modelValue"]);
 
 const inputElement = ref<HTMLInputElement>();

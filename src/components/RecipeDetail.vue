@@ -62,17 +62,17 @@
 </template>
 
 <script setup lang="ts">
-import RecipeImageSlides from "@/components/RecipeImageSlides.vue";
-import ServingsSlider from "@/components/ServingsSlider.vue";
-import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
-import RecipeDurationLabel from "@/components/RecipeDurationLabel.vue";
-import RecipeSourceLabel from "@/components/RecipeSourceLabel.vue";
-import RoundedButton from "@/components/RoundedButton.vue";
-import SubSection from "@/components/SubSection.vue";
+import RecipeImageSlides from "./RecipeImageSlides.vue";
+import ServingsSlider from "./ServingsSlider.vue";
+import RecipeLabelTag from "./RecipeLabelTag.vue";
+import RecipeDurationLabel from "./RecipeDurationLabel.vue";
+import RecipeSourceLabel from "./RecipeSourceLabel.vue";
+import RoundedButton from "./RoundedButton.vue";
+import SubSection from "./SubSection.vue";
 import { RecipeData } from "../types/recipeDbTypes";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import { ref, watchEffect, computed } from "vue";
-import placeholderImageUrl from "@/assets/placeholder_image.png";
+import placeholderImageUrl from "../assets/placeholder_image.png";
 
 const props = defineProps<{
   recipeData: RecipeData;

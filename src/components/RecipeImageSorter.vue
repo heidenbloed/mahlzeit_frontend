@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import RoundedButton from "@/components/RoundedButton.vue";
+import RoundedButton from "./RoundedButton.vue";
 import draggable from "vuedraggable";
 import { RecipeImageEditData } from "../types/recipeDbTypes";
 import { ref, watchEffect } from "vue";

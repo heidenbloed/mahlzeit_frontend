@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import RoundedInput from "@/components/RoundedInput.vue";
+import RoundedInput from "./RoundedInput.vue";
 import { ref, watchEffect } from "vue";
 
 const props = defineProps<{

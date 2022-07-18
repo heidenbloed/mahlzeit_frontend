@@ -55,12 +55,12 @@
 </template>
 
 <script setup lang="ts">
-import RoundedInput from "@/components/RoundedInput.vue";
-import SubSection from "@/components/SubSection.vue";
-import RecipeImageSorter from "@/components/RecipeImageSorter.vue";
-import RecipeLabelListEdit from "@/components/RecipeLabelListEdit.vue";
-import RecipeIngredientListEdit from "@/components/RecipeIngredientListEdit.vue";
-import ValidatingForm from "@/components/ValidatingForm.vue";
+import RoundedInput from "./RoundedInput.vue";
+import SubSection from "./SubSection.vue";
+import RecipeImageSorter from "./RecipeImageSorter.vue";
+import RecipeLabelListEdit from "./RecipeLabelListEdit.vue";
+import RecipeIngredientListEdit from "./RecipeIngredientListEdit.vue";
+import ValidatingForm from "./ValidatingForm.vue";
 import {
   RecipeEditData,
   Unit,

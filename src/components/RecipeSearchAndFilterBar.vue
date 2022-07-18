@@ -44,9 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import RoundedCard from "@/components/RoundedCard.vue";
-import RecipeLabelTag from "@/components/RecipeLabelTag.vue";
-import AutoCompleteInput from "@/components/AutoCompleteInput.vue";
+import RoundedCard from "./RoundedCard.vue";
+import RecipeLabelTag from "./RecipeLabelTag.vue";
+import AutoCompleteInput from "./AutoCompleteInput.vue";
 import { getRecipeLabelList } from "../api/recipeDbApi";
 import { RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect, PropType, reactive } from "vue";
@@ -81,7 +81,11 @@ watchEffect(async () => {
   if (_modelValue.value.length > 0) {
     const filteredLabelList = await getRecipeLabelList(_modelValue.value);
     autoCompleteList.value = filteredLabelList.filter((label) => {
-      return _labelFilterList.value.findIndex((filterListLabel) => filterListLabel.id === label.id) < 0;
+      return (
+        _labelFilterList.value.findIndex(
+          (filterListLabel) => filterListLabel.id === label.id
+        ) < 0
+      );
     });
   }
 });
@@ -96,7 +100,7 @@ function selectAutoCompleteOption(recipeLabel: RecipeLabel) {
   _labelFilterList.value.push(recipeLabel);
   _modelValue.value = "";
 }
-function clearLabelFilterList(){
+function clearLabelFilterList() {
   _labelFilterList.value = [];
 }
 </script>

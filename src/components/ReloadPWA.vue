@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import RoundedButton from "@/components/RoundedButton.vue";
+import RoundedButton from "./RoundedButton.vue";
 import { useRegisterSW } from "virtual:pwa-register/vue";
 import {
   Dialog,
