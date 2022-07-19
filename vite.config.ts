@@ -8,8 +8,8 @@ const pwaOptions: Partial<VitePWAOptions> = {
   base: "/",
   srcDir: "src",
   filename: "sw.ts",
-  includeAssets: ["favicon.svg"],
-  strategies: "injectManifest",
+  includeAssets: ["favicon.svg", "assets/*"],
+  strategies: "generateSW",
   manifest: {
     name: "Rezeptdatenbank",
     short_name: "RezeptDB",
@@ -19,23 +19,47 @@ const pwaOptions: Partial<VitePWAOptions> = {
     background_color: "#ffffff",
     icons: [
       {
-        src: "pwa-192x192.png", // <== don't add slash, for testing
+        src: "pwa-192x192.png",
         sizes: "192x192",
         type: "image/png",
       },
       {
-        src: "/pwa-512x512.png", // <== don't remove slash, for testing
+        src: "/pwa-512x512.png",
         sizes: "512x512",
         type: "image/png",
       },
       {
-        src: "pwa-512x512.png", // <== don't add slash, for testing
+        src: "pwa-512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any maskable",
       },
     ],
   },
+  workbox: {
+    runtimeCaching: [
+      {
+        urlPattern: /^https:\/\/recipedb-api\.heidenblut\.eu\/media\/.*/i,
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "recipedb-media",
+          expiration: {
+            maxAgeSeconds: 60 * 60 * 24 * 365,
+          },
+        }
+      },
+      {
+        urlPattern: /^https:\/\/recipedb-api\.heidenblut\.eu\/api\/.*/i,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "recipedb-api",
+          expiration: {
+            maxAgeSeconds: 60 * 60 * 24 * 5,
+          },
+        }
+      }
+    ]
+  }
 };
 
 // https://vitejs.dev/config/

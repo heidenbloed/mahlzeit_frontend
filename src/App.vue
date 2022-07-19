@@ -6,5 +6,5 @@
 </template>
 
 <script setup lang="ts">
-import ReloadPWA from "@/components/ReloadPWA.vue";
+import ReloadPWA from "./components/ReloadPWA.vue";
 </script>
