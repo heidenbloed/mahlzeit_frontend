@@ -8,7 +8,11 @@
     <div
       class="hidden w-full flex-row justify-center md:flex lg:col-span-2 xl:col-span-3"
     >
-      <RoundedButton type="primary" @click="$router.push('/recipe/new/')">
+      <RoundedButton
+        type="primary"
+        @click="$router.push('/recipe/new/')"
+        :disabled="!isOnline"
+      >
         <template #default> Neues Rezept </template>
         <template #icon> add </template>
       </RoundedButton>
@@ -20,6 +24,7 @@
     <FloatingActionButton
       class="block md:hidden"
       @click="$router.push('/recipe/new/')"
+      :disabled="!isOnline"
     >
       add
     </FloatingActionButton>
@@ -36,6 +41,7 @@ import FloatingActionButton from "./FloatingActionButton.vue";
 import { getRecipeList, RecipeListOrdering } from "../api/recipeDbApi";
 import { RecipeShort, RecipeLabel } from "../types/recipeDbTypes";
 import { ref, watchEffect } from "vue";
+import { useNetwork } from "@vueuse/core";
 
 const recipeCardDataList = ref<RecipeShort[]>([]);
 
@@ -48,4 +54,6 @@ watchEffect(async () => {
     labelFilterList.value
   );
 });
+
+const { isOnline } = useNetwork();
 </script>

@@ -44,13 +44,22 @@
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="flat" @click="deleteRecipe">
+        <RoundedButton type="flat" @click="deleteRecipe" :disabled="!isOnline">
           <template v-slot:icon>delete</template>
           <template v-slot:default>Löschen</template>
         </RoundedButton>
-        <RoundedButton type="flat" @click="emit('edit')">
+        <RoundedButton type="flat" @click="emit('edit')" :disabled="!isOnline">
           <template v-slot:icon>edit</template>
           <template v-slot:default>Bearbeiten</template>
+        </RoundedButton>
+        <RoundedButton
+          v-if="shareIsSupported"
+          type="flat"
+          @click="shareRecipe()"
+          :disabled="!isOnline"
+        >
+          <template v-slot:icon>share</template>
+          <template v-slot:default>Teilen</template>
         </RoundedButton>
         <RoundedButton type="flat" @click="toggleRecipePlanning">
           <template v-slot:icon>{{ planningButtonIcon }}</template>
@@ -72,12 +81,16 @@ import SubSection from "./SubSection.vue";
 import { RecipeData } from "../types/recipeDbTypes";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import { ref, watchEffect, computed } from "vue";
+import { useNetwork, useShare } from "@vueuse/core";
 import placeholderImageUrl from "../assets/placeholder_image.png";
 
 const props = defineProps<{
   recipeData: RecipeData;
 }>();
 const emit = defineEmits(["edit", "delete"]);
+
+const { isOnline } = useNetwork();
+const { share, isSupported: shareIsSupported } = useShare();
 
 const numServings = ref(0);
 watchEffect(() => {
@@ -120,5 +133,12 @@ function toggleRecipePlanning() {
 function deleteRecipe() {
   removeFromPlannedRecipes();
   emit("delete");
+}
+
+function shareRecipe() {
+  share({
+    title: props.recipeData.name,
+    url: location.href,
+  });
 }
 </script>

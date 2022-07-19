@@ -46,7 +46,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
           expiration: {
             maxAgeSeconds: 60 * 60 * 24 * 365,
           },
-        }
+        },
       },
       {
         urlPattern: /^https:\/\/recipedb-api\.heidenblut\.eu\/api\/.*/i,
@@ -56,10 +56,10 @@ const pwaOptions: Partial<VitePWAOptions> = {
           expiration: {
             maxAgeSeconds: 60 * 60 * 24 * 5,
           },
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 };
 
 // https://vitejs.dev/config/
