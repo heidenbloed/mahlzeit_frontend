@@ -141,6 +141,7 @@ function deleteRecipe() {
 function shareRecipe() {
   share({
     title: props.recipeData.name,
+    text: `🥘 Schau dir mal ${props.recipeData.name} bei Mahlzeit an 🥘`,
     url: location.href,
   });
 }

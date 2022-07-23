@@ -1,7 +1,7 @@
 <template>
   <TabBar>
     <template v-slot:logo>
-      <div class="font-logo text-center text-4xl text-red-500">RezeptDB</div>
+      <div class="font-logo text-center text-4xl text-red-500">Mahlzeit</div>
     </template>
 
     <template v-slot:buttons>

@@ -1,6 +1,6 @@
 <template>
-  <Dialog :open="needRefresh" class="fixed inset-0 z-10 overflow-y-auto">
-    <div class="flex min-h-screen items-center justify-center">
+  <Dialog :open="needRefresh" class="fixed inset-0 z-40 overflow-y-auto">
+    <div class="flex min-h-screen items-center justify-center p-2">
       <DialogOverlay class="fixed inset-0 bg-black opacity-30" />
       <div
         class="flex w-96 transform flex-col gap-2 rounded-2xl bg-white p-4 shadow-xl"
