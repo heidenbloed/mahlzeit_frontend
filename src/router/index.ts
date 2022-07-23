@@ -9,6 +9,9 @@ const routes = [
   {
     path: "/",
     component: TabsView,
+    meta: {
+      title: "Mahlzeit",
+    },
     children: [
       {
         path: "",
@@ -17,6 +20,9 @@ const routes = [
       {
         path: "recipes/",
         component: RecipesGridView,
+        meta: {
+          title: "Rezepte - Mahlzeit",
+        }
       },
       {
         path: "recipe/:id/",
@@ -25,10 +31,16 @@ const routes = [
       {
         path: "plan/",
         component: PlanningGridView,
+        meta: {
+          title: "Planung - Mahlzeit",
+        }
       },
       {
         path: "cart/",
         component: ShoppingListView,
+        meta: {
+          title: "Einkaufsliste - Mahlzeit",
+        }
       },
     ],
   },
@@ -37,6 +49,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+  if(nearestWithTitle) {
+    document.title = nearestWithTitle.meta?.title as string;
+  }
+  next();
 });
 
 export default router;

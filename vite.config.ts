@@ -2,39 +2,22 @@ import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import path from "path";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
+import { icons } from "./icons.json";
 
 const pwaOptions: Partial<VitePWAOptions> = {
   mode: "development",
   base: "/",
   srcDir: "src",
-  filename: "sw.ts",
-  includeAssets: ["favicon.svg", "assets/*"],
+  includeAssets: ["favicon.png", "assets/*"],
   strategies: "generateSW",
   manifest: {
-    name: "Rezeptdatenbank",
-    short_name: "RezeptDB",
+    name: "Mahlzeit",
+    short_name: "Mahlzeit",
     theme_color: "#ffffff",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
-    icons: [
-      {
-        src: "pwa-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "/pwa-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
-      {
-        src: "pwa-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-        purpose: "any maskable",
-      },
-    ],
+    icons: icons,
   },
   workbox: {
     runtimeCaching: [

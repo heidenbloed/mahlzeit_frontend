@@ -81,13 +81,16 @@ import SubSection from "./SubSection.vue";
 import { RecipeData } from "../types/recipeDbTypes";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import { ref, watchEffect, computed } from "vue";
-import { useNetwork, useShare } from "@vueuse/core";
+import { useNetwork, useShare, useTitle } from "@vueuse/core";
 import placeholderImageUrl from "../assets/placeholder_image.png";
 
 const props = defineProps<{
   recipeData: RecipeData;
 }>();
 const emit = defineEmits(["edit", "delete"]);
+
+const pageTitle = computed(() => `${props.recipeData.name} - Mahlzeit`);
+useTitle(pageTitle);
 
 const { isOnline } = useNetwork();
 const { share, isSupported: shareIsSupported } = useShare();
