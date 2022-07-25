@@ -5,7 +5,6 @@ import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 import { icons } from "./icons.json";
 
 const pwaOptions: Partial<VitePWAOptions> = {
-  mode: "development",
   base: "/",
   srcDir: "src",
   includeAssets: ["favicon.png", "assets/*"],
