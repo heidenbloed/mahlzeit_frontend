@@ -5,7 +5,7 @@
       class="relative overflow-hidden rounded-t-xl"
     >
       <img
-        :src="firstImageUrl"
+        :src="firstImageThumbnailCardUrl"
         alt="recipe image"
         class="aspect-[2/1] object-cover object-center"
       />
@@ -41,11 +41,28 @@ const props = defineProps<{
   recipeCardData: RecipeShort;
 }>();
 
-const firstImageUrl = computed(() =>
-  props.recipeCardData.first_image
-    ? props.recipeCardData.first_image.image
-    : placeholderImageUrl
-);
+const firstImageThumbnailCardUrl = computed(() => {
+  if (props.recipeCardData.first_image) {
+    if (props.recipeCardData.first_image.thumbnail_card) {
+      return props.recipeCardData.first_image.thumbnail_card;
+    } else {
+      return props.recipeCardData.first_image.image;
+    }
+  } else {
+    return placeholderImageUrl;
+  }
+});
+const firstImageThumbnailPlanUrl = computed(() => {
+  if (props.recipeCardData.first_image) {
+    if (props.recipeCardData.first_image.thumbnail_plan) {
+      return props.recipeCardData.first_image.thumbnail_plan;
+    } else {
+      return props.recipeCardData.first_image.image;
+    }
+  } else {
+    return placeholderImageUrl;
+  }
+});
 const detailUrl = computed(() => `/recipe/${props.recipeCardData.id}/`);
 
 const {
@@ -58,7 +75,7 @@ function toggleRecipePlanning() {
     id: props.recipeCardData.id,
     name: props.recipeCardData.name,
     numServings: 4,
-    image: firstImageUrl.value,
+    image: firstImageThumbnailPlanUrl.value,
   });
 }
 </script>

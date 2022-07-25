@@ -8,6 +8,8 @@ interface UpdatedableModel extends Model {
 
 interface RecipeImageShort extends UpdatedableModel {
   image: string;
+  thumbnail_card: string | null;
+  thumbnail_plan: string | null;
 }
 
 export interface RecipeImage extends RecipeImageShort {

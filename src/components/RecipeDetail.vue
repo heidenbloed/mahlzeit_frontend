@@ -105,15 +105,20 @@ function getScaledQuantity(quantity: number) {
   return Math.round(scaledQuantity * 10) / 10;
 }
 
-const firstImageUrl = computed(() => {
+const firstImageThumbnailPlanUrl = computed(() => {
   if (props.recipeData.recipe_images.length > 0) {
-    return props.recipeData.recipe_images.reduce((prev, current) => {
+    const firstImage = props.recipeData.recipe_images.reduce((prev, current) => {
       if (prev.order < current.order) {
         return prev;
       } else {
         return current;
       }
-    }).image;
+    });
+    if (firstImage.thumbnail_plan) {
+      return firstImage.thumbnail_plan;
+    } else {
+      return firstImage.image;
+    }
   } else {
     return placeholderImageUrl;
   }
@@ -129,7 +134,7 @@ function toggleRecipePlanning() {
     id: props.recipeData.id,
     name: props.recipeData.name,
     numServings: numServings.value,
-    image: firstImageUrl.value,
+    image: firstImageThumbnailPlanUrl.value,
   });
 }
 
