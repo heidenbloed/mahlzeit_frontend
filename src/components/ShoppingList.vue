@@ -1,6 +1,6 @@
 <template>
   <main
-    class="mx-auto grid max-w-2xl grid-cols-1 gap-4 rounded-b-xl bg-white p-4 md:rounded-t-xl"
+    class="mx-auto grid max-w-4xl grid-cols-1 gap-4 rounded-b-xl bg-white p-4 md:rounded-t-xl"
   >
     <SubSection
       v-if="list.length > 0"

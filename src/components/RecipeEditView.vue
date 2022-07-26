@@ -7,7 +7,7 @@
     :allLabels="allLabels"
     @editFinished="onEditFinished"
   />
-  <LoadingSkeleton v-else />
+  <LoadingSkeleton mockup="RecipeEdit" v-else />
 </template>
 
 <script setup lang="ts">

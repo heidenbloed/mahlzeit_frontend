@@ -1,6 +1,6 @@
 <template>
   <ShoppingList v-if="shoppingList" :list="shoppingList" />
-  <LoadingSkeleton v-else />
+  <LoadingSkeleton mockup="ShoppingList" v-else />
 </template>
 
 <script setup lang="ts">
