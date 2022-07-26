@@ -78,7 +78,7 @@ import RecipeDurationLabel from "./RecipeDurationLabel.vue";
 import RecipeSourceLabel from "./RecipeSourceLabel.vue";
 import RoundedButton from "./RoundedButton.vue";
 import SubSection from "./SubSection.vue";
-import { RecipeData } from "../types/recipeDbTypes";
+import { RecipeData, ImageInfo } from "../types/recipeDbTypes";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import { ref, watchEffect, computed } from "vue";
 import { useNetwork, useShare, useTitle } from "@vueuse/core";
@@ -105,24 +105,43 @@ function getScaledQuantity(quantity: number) {
   return Math.round(scaledQuantity * 10) / 10;
 }
 
-const firstImageThumbnailPlanUrl = computed(() => {
+const firstImageThumbnailPlanInfo = computed<ImageInfo>(() => {
   if (props.recipeData.recipe_images.length > 0) {
-    const firstImage = props.recipeData.recipe_images.reduce((prev, current) => {
-      if (prev.order < current.order) {
-        return prev;
-      } else {
-        return current;
+    const firstImage = props.recipeData.recipe_images.reduce(
+      (prev, current) => {
+        if (prev.order < current.order) {
+          return prev;
+        } else {
+          return current;
+        }
       }
-    });
-    if (firstImage.thumbnail_plan) {
-      return firstImage.thumbnail_plan;
+    );
+    if (
+      firstImage.thumbnail_plan &&
+      firstImage.thumbnail_plan_width &&
+      firstImage.thumbnail_plan_height
+    ) {
+      return {
+        url: firstImage.thumbnail_plan,
+        width: firstImage.thumbnail_plan_width,
+        height: firstImage.thumbnail_plan_height,
+      };
     } else {
-      return firstImage.image;
+      return {
+        url: firstImage.image,
+        width: firstImage.image_width,
+        height: firstImage.image_width,
+      };
     }
   } else {
-    return placeholderImageUrl;
+    return {
+      url: placeholderImageUrl,
+      width: 800,
+      height: 600,
+    };
   }
 });
+
 const {
   toggleRecipePlanning: _toggleRecipePlanning,
   removeFromPlannedRecipes,
@@ -134,7 +153,7 @@ function toggleRecipePlanning() {
     id: props.recipeData.id,
     name: props.recipeData.name,
     numServings: numServings.value,
-    image: firstImageThumbnailPlanUrl.value,
+    image: firstImageThumbnailPlanInfo.value,
   });
 }
 

@@ -1,12 +1,13 @@
 import { defineStore, storeToRefs } from "pinia";
 import { computed, ref, watch } from "vue";
 import { useLocalStorage } from "@vueuse/core";
+import { ImageInfo } from "../types/recipeDbTypes";
 
 export interface PlannedRecipe {
   id: number;
   name: string;
   numServings: number;
-  image: string;
+  image: ImageInfo;
 }
 
 export const usePlannedRecipesStore = defineStore("plannedRecipes", () => {

@@ -10,6 +10,12 @@ interface RecipeImageShort extends UpdatedableModel {
   image: string;
   thumbnail_card: string | null;
   thumbnail_plan: string | null;
+  image_width: number;
+  image_height: number;
+  thumbnail_card_width: number | null;
+  thumbnail_card_height: number | null;
+  thumbnail_plan_width: number | null;
+  thumbnail_plan_height: number | null;
 }
 
 export interface RecipeImage extends RecipeImageShort {
@@ -24,6 +30,12 @@ export interface RecipeImageEdit {
 
 export interface RecipeImageEditResponse extends RecipeImage {
   recipe: number;
+}
+
+export interface ImageInfo {
+  url: string;
+  width: number;
+  height: number;
 }
 
 export interface RecipeLabel extends Model {

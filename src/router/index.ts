@@ -22,7 +22,7 @@ const routes = [
         component: RecipesGridView,
         meta: {
           title: "Rezepte - Mahlzeit",
-        }
+        },
       },
       {
         path: "recipe/:id/",
@@ -33,14 +33,14 @@ const routes = [
         component: PlanningGridView,
         meta: {
           title: "Planung - Mahlzeit",
-        }
+        },
       },
       {
         path: "cart/",
         component: ShoppingListView,
         meta: {
           title: "Einkaufsliste - Mahlzeit",
-        }
+        },
       },
     ],
   },
@@ -52,8 +52,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
-  if(nearestWithTitle) {
+  const nearestWithTitle = to.matched
+    .slice()
+    .reverse()
+    .find((r) => r.meta && r.meta.title);
+  if (nearestWithTitle) {
     document.title = nearestWithTitle.meta?.title as string;
   }
   next();

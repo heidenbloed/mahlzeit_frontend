@@ -28,7 +28,7 @@
       v-for="plannedRecipe in plannedRecipes.list"
       :recipeId="plannedRecipe.id"
       :recipeName="plannedRecipe.name"
-      :imageUrl="plannedRecipe.image"
+      :image="plannedRecipe.image"
       :numServings="plannedRecipe.numServings"
       :key="plannedRecipe.id"
     />

@@ -6,7 +6,9 @@
       type="button"
     >
       <img
-        :src="imageUrl"
+        :src="image.url"
+        :width="image.width"
+        :height="image.height"
         alt="recipe image"
         class="h-full w-full object-cover object-center"
       />
@@ -31,12 +33,13 @@ import RoundedCard from "./RoundedCard.vue";
 import ServingsSlider from "./ServingsSlider.vue";
 import RoundedButton from "./RoundedButton.vue";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
+import { ImageInfo } from "../types/recipeDbTypes";
 import { computed } from "vue";
 
 const props = defineProps<{
   recipeId: number;
   recipeName: string;
-  imageUrl: string;
+  image: ImageInfo;
   numServings: number;
 }>();
 

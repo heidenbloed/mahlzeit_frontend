@@ -17,6 +17,8 @@
     <swiper-slide v-for="(image, index) in sortedImages" :virtualIndex="index">
       <img
         :src="image.image"
+        :width="image.image_width"
+        :height="image.image_height"
         class="aspect-[3/2] h-full w-full rounded-none object-cover md:rounded-t-xl"
       />
     </swiper-slide>

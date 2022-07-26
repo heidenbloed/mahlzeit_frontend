@@ -5,9 +5,11 @@
       class="relative overflow-hidden rounded-t-xl"
     >
       <img
-        :src="firstImageThumbnailCardUrl"
+        :src="firstImageThumbnailCardInfo.url"
         alt="recipe image"
         class="aspect-[2/1] object-cover object-center"
+        :width="firstImageThumbnailCardInfo.width"
+        :height="firstImageThumbnailCardInfo.height"
       />
       <div
         class="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-black/50"
@@ -32,7 +34,7 @@
 import RoundedCard from "./RoundedCard.vue";
 import RoundedButton from "./RoundedButton.vue";
 import RecipeDurationLabel from "./RecipeDurationLabel.vue";
-import { RecipeShort } from "../types/recipeDbTypes";
+import { RecipeShort, ImageInfo } from "../types/recipeDbTypes";
 import { computed } from "vue";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import placeholderImageUrl from "../assets/placeholder_image.png";
@@ -41,26 +43,58 @@ const props = defineProps<{
   recipeCardData: RecipeShort;
 }>();
 
-const firstImageThumbnailCardUrl = computed(() => {
+const firstImageThumbnailCardInfo = computed<ImageInfo>(() => {
   if (props.recipeCardData.first_image) {
-    if (props.recipeCardData.first_image.thumbnail_card) {
-      return props.recipeCardData.first_image.thumbnail_card;
+    if (
+      props.recipeCardData.first_image.thumbnail_card &&
+      props.recipeCardData.first_image.thumbnail_card_width &&
+      props.recipeCardData.first_image.thumbnail_card_height
+    ) {
+      return {
+        url: props.recipeCardData.first_image.thumbnail_card,
+        width: props.recipeCardData.first_image.thumbnail_card_width,
+        height: props.recipeCardData.first_image.thumbnail_card_height,
+      };
     } else {
-      return props.recipeCardData.first_image.image;
+      return {
+        url: props.recipeCardData.first_image.image,
+        width: props.recipeCardData.first_image.image_width,
+        height: props.recipeCardData.first_image.image_width,
+      };
     }
   } else {
-    return placeholderImageUrl;
+    return {
+      url: placeholderImageUrl,
+      width: 800,
+      height: 600,
+    };
   }
 });
-const firstImageThumbnailPlanUrl = computed(() => {
+const firstImageThumbnailPlanInfo = computed<ImageInfo>(() => {
   if (props.recipeCardData.first_image) {
-    if (props.recipeCardData.first_image.thumbnail_plan) {
-      return props.recipeCardData.first_image.thumbnail_plan;
+    if (
+      props.recipeCardData.first_image.thumbnail_plan &&
+      props.recipeCardData.first_image.thumbnail_plan_width &&
+      props.recipeCardData.first_image.thumbnail_plan_height
+    ) {
+      return {
+        url: props.recipeCardData.first_image.thumbnail_plan,
+        width: props.recipeCardData.first_image.thumbnail_plan_width,
+        height: props.recipeCardData.first_image.thumbnail_plan_height,
+      };
     } else {
-      return props.recipeCardData.first_image.image;
+      return {
+        url: props.recipeCardData.first_image.image,
+        width: props.recipeCardData.first_image.image_width,
+        height: props.recipeCardData.first_image.image_width,
+      };
     }
   } else {
-    return placeholderImageUrl;
+    return {
+      url: placeholderImageUrl,
+      width: 800,
+      height: 600,
+    };
   }
 });
 const detailUrl = computed(() => `/recipe/${props.recipeCardData.id}/`);
@@ -75,7 +109,7 @@ function toggleRecipePlanning() {
     id: props.recipeCardData.id,
     name: props.recipeCardData.name,
     numServings: 4,
-    image: firstImageThumbnailPlanUrl.value,
+    image: firstImageThumbnailPlanInfo.value,
   });
 }
 </script>
