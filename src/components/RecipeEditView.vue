@@ -8,11 +8,13 @@
     @editFinished="onEditFinished"
   />
   <LoadingSkeleton mockup="RecipeEdit" v-else />
+  <LoadingOverlay v-show="isUploading" />
 </template>
 
 <script setup lang="ts">
 import RecipeEdit from "./RecipeEdit.vue";
 import LoadingSkeleton from "./LoadingSkeleton.vue";
+import LoadingOverlay from "./LoadingOverlay.vue";
 import {
   getIngredientDetail,
   getUnitList,
@@ -47,6 +49,7 @@ const recipeData = ref<RecipeEditData | null>(null);
 const unitList = ref<Unit[] | null>(null);
 const ingredientCategoryList = ref<IngredientCategory[] | null>(null);
 const allLabels = ref<RecipeLabel[] | null>(null);
+const isUploading = ref(false);
 
 const router = useRouter();
 
@@ -109,6 +112,7 @@ onMounted(async () => {
 async function onEditFinished(saveChanges: boolean) {
   if (saveChanges) {
     if (recipeData.value) {
+      isUploading.value = true;
       const quantifiedIngredientList: Array<QuantifiedIngredientEdit> =
         await Promise.all(
           recipeData.value.quantified_ingredients.map(async (quantIngr) => {
@@ -227,6 +231,7 @@ async function onEditFinished(saveChanges: boolean) {
       }
 
       await Promise.all(promises);
+      isUploading.value = false;
 
       if (!props.initRecipeData) {
         router.push(`/recipe/${recipeId}/`);
