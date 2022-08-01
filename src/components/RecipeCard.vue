@@ -15,9 +15,9 @@
         class="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-black/50"
       ></div>
       <div class="absolute bottom-2 left-3 tracking-tight text-white">
-        <div class="text-2xl font-semibold">
+        <h2 class="text-2xl font-semibold">
           {{ recipeCardData.name }}
-        </div>
+        </h2>
         <RecipeDurationLabel :prepTime="recipeCardData.preparation_time" />
       </div>
     </button>

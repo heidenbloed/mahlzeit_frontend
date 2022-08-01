@@ -44,7 +44,11 @@
       </SubSection>
 
       <section class="flex flex-wrap justify-center gap-2">
-        <RoundedButton type="flat" @click="deleteRecipe" :disabled="!isOnline">
+        <RoundedButton
+          type="flat"
+          @click="deleteDialogOpen = true"
+          :disabled="!isOnline"
+        >
           <template v-slot:icon>delete</template>
           <template v-slot:default>Löschen</template>
         </RoundedButton>
@@ -67,6 +71,14 @@
         </RoundedButton>
       </section>
     </article>
+    <ConfirmDialog
+      :title="recipeData.name"
+      :open="deleteDialogOpen"
+      @confirmed="deleteRecipe"
+      @cancelled="deleteDialogOpen = false"
+    >
+      Soll dieses Rezept gelöscht werden?
+    </ConfirmDialog>
   </main>
 </template>
 
@@ -78,6 +90,7 @@ import RecipeDurationLabel from "./RecipeDurationLabel.vue";
 import RecipeSourceLabel from "./RecipeSourceLabel.vue";
 import RoundedButton from "./RoundedButton.vue";
 import SubSection from "./SubSection.vue";
+import ConfirmDialog from "./ConfirmDialog.vue";
 import { RecipeData, ImageInfo } from "../types/recipeDbTypes";
 import { usePlannedRecipesStoreForRecipe } from "../stores/plannedRecipes";
 import { ref, watchEffect, computed } from "vue";
@@ -157,6 +170,7 @@ function toggleRecipePlanning() {
   });
 }
 
+const deleteDialogOpen = ref(false);
 function deleteRecipe() {
   removeFromPlannedRecipes();
   emit("delete");
