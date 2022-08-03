@@ -17,14 +17,19 @@
     </section>
 
     <section class="flex justify-center gap-2">
-      <RoundedButton
-        type="raised"
-        @click="copyToClipboard"
-        :disabled="!copyIsSupported"
-      >
-        <template #icon>copy</template>
-        <template #default>Kopieren</template>
-      </RoundedButton>
+      <RoundedTooltip v-model:open="copyTooltip">
+        <template #tooltip> Kopiert </template>
+        <template #anchor>
+          <RoundedButton
+            type="raised"
+            @click="copyToClipboard"
+            :disabled="!copyIsSupported"
+          >
+            <template #icon>copy</template>
+            <template #default>Kopieren</template>
+          </RoundedButton>
+        </template>
+      </RoundedTooltip>
     </section>
   </main>
 </template>
@@ -33,10 +38,11 @@
 import SubSection from "./SubSection.vue";
 import ShoppingListItem from "./ShoppingListItem.vue";
 import RoundedButton from "./RoundedButton.vue";
+import RoundedTooltip from "./RoundedTooltip.vue";
 import { CategorizedShoppingListItem } from "../types/shoppingListTypes";
 import { IngredientCategory } from "../types/recipeDbTypes";
 import { useClipboard } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps<{
   list: CategorizedShoppingListItem[];
@@ -99,7 +105,9 @@ const listAsString = computed(() => {
 });
 
 const { copy: _copyToClipboard, isSupported: copyIsSupported } = useClipboard();
+const copyTooltip = ref(false);
 function copyToClipboard() {
   _copyToClipboard(listAsString.value);
+  copyTooltip.value = true;
 }
 </script>
