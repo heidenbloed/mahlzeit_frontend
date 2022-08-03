@@ -12,10 +12,10 @@ const pwaOptions: Partial<VitePWAOptions> = {
   manifest: {
     name: "Mahlzeit",
     short_name: "Mahlzeit",
-    theme_color: "#ffffff",
+    theme_color: "#E7E5E4",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
+    background_color: "#E7E5E4",
     icons: icons,
   },
   workbox: {
