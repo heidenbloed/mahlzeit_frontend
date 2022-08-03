@@ -13,11 +13,10 @@
         <input
           :type="inputType"
           class="w-full appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
-          v-model="_modelValue"
           ref="inputElement"
-          @blur="handleBlur"
-          @change="handleChange"
-          @input="scrollIntoView"
+          @input="onInput"
+          @blur="onBlur"
+          @change="onChange"
           step="any"
         />
       </div>
@@ -40,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useField } from "vee-validate";
 
 const props = withDefaults(
@@ -70,15 +69,24 @@ const {
   errorMessage,
   value: _modelValue,
   resetField,
-  handleBlur,
-  handleChange,
+  handleBlur: onBlur,
+  handleChange: onChange,
 } = useField<string>(props.name, props.rules, {
   initialValue: props.modelValue.toString(),
   validateOnMount: false,
   validateOnValueUpdate: false,
 });
 
+onMounted(() => {
+  if (inputElement.value) {
+    inputElement.value.value = _modelValue.value;
+  }
+});
+
 watch(_modelValue, (newVal, prevVal) => {
+  if (inputElement.value) {
+    inputElement.value.value = newVal;
+  }
   emit("update:modelValue", newVal);
 });
 watch(
@@ -90,6 +98,12 @@ watch(
     }
   }
 );
+function onInput() {
+  if (inputElement.value) {
+    _modelValue.value = inputElement.value.value;
+  }
+  scrollIntoView();
+}
 
 function scrollIntoView() {
   inputContainer.value?.scrollIntoView({
