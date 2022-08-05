@@ -13,10 +13,13 @@
     </SubSection>
 
     <section v-else>
-      <p class="text-center font-medium">Die Einkaufsliste ist noch leer.</p>
+      <p class="text-center font-medium">
+        Die Einkaufsliste ist noch leer. Wähle erst die Rezepte aus, für die du
+        die Zutaten kaufen möchtest.
+      </p>
     </section>
 
-    <section class="flex justify-center gap-2">
+    <section v-if="list.length > 0" class="flex justify-center gap-2">
       <RoundedTooltip v-model:open="copyTooltip">
         <template #tooltip> Kopiert </template>
         <template #anchor>

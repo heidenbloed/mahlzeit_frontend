@@ -1,14 +1,23 @@
 <template>
-  <CardGrid>
+  <div
+    v-if="plannedRecipes.list.length == 0"
+    class="mx-auto max-w-4xl rounded-b-xl bg-white p-4 text-center font-medium shadow-xl md:rounded-t-xl"
+  >
+    Die Planungsliste ist noch leer. Wähle erst die Rezepte aus, für die du die
+    Zutaten kaufen möchtest.
+  </div>
+  <CardGrid v-else>
     <RoundedCard
       noWidthLimit
-      class="col-span-1 w-full p-2 md:p-4 lg:col-span-2 xl:col-span-3"
+      class="col-span-1 w-full p-2 lg:col-span-2 xl:col-span-3"
     >
       <div
-        class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
+        class="flex flex-col items-center justify-center gap-2 md:flex-row md:gap-4"
       >
-        <span class="flex flex-wrap items-center justify-center gap-1 md:gap-2">
-          <ServingsSlider v-model="numServingsForAll" class="" />
+        <SubSection
+          class="flex max-w-full flex-row flex-wrap items-center justify-center gap-1 md:gap-2 md:py-0"
+        >
+          <ServingsSlider v-model="numServingsForAll" />
           <RoundedButton
             type="flat"
             @click="plannedRecipes.updateAllNumServings(numServingsForAll)"
@@ -16,8 +25,7 @@
             <template v-slot:icon>approval</template>
             <template v-slot:default>Für alle übernehmen</template>
           </RoundedButton>
-        </span>
-        <div class="h-px self-stretch bg-stone-800 md:h-auto md:w-px"></div>
+        </SubSection>
         <RoundedButton type="flat" @click="plannedRecipes.clearList">
           <template v-slot:icon>remove_shopping_cart</template>
           <template v-slot:default>Liste leeren</template>
@@ -41,6 +49,7 @@ import RoundedCard from "./RoundedCard.vue";
 import PlanningCard from "./PlanningCard.vue";
 import RoundedButton from "./RoundedButton.vue";
 import ServingsSlider from "./ServingsSlider.vue";
+import SubSection from "./SubSection.vue";
 import { usePlannedRecipesStore } from "../stores/plannedRecipes";
 import { ref } from "vue";
 
