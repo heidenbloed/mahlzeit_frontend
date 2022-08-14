@@ -18,6 +18,6 @@ const props = defineProps<{
 
 const itemLabel = computed(() => {
   const roundedQunatity = Math.round(props.itemData.quantity * 10) / 10;
-  return `${roundedQunatity}${props.itemData.unitShortForm} ${props.itemData.ingredientName}`;
+  return `${roundedQunatity} ${props.itemData.unitShortForm} ${props.itemData.ingredientName}`;
 });
 </script>
