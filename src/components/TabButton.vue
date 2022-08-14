@@ -1,5 +1,5 @@
 <template>
-  <a :href="url" class="h-full">
+  <router-link :to="url" class="h-full">
     <button
       class="flex h-full flex-col place-items-center justify-center gap-x-3 gap-y-2 border-red-500 px-6 focus:bg-white focus:outline-none md:flex-row"
       :class="
@@ -15,7 +15,7 @@
         <slot></slot>
       </span>
     </button>
-  </a>
+  </router-link>
 </template>
 
 <script setup lang="ts">
