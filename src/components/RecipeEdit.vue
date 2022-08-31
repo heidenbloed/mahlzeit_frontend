@@ -39,6 +39,14 @@
           />
         </SubSection>
 
+        <SubSection title="Zubereitung">
+          <RoundedInput
+            v-model="_recipeData.preparation_text"
+            name="prepText"
+            inputType="textarea"
+          />
+        </SubSection>
+
         <SubSection title="Schlagwörter">
           <RecipeLabelListEdit
             v-model="_recipeData.labels"

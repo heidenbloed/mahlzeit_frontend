@@ -94,6 +94,7 @@ onMounted(async () => {
       preparation_time: "",
       source: "",
       num_servings: 4,
+      preparation_text: "",
       labels: [],
       quantified_ingredients: [],
       recipe_images: [],
@@ -187,6 +188,7 @@ async function onEditFinished(saveChanges: boolean) {
         preparation_time: recipeData.value.preparation_time,
         source: recipeData.value.source,
         num_servings: recipeData.value.num_servings,
+        preparation_text: recipeData.value.preparation_text,
         labels: recipeData.value.labels.map((label) => label.id),
         quantified_ingredients: quantifiedIngredientList,
       };

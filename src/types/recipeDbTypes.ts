@@ -106,6 +106,7 @@ export interface RecipeShort extends UpdatedableModel {
 export interface RecipeData extends Omit<RecipeShort, "first_image"> {
   source: string;
   num_servings: number;
+  preparation_text: string;
   labels: RecipeLabel[];
   quantified_ingredients: QuantifiedIngredient[];
   recipe_images: RecipeImage[];
@@ -116,6 +117,7 @@ export interface RecipeEdit {
   preparation_time: number;
   source: string;
   num_servings: number;
+  preparation_text: string;
   labels: number[];
   quantified_ingredients: QuantifiedIngredientEdit[];
 }
@@ -148,6 +150,7 @@ export interface RecipeEditData {
   preparation_time: number | "";
   source: string;
   num_servings: number;
+  preparation_text: string;
   labels: RecipeLabel[];
   quantified_ingredients: QuantifiedIngredientEditData[];
   recipe_images: RecipeImageEditData[];

@@ -11,6 +11,7 @@
           {{ label }}
         </div>
         <input
+          v-if="inputType !== 'textarea'"
           :type="inputType"
           class="w-full appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
           ref="inputElement"
@@ -19,6 +20,15 @@
           @change="onChange"
           step="any"
         />
+        <textarea
+          v-else
+          class="w-full resize-none appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
+          v-model="modelValue"
+          ref="inputElement"
+          @blur="onBlur"
+          @change="onChange"
+        >
+        </textarea>
       </div>
       <button
         type="button"
@@ -39,8 +49,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, Ref } from "vue";
 import { useField } from "vee-validate";
+import { useTextareaAutosize } from "@vueuse/core";
 
 const props = withDefaults(
   defineProps<{
@@ -63,7 +74,7 @@ const props = withDefaults(
 
 const emit = defineEmits(["update:modelValue"]);
 
-const inputElement = ref<HTMLInputElement>();
+const inputElement = ref<HTMLInputElement | HTMLTextAreaElement>();
 const inputContainer = ref<HTMLDivElement>();
 const {
   errorMessage,
@@ -76,6 +87,12 @@ const {
   validateOnMount: false,
   validateOnValueUpdate: false,
 });
+if (props.inputType === "textarea") {
+  useTextareaAutosize({
+    element: inputElement as Ref<HTMLTextAreaElement | undefined>,
+    input: _modelValue,
+  });
+}
 
 onMounted(() => {
   if (inputElement.value) {

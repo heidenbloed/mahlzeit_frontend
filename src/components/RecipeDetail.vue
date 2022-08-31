@@ -33,6 +33,16 @@
         </ul>
       </SubSection>
 
+      <SubSection title="Zubereitung" v-if="prepTextParagraphs.length > 0">
+        <p
+          v-for="{ text, doubleLineBreak } in prepTextParagraphs"
+          :class="doubleLineBreak ? 'mb-4' : ''"
+          class="text-start"
+        >
+          {{ text }}
+        </p>
+      </SubSection>
+
       <SubSection title="Schlagwörter" v-if="recipeData.labels.length > 0">
         <div class="mt-2 flex flex-wrap gap-x-2 gap-y-1">
           <RecipeLabelTag
@@ -117,6 +127,27 @@ function getScaledQuantity(quantity: number) {
     (numServings.value * quantity) / props.recipeData.num_servings;
   return Math.round(scaledQuantity * 10) / 10;
 }
+
+interface PrepTextParagraph {
+  text: string;
+  doubleLineBreak: boolean;
+}
+const prepTextParagraphs = computed(() => {
+  return props.recipeData.preparation_text
+    .split("\n")
+    .reduce<PrepTextParagraph[]>((paragraphList, paragraph) => {
+      const trimmedParagraph = paragraph.trim();
+      if (trimmedParagraph.length > 0) {
+        paragraphList.push({
+          text: trimmedParagraph,
+          doubleLineBreak: false,
+        });
+      } else if (paragraphList.length > 0) {
+        paragraphList[paragraphList.length - 1].doubleLineBreak = true;
+      }
+      return paragraphList;
+    }, []);
+});
 
 const firstImageThumbnailPlanInfo = computed<ImageInfo>(() => {
   if (props.recipeData.recipe_images.length > 0) {
