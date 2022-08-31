@@ -19,6 +19,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
     icons: icons,
   },
   workbox: {
+    globPatterns: ["**/*.{js,css,html,woff,woff2}"],
     runtimeCaching: [
       {
         urlPattern: /^https:\/\/recipedb-api\.heidenblut\.eu\/media\/.*/i,

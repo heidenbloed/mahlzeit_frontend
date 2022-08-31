@@ -11,6 +11,8 @@
     "https-start": "npm run build-no-check && npm run https-serve"
   },
   "dependencies": {
+    "@fontsource/josefin-slab": "^4.5.9",
+    "@fontsource/material-icons-outlined": "^4.5.4",
     "@headlessui/vue": "^1.4.2",
     "@tailwindcss/forms": "^0.4.0",
     "@types/swiper": "^5.4.3",

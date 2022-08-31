@@ -3,6 +3,8 @@ import { createPinia } from "pinia";
 import { defineRule } from "vee-validate";
 import router from "./router";
 import App from "./App.vue";
+import "@fontsource/josefin-slab";
+import "@fontsource/material-icons-outlined";
 import "./index.css";
 
 defineRule("required", (value: string) => {
