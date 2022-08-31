@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TabsView from "@/components/TabsView.vue";
-import RecipesGridView from "@/components/RecipesGridView.vue";
-import RecipeDetailView from "@/components/RecipeDetailView.vue";
-import PlanningGridView from "@/components/PlanningGridView.vue";
-import ShoppingListView from "@/components/ShoppingListView.vue";
+import TabsView from "../components/TabsView.vue";
+import RecipesGridView from "../components/RecipesGridView.vue";
+import RecipeDetailView from "../components/RecipeDetailView.vue";
+import PlanningGridView from "../components/PlanningGridView.vue";
+import ShoppingListView from "../components/ShoppingListView.vue";
+import NotFoundView from "../components/NotFoundView.vue";
 
 const routes = [
   {
@@ -40,6 +41,13 @@ const routes = [
         component: ShoppingListView,
         meta: {
           title: "Einkaufsliste - Mahlzeit",
+        },
+      },
+      {
+        path: ":pathMatch(.*)*",
+        component: NotFoundView,
+        meta: {
+          title: "404 - Mahlzeit",
         },
       },
     ],
