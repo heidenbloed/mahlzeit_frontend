@@ -13,33 +13,14 @@ import {
   RecipeEditResponse,
   RecipeImageEdit,
   RecipeImageEditResponse,
+  PushSubscriptionInfo,
+  PushSubscriptionInfoFull,
 } from "../types/recipeDbTypes";
 
 const recipeDbApi = axios.create({
   baseURL: import.meta.env.VITE_RECIPE_DB_API_URL,
   timeout: 30000,
 });
-
-recipeDbApi.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response) {
-      console.error(
-        "RecipeDB API Error:",
-        "Data=",
-        error.response.data,
-        "Status=",
-        error.response.status,
-        "Headers=",
-        error.response.headers
-      );
-    } else if (error.request) {
-      console.error("RecipeDB API Error:", error.request);
-    } else {
-      console.error("RecipeDB API Error:", error.message);
-    }
-  }
-);
 
 export enum IngredientListOrdering {
   nameAscending = "name",
@@ -92,7 +73,7 @@ export async function getIngredientList(
 }
 
 export async function getIngredientDetail(id: number): Promise<Ingredient> {
-  const response = await recipeDbApi.get("/ingredients/" + id + "/");
+  const response = await recipeDbApi.get(`/ingredients/${id}/`);
   return response.data;
 }
 
@@ -107,15 +88,12 @@ export async function updateIngredient(
   id: number,
   ingredient: Partial<IngredientEdit>
 ): Promise<IngredientEditResponse> {
-  const response = await recipeDbApi.patch(
-    "/ingredients/" + id + "/",
-    ingredient
-  );
+  const response = await recipeDbApi.patch(`/ingredients/${id}/`, ingredient);
   return response.data;
 }
 
 export async function deleteIngredient(id: number) {
-  await recipeDbApi.delete("/ingredients/" + id + "/");
+  await recipeDbApi.delete(`/ingredients/${id}/`);
 }
 
 export async function getRecipeList(
@@ -133,7 +111,7 @@ export async function getRecipeList(
 }
 
 export async function getRecipeDetail(id: number): Promise<RecipeData> {
-  const response = await recipeDbApi.get("/recipes/" + id + "/");
+  const response = await recipeDbApi.get(`/recipes/${id}/`);
   return response.data;
 }
 
@@ -148,12 +126,12 @@ export async function updateRecipe(
   id: number,
   recipe: Partial<RecipeEdit>
 ): Promise<RecipeEditResponse> {
-  const response = await recipeDbApi.patch("/recipes/" + id + "/", recipe);
+  const response = await recipeDbApi.patch(`/recipes/${id}/`, recipe);
   return response.data;
 }
 
 export async function deleteRecipe(id: number) {
-  await recipeDbApi.delete("/recipes/" + id + "/");
+  await recipeDbApi.delete(`/recipes/${id}/`);
 }
 
 export async function createRecipeImage(
@@ -184,14 +162,43 @@ export async function updateRecipeImage(
   if (imageData.recipe !== undefined) {
     formData.append("recipe", imageData.recipe.toString());
   }
-  const response = await recipeDbApi.patch(
-    "/recipe_image/" + id + "/",
-    formData,
-    { headers: { "Content-Type": "multipart/form-data" } }
-  );
+  const response = await recipeDbApi.patch(`/recipe_image/${id}/`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }
 
 export async function deleteRecipeImage(id: number) {
-  await recipeDbApi.delete("/recipe_image/" + id + "/");
+  await recipeDbApi.delete(`/recipe_image/${id}/`);
+}
+
+export async function createPushSubscription(
+  pushSubscriptionInfo: PushSubscriptionInfoFull
+): Promise<PushSubscriptionInfoFull> {
+  const response = await recipeDbApi.post(
+    "/push_subscriptions/",
+    pushSubscriptionInfo
+  );
+  return response.data;
+}
+
+export async function updatePushSubscription(
+  endpoint: string,
+  pushSubscriptionInfo: Partial<PushSubscriptionInfo>
+): Promise<PushSubscriptionInfoFull> {
+  const doubleEncodedEndpoint = encodeURIComponent(
+    encodeURIComponent(endpoint)
+  );
+  const response = await recipeDbApi.patch(
+    `/push_subscriptions/${doubleEncodedEndpoint}/`,
+    pushSubscriptionInfo
+  );
+  return response.data;
+}
+
+export async function deletePushSubscription(endpoint: string) {
+  const doubleEncodedEndpoint = encodeURIComponent(
+    encodeURIComponent(endpoint)
+  );
+  await recipeDbApi.delete(`/push_subscription/${doubleEncodedEndpoint}/`);
 }

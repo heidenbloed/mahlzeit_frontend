@@ -155,3 +155,13 @@ export interface RecipeEditData {
   quantified_ingredients: QuantifiedIngredientEditData[];
   recipe_images: RecipeImageEditData[];
 }
+
+export interface PushSubscriptionInfo {
+  auth_key: string;
+  p256dh_key: string;
+  notify_at_new_recipes: boolean;
+}
+
+export interface PushSubscriptionInfoFull extends PushSubscriptionInfo {
+  endpoint: string;
+}
