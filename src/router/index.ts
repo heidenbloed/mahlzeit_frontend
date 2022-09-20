@@ -4,6 +4,7 @@ import RecipesGridView from "../components/RecipesGridView.vue";
 import RecipeDetailView from "../components/RecipeDetailView.vue";
 import PlanningGridView from "../components/PlanningGridView.vue";
 import ShoppingListView from "../components/ShoppingListView.vue";
+import MoreView from "../components/MoreView.vue";
 import NotFoundView from "../components/NotFoundView.vue";
 
 const routes = [
@@ -40,7 +41,14 @@ const routes = [
         path: "cart/",
         component: ShoppingListView,
         meta: {
-          title: "Einkaufsliste - Mahlzeit",
+          title: "Einkauf - Mahlzeit",
+        },
+      },
+      {
+        path: "more/",
+        component: MoreView,
+        meta: {
+          title: "Mehr - Mahlzeit",
         },
       },
       {

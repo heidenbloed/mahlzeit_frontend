@@ -7,9 +7,8 @@
     <template v-slot:buttons>
       <TabButton iconName="dinner_dining" url="/recipes/"> Rezepte </TabButton>
       <TabButton iconName="event" url="/plan/"> Planung </TabButton>
-      <TabButton iconName="shopping_cart" url="/cart/">
-        Einkaufsliste
-      </TabButton>
+      <TabButton iconName="shopping_cart" url="/cart/"> Einkauf </TabButton>
+      <TabButton iconName="person" url="/more/"> Mehr </TabButton>
     </template>
 
     <template v-slot:content>
