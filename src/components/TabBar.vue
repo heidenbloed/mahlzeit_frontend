@@ -9,13 +9,16 @@
       <slot name="buttons"></slot>
     </div>
   </header>
-  <div class="flex h-full w-full flex-col">
+  <div class="flex h-full w-full flex-col overflow-auto">
     <div class="mb-4 hidden h-16 shrink-0 md:block"></div>
-    <div class="container mx-auto grow scroll-mt-5 pb-2 md:pb-4">
+    <div class="container relative mx-auto grow scroll-mt-5 pb-2 md:pb-4">
       <slot name="content"></slot>
     </div>
     <div class="h-16 shrink-0 md:hidden"></div>
   </div>
+  <footer class="fixed bottom-16 right-0 md:right-16">
+    <slot name="footer"></slot>
+  </footer>
 </template>
 
 <style>

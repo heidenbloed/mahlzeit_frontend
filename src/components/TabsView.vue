@@ -15,10 +15,15 @@
     <template v-slot:content>
       <router-view />
     </template>
+
+    <template v-slot:footer>
+      <InAppNotifications />
+    </template>
   </TabBar>
 </template>
 
 <script setup lang="ts">
 import TabBar from "./TabBar.vue";
 import TabButton from "./TabButton.vue";
+import InAppNotifications from "./InAppNotifications.vue";
 </script>
