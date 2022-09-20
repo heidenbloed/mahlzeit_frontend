@@ -1,7 +1,7 @@
 <template>
-  <router-link :to="url" class="h-full">
+  <router-link :to="url" class="h-full w-full">
     <button
-      class="flex h-full flex-col place-items-center justify-center gap-x-3 gap-y-2 border-red-500 px-6 focus:bg-white focus:outline-none md:flex-row"
+      class="flex h-full w-full flex-col place-items-center justify-center gap-x-3 gap-y-2 border-red-500 focus:bg-white focus:outline-none md:flex-row"
       :class="
         tabActive
           ? 'border-t-4 text-red-500 md:border-b-4 md:border-t-0'
