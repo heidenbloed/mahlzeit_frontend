@@ -48,6 +48,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
+    minify: process.env.NODE_ENV === "production",
     sourcemap: process.env.SOURCE_MAP === "true",
   },
   plugins: [Vue(), VitePWA(pwaOptions)],
@@ -57,7 +58,14 @@ export default defineConfig({
     },
   },
   server: {
-    host: true,
+    host: "0.0.0.0",
     port: 3000,
+  },
+  preview: {
+    port: 3050,
+    https: {
+      key: "localhost+1-key.pem",
+      cert: "localhost+1.pem",
+    },
   },
 });

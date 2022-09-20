@@ -4,11 +4,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "build-no-check": "DEBUG=vite-plugin-pwa:* vite build",
-    "serve": "vite preview --port 4000",
-    "start": "npm run build-no-check && npm run serve",
-    "https-serve": "PORT=5000 serve dist",
-    "https-start": "npm run build-no-check && npm run https-serve"
+    "build-dev": "vite build --mode development",
+    "serve": "vite preview",
+    "start": "npm run build && npm run serve",
+    "start-dev": "npm run build-dev && npm run serve"
   },
   "dependencies": {
     "@fontsource/josefin-slab": "^4.5.9",
@@ -29,7 +28,6 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",
     "autoprefixer": "^10.4.0",
-    "https-localhost": "^4.7.0",
     "postcss": "^8.4.4",
     "prettier": "2.6.2",
     "prettier-plugin-tailwindcss": "^0.1.11",
