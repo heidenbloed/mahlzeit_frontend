@@ -7,8 +7,8 @@ import { icons } from "./icons.json";
 const pwaOptions: Partial<VitePWAOptions> = {
   base: "/",
   srcDir: "src",
-  includeAssets: ["favicon.png", "assets/*"],
-  strategies: "generateSW",
+  strategies: "injectManifest",
+  filename: "serviceWorker.ts",
   manifest: {
     name: "Mahlzeit",
     short_name: "Mahlzeit",
@@ -18,6 +18,7 @@ const pwaOptions: Partial<VitePWAOptions> = {
     background_color: "#E7E5E4",
     icons: icons,
   },
+  includeAssets: ["favicon.png", "assets/*"],
   workbox: {
     globPatterns: ["**/*.{js,css,html,woff,woff2}"],
     runtimeCaching: [
