@@ -21,6 +21,7 @@ import { getRecipeDetail, deleteRecipe } from "../api/recipeDbApi";
 import { RecipeData } from "../types/recipeDbTypes";
 import { ref, onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { AxiosError } from "axios";
 
 const router = useRouter();
 const route = useRoute();
@@ -36,7 +37,13 @@ const recipeId = computed(() => {
 const recipeData = ref<RecipeData | null>(null);
 async function reloadRecipeData() {
   if (recipeId.value >= 0) {
-    recipeData.value = await getRecipeDetail(recipeId.value);
+    try {
+      recipeData.value = await getRecipeDetail(recipeId.value);
+    } catch (err) {
+      if (err instanceof AxiosError && err.response?.status == 404) {
+        router.push("/404/");
+      }
+    }
   }
 }
 onMounted(reloadRecipeData);
