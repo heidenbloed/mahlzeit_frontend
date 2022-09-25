@@ -1,7 +1,9 @@
 <template>
   <TabBar>
     <template v-slot:logo>
+      <router-link to="/">
       <div class="font-logo text-center text-4xl text-red-500">Mahlzeit</div>
+      </router-link>
     </template>
 
     <template v-slot:buttons>
