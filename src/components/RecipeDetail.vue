@@ -22,7 +22,7 @@
         </p>
       </section>
 
-      <SubSection title="Zutaten">
+      <SubSection title="Zutaten" icon="list_alt">
         <ServingsSlider v-model="numServings" />
         <ul>
           <li v-for="quant_ingr in recipeData.quantified_ingredients">
@@ -33,7 +33,11 @@
         </ul>
       </SubSection>
 
-      <SubSection title="Zubereitung" v-if="prepTextParagraphs.length > 0">
+      <SubSection
+        title="Zubereitung"
+        icon="article"
+        v-if="prepTextParagraphs.length > 0"
+      >
         <p
           v-for="{ text, doubleLineBreak } in prepTextParagraphs"
           :class="doubleLineBreak ? 'mb-4' : ''"
@@ -43,7 +47,11 @@
         </p>
       </SubSection>
 
-      <SubSection title="Schlagwörter" v-if="recipeData.labels.length > 0">
+      <SubSection
+        title="Schlagwörter"
+        icon="label"
+        v-if="recipeData.labels.length > 0"
+      >
         <div class="mt-2 flex flex-wrap gap-x-2 gap-y-1">
           <RecipeLabelTag
             v-for="label in recipeData.labels"
