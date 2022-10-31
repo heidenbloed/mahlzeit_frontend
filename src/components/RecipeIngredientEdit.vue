@@ -143,10 +143,12 @@ watch(
   () => currentIngredient.ingredientName,
   async () => {
     if (currentIngredient.ingredientName.length >= 1) {
-      ingredientAutoCompleteList.value = await getIngredientList(
-        IngredientListOrdering.nameAscending,
-        currentIngredient.ingredientName
-      );
+      ingredientAutoCompleteList.value = (
+        await getIngredientList(
+          IngredientListOrdering.nameAscending,
+          currentIngredient.ingredientName
+        )
+      ).results;
     } else {
       ingredientAutoCompleteList.value = [];
     }
@@ -154,10 +156,12 @@ watch(
 );
 async function onIngredientChange() {
   currentIngredient.ingredientName = currentIngredient.ingredientName.trim();
-  const possibleIngredients = await getIngredientList(
-    IngredientListOrdering.nameAscending,
-    currentIngredient.ingredientName
-  );
+  const possibleIngredients = (
+    await getIngredientList(
+      IngredientListOrdering.nameAscending,
+      currentIngredient.ingredientName
+    )
+  ).results;
   const selectedIngredient = possibleIngredients.find(
     (ingredient) =>
       ingredient.name.toLowerCase() ===
