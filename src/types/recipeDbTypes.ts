@@ -1,12 +1,19 @@
-interface Model {
+export interface PaginationResult<Data> {
+  count: number;
+  next?: string;
+  previous?: string;
+  results: Data;
+}
+
+export interface Model {
   id: number;
 }
 
-interface UpdatedableModel extends Model {
+export interface UpdatedableModel extends Model {
   updated_at: number;
 }
 
-interface RecipeImageShort extends UpdatedableModel {
+export interface RecipeImageShort extends UpdatedableModel {
   image: string;
   thumbnail_card: string | null;
   thumbnail_plan: string | null;

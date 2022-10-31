@@ -65,7 +65,7 @@ export default defineConfig({
   preview: {
     port: 3050,
     https: {
-      key: "localhost+1-key.pem",
+      key: "secrets/localhost+1-key.pem",
       cert: "localhost+1.pem",
     },
   },

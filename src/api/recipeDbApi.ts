@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  PaginationResult,
   IngredientCategory,
   RecipeLabel,
   Unit,
@@ -62,11 +63,15 @@ export async function getUnitList(): Promise<Unit[]> {
 
 export async function getIngredientList(
   ordering: IngredientListOrdering,
-  search?: string
-): Promise<IngredientShort[]> {
+  search?: string,
+  limit?: number,
+  offset?: number
+): Promise<PaginationResult<IngredientShort[]>> {
   const params = {
     ordering: ordering,
     search: search,
+    limit: limit,
+    offset: offset,
   };
   const response = await recipeDbApi.get("/ingredients/", { params: params });
   return response.data;
@@ -99,12 +104,16 @@ export async function deleteIngredient(id: number) {
 export async function getRecipeList(
   ordering: RecipeListOrdering,
   search?: string,
-  labels?: RecipeLabel[]
-): Promise<RecipeShort[]> {
+  labels?: RecipeLabel[],
+  limit?: number,
+  offset?: number
+): Promise<PaginationResult<RecipeShort[]>> {
   const params = {
     ordering: ordering,
     search: search,
     labels: labels?.map((label) => label.id).join(","),
+    limit: limit,
+    offset: offset,
   };
   const response = await recipeDbApi.get("/recipes/", { params: params });
   return response.data;
