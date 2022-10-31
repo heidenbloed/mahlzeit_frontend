@@ -9,9 +9,12 @@
       <slot name="buttons"></slot>
     </div>
   </header>
-  <div class="flex h-full w-full flex-col overflow-auto">
+  <div class="flex h-full w-full flex-col">
     <div class="mb-4 hidden h-16 shrink-0 md:block"></div>
-    <div class="container relative mx-auto grow scroll-mt-5 pb-2 md:pb-4">
+    <div
+      class="container relative mx-auto grow scroll-mt-5 pb-2 md:pb-4"
+      ref="appContainer"
+    >
       <slot name="content"></slot>
     </div>
     <div class="h-16 shrink-0 md:hidden"></div>
@@ -20,6 +23,13 @@
     <slot name="footer"></slot>
   </footer>
 </template>
+
+<script setup lang="ts">
+import { provide, ref } from "vue";
+
+const appContainer = ref<HTMLDivElement | null>(null);
+provide("appContainer", appContainer);
+</script>
 
 <style>
 * {

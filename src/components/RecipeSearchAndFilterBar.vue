@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-1 w-full lg:col-span-2 xl:col-span-3">
+  <div class="w-full">
     <RoundedCard noWidthLimit class="flex flex-col gap-4 p-4">
       <AutoCompleteInput
         v-model="_modelValue"
