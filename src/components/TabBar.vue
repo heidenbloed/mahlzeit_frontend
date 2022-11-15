@@ -19,7 +19,7 @@
     </div>
     <div class="h-16 shrink-0 md:hidden"></div>
   </div>
-  <footer class="fixed bottom-16 right-0 md:right-16">
+  <footer class="fixed bottom-16 right-0 max-w-full md:right-16">
     <slot name="footer"></slot>
   </footer>
 </template>
