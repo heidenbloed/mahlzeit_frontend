@@ -3,6 +3,7 @@
     :is="closeable ? 'button' : 'span'"
     class="inline-flex items-center gap-1 rounded-xl px-2 py-1"
     :class="categoryClasses"
+    type="button"
   >
     <span>{{ name }}</span>
     <span v-if="closeable" class="icon-sm">close</span>
