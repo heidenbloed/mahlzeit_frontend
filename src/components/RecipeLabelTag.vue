@@ -1,12 +1,13 @@
 <template>
   <component
-    :is="closeable ? 'button' : 'span'"
+    :is="closeable || addable ? 'button' : 'span'"
     class="inline-flex items-center gap-1 rounded-xl px-2 py-1"
     :class="categoryClasses"
     type="button"
   >
     <span>{{ name }}</span>
     <span v-if="closeable" class="icon-sm">close</span>
+    <span v-if="addable" class="icon-sm">add</span>
   </component>
 </template>
 
@@ -21,17 +22,36 @@ const props = defineProps({
     default: false,
     requried: false,
   },
+  addable: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
 
 const categoryClasses = computed(() => {
+  let borderColor = "border-red-800";
+  let backgroundColor = "bg-red-100";
+  let textColor = "text-red-800";
+
   if (props.category === "diet") {
-    return "border-lime-700 bg-lime-100 text-lime-700";
+    borderColor = "border-lime-700";
+    backgroundColor = "bg-lime-100";
+    textColor = "text-lime-700";
   } else if (props.category === "complexity") {
-    return "border-sky-800 bg-sky-100 text-sky-800";
+    borderColor = "border-sky-800";
+    backgroundColor = "bg-sky-100";
+    textColor = "text-sky-800";
   } else if (props.category === "cuisine") {
-    return "border-amber-600 bg-amber-100 text-amber-600";
+    borderColor = "border-amber-600";
+    backgroundColor = "bg-amber-100";
+    textColor = "text-amber-600";
+  }
+
+  if (props.addable) {
+    return `bg-stone-200 ${borderColor} ${textColor}`;
   } else {
-    return "border-red-800 bg-red-100 text-red-800";
+    return `${backgroundColor} ${borderColor} ${textColor}`;
   }
 });
 </script>
