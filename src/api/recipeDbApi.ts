@@ -65,6 +65,10 @@ export async function loginUser(
   return response.data;
 }
 
+export async function logoutUser(): Promise<void> {
+  await recipeDbApi.post("/auth/logout/");
+}
+
 export async function getIngredientCategoryList(): Promise<
   IngredientCategory[]
 > {

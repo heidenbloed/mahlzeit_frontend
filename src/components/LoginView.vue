@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit" class="h-full" v-show="!authStore.userIsLoggedIn">
+  <form @submit="onSubmit" v-show="!authStore.userIsLoggedIn">
     <RoundedDialog :open="!authStore.userIsLoggedIn">
       <template #message>
         <div class="mt-4 mb-4 flex flex-col gap-4">
