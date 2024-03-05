@@ -12,6 +12,7 @@
         <RoundedInput
           name="password"
           label="Passwort"
+          inputType="password"
           v-model="_password"
           rules="required"
         />
