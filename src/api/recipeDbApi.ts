@@ -23,6 +23,17 @@ const recipeDbApi = axios.create({
   timeout: 30000,
 });
 
+export function setErrorInterceptor(interceptor: (err: any) => any) {
+  recipeDbApi.interceptors.response.use(
+    (res) => res,
+    (err) => interceptor(err)
+  );
+}
+
+export function setAuthToken(token: string) {
+  recipeDbApi.defaults.headers.common["Authorization"] = `Token ${token}`;
+}
+
 export enum IngredientListOrdering {
   nameAscending = "name",
   nameDescending = "-name",
@@ -37,6 +48,21 @@ export enum RecipeListOrdering {
   prepTimeDescending = "-preparation_time",
   updatedAtAscending = "updated_at",
   updatedAtDescending = "-updated_at",
+}
+
+interface TokenInfo {
+  expiry: string;
+  token: string;
+}
+
+export async function loginUser(
+  username: string,
+  password: string
+): Promise<TokenInfo> {
+  const response = await recipeDbApi.post("/auth/login/", null, {
+    auth: { username, password },
+  });
+  return response.data;
 }
 
 export async function getIngredientCategoryList(): Promise<

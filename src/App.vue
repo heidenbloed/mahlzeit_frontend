@@ -1,8 +1,8 @@
 <template>
-  <!-- <ReloadPWA /> -->
+  <ReloadPWA />
+  <LoginView />
   <div class="h-full w-full overflow-auto bg-stone-200" ref="appDiv">
-    <!-- <router-view></router-view> -->
-    <LoginView></LoginView>
+    <router-view></router-view>
   </div>
 </template>
 
