@@ -13,6 +13,7 @@
         <input
           v-if="inputType !== 'textarea'"
           :type="inputType"
+          :autocomplete="autocompleteHint || undefined"
           class="w-full appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
           ref="inputElement"
           @input="onInput"
@@ -22,6 +23,7 @@
         />
         <textarea
           v-else
+          :autocomplete="autocompleteHint || undefined"
           class="w-full resize-none appearance-none border-0 bg-transparent p-0 align-middle focus:ring-0"
           v-model="modelValue"
           ref="inputElement"
@@ -63,12 +65,14 @@ const props = withDefaults(
     clearable?: boolean;
     noRing?: boolean;
     errorMsgContainerId?: string;
+    autocompleteHint?: string;
   }>(),
   {
     label: "",
     inputType: "text",
     clearable: false,
     noRing: false,
+    autocompleteHint: "",
   }
 );
 

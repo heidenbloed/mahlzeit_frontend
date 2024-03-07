@@ -1,0 +1,15 @@
+{
+    "editor.formatOnSave": true,
+    "volar.format.initialIndent": {
+        "typescript": false,
+        "html": true
+    },
+    "[vue]": {
+        "editor.detectIndentation": false,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
+    "prettier.useEditorConfig": false,
+    "prettier.configPath": ".prettierrc",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
